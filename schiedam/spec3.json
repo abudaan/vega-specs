@@ -19,17 +19,55 @@
             ]
         }
     ],
+    "signals": [
+        {
+            "name": "scale",
+            "value": 1200,
+            "bind": {
+                "input": "range",
+                "min": 500,
+                "max": 3000
+            }
+        },
+        {
+            "name": "translateX",
+            "value": 450,
+            "bind": {
+                "input": "range",
+                "min": -500,
+                "max": 1200
+            }
+        },
+        {
+            "name": "translateY",
+            "value": 260,
+            "bind": {
+                "input": "range",
+                "min": -300,
+                "max": 700
+            }
+        }
+    ],
     "projections": [
         {
             "name": "projection",
             "type": "mercator",
-            "scale": 1
+            "scale": {
+                "signal": "scale"
+            },
+            "translate": [
+                {
+                    "signal": "translateX"
+                },
+                {
+                    "signal": "translateY"
+                }
+            ]
         }
     ],
     "marks": [
         {
             "type": "path",
-            "name": "buurten_path",
             "from": {
                 "data": "buurten"
             },

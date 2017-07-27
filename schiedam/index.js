@@ -2,7 +2,7 @@
 
 window.addEventListener('DOMContentLoaded', function () {
 
-    fetch('spec2.json').then(function (response) {
+    fetch('spec3.json').then(function (response) {
         if (response.status >= 400) {
             throw new Error("Bad response from server");
         }
