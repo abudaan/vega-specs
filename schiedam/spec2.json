@@ -9,7 +9,7 @@
         "right": 0,
         "bottom": 0
     },
-    "autosize": "pad",
+    "autosize": "none",
     "padding": {
         "top": 0,
         "left": 0,
@@ -18,24 +18,16 @@
     },
     "data": [
         {
-            "name": "containers",
-            "url": "containers.topo.json",
+            "name": "buurten",
+            "url": "buurten.topo.json",
             "format": {
                 "type": "topojson",
-                "feature": "containers.geo"
+                "feature": "buurten-schiedam"
             },
             "transform": [
                 {
-                    "type": "geopoint",
-                    "projection": "projection",
-                    "fields": [
-                        "geometry.coordinates.0",
-                        "geometry.coordinates.1"
-                    ],
-                    "as": [
-                        "x",
-                        "y"
-                    ]
+                    "type": "geopath",
+                    "projection": "projection"
                 }
             ]
         }
@@ -72,30 +64,6 @@
     ],
     "signals": [
         {
-            "name": "container_data",
-            "value": null,
-            "on": [
-                {
-                    "events": "@container:mouseover, @container_shape:mouseover",
-                    "update": "datum"
-                },
-                {
-                    "events": "@container:mouseout, @container_shape:mouseout",
-                    "update": "null"
-                }
-            ]
-        },
-        {
-            "name": "location",
-            "value": null,
-            "update": "container_data ? 'location: ' + container_data.properties.locatie : null"
-        },
-        {
-            "name": "coordinates",
-            "value": null,
-            "update": "container_data ? 'coordinates: ' + container_data.geometry.coordinates : null"
-        },
-        {
             "name": "tx",
             "update": "width / 2"
         },
@@ -105,7 +73,7 @@
         },
         {
             "name": "scale",
-            "value": 150,
+            "value": 1,
             "on": [
                 {
                     "events": {
@@ -198,56 +166,10 @@
     ],
     "marks": [
         {
-            "type": "text",
-            "name": "info",
-            "interactive": false,
-            "encode": {
-                "enter": {
-                    "x": {
-                        "value": 100
-                    },
-                    "y": {
-                        "value": 100
-                    },
-                    "fill": {
-                        "value": "black"
-                    },
-                    "fontSize": {
-                        "value": 20
-                    }
-                },
-                "update": {
-                    "text": {
-                        "signal": "location"
-                    }
-                }
-            }
-        },
-        {
-            "type": "image",
-            "name": "container",
+            "type": "path",
+            "name": "buurten_path",
             "from": {
-                "data": "containers"
-            },
-            "encode": {
-                "enter": {
-                    "url": {
-                        "value": "./afval.png"
-                    },
-                    "x": {
-                        "field": "x"
-                    },
-                    "y": {
-                        "field": "y"
-                    }
-                }
-            }
-        },
-        {
-            "type": "shape",
-            "name": "container_shape",
-            "from": {
-                "data": "containers"
+                "data": "buurten"
             },
             "encode": {
                 "enter": {
@@ -255,19 +177,13 @@
                         "value": 1
                     },
                     "stroke": {
-                        "value": "#e00"
+                        "value": "#ee0000"
                     },
                     "fill": {
-                        "value": null
+                        "value": "#00ee00"
                     }
                 }
-            },
-            "transform": [
-                {
-                    "type": "geoshape",
-                    "projection": "projection"
-                }
-            ]
+            }
         }
     ]
 }

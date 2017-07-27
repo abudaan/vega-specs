@@ -2,7 +2,7 @@
 
 window.addEventListener('DOMContentLoaded', function () {
 
-    fetch('spec1.json').then(function (response) {
+    fetch('spec2.json').then(function (response) {
         if (response.status >= 400) {
             throw new Error("Bad response from server");
         }
@@ -12,12 +12,12 @@ window.addEventListener('DOMContentLoaded', function () {
         // .hover()
         // .logLevel(vega.Debug)
         .run()
-        .addSignalListener('container_data', (name, data) => {
-            console.log(name, data);
-        })
+        // .addSignalListener('container_data', (name, data) => {
+        //     console.log(name, data);
+        // })
 
         setTimeout(() => {
-            console.log(view.data('container_points'));
+            console.log(view.data('buurten'));
         }, 400)
     }).catch(function (e) {
         return console.error(e);

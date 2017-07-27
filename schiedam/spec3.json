@@ -1,0 +1,56 @@
+{
+    "$schema": "https://vega.github.io/schema/vega/v3.0.json",
+    "width": 800,
+    "height": 450,
+    "autosize": "none",
+    "data": [
+        {
+            "name": "buurten",
+            "url": "buurten.topo.json",
+            "format": {
+                "type": "topojson",
+                "feature": "buurten-schiedam"
+            },
+            "transform": [
+                {
+                    "type": "geopath",
+                    "projection": "projection"
+                }
+            ]
+        }
+    ],
+    "projections": [
+        {
+            "name": "projection",
+            "type": "mercator",
+            "scale": 1
+        }
+    ],
+    "marks": [
+        {
+            "type": "path",
+            "name": "buurten_path",
+            "from": {
+                "data": "buurten"
+            },
+            "encode": {
+                "enter": {
+                    "strokeWidth": {
+                        "value": 1
+                    },
+                    "stroke": {
+                        "value": "#ee0000"
+                    },
+                    "fill": {
+                        "value": "#00ee00"
+                    }
+                },
+                "update": {
+                    "path": {
+                        "field": "path"
+                    }
+                }
+            }
+        }
+    ]
+}
