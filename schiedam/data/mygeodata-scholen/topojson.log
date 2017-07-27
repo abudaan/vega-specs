@@ -1,0 +1,5 @@
+bounds: 4.365459 51.904019 4.413694 51.943535 (spherical)
+pre-quantization: 0.00536m (4.82e-8°) 0.00439m (3.95e-8°)
+topology: 0 arcs, 0 points
+post-quantization: 0.536m (0.00000482°) 0.439m (0.00000395°)
+prune: retained 0 / 0 arcs (NaN%)

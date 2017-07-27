@@ -1,0 +1,144 @@
+{
+    "$schema": "https://vega.github.io/schema/vega/v3.0.json",
+    "description": "map",
+    "width": 1500,
+    "height": 600,
+    "padding": {
+        "top": 30,
+        "left": 0,
+        "right": 0,
+        "bottom": 0
+    },
+    "autosize": "none",
+    "padding": {
+        "top": 0,
+        "left": 0,
+        "right": 0,
+        "bottom": 0
+    },
+    "data": [
+        {
+            "name": "containers",
+            "url": "containers3.topo.json",
+            "format": {
+                "type": "topojson",
+                "feature": "containers"
+            },
+            "transform": [
+                {
+                    "type": "geopoint",
+                    "projection": "projection",
+                    "fields": [
+                        "geometry.coordinates.0",
+                        "geometry.coordinates.1"
+                    ],
+                    "as": [
+                        "x",
+                        "y"
+                    ]
+                }
+            ]
+        }
+    ],
+    "projections": [
+        {
+            "name": "projection",
+            "type": "mercator"
+        }
+    ],
+    "signals": [
+        {
+            "name": "container_data",
+            "value": null,
+            "on": [
+                {
+                    "events": "@container:mouseover, @container_shape:mouseover",
+                    "update": "datum"
+                },
+                {
+                    "events": "@container:mouseout, @container_shape:mouseout",
+                    "update": "null"
+                }
+            ]
+        },
+        {
+            "name": "location",
+            "value": null,
+            "update": "container_data ? 'coordinates: ' + container_data.geometry.coordinates : null"
+        }
+    ],
+    "marks": [
+        {
+            "type": "text",
+            "name": "info",
+            "interactive": false,
+            "encode": {
+                "enter": {
+                    "x": {
+                        "value": 100
+                    },
+                    "y": {
+                        "value": 100
+                    },
+                    "fill": {
+                        "value": "black"
+                    },
+                    "fontSize": {
+                        "value": 20
+                    }
+                },
+                "update": {
+                    "text": {
+                        "signal": "location"
+                    }
+                }
+            }
+        },
+        {
+            "type": "image",
+            "name": "container",
+            "from": {
+                "data": "containers"
+            },
+            "encode": {
+                "enter": {
+                    "url": {
+                        "value": "./school.png"
+                    },
+                    "x": {
+                        "field": "x"
+                    },
+                    "y": {
+                        "field": "y"
+                    }
+                }
+            }
+        },
+        {
+            "type": "shape",
+            "name": "container_shape",
+            "from": {
+                "data": "containers"
+            },
+            "encode": {
+                "enter": {
+                    "strokeWidth": {
+                        "value": 1
+                    },
+                    "stroke": {
+                        "value": "#e00"
+                    },
+                    "fill": {
+                        "value": null
+                    }
+                }
+            },
+            "transform": [
+                {
+                    "type": "geoshape",
+                    "projection": "projection"
+                }
+            ]
+        }
+    ]
+}
