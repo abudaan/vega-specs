@@ -1,16 +1,40 @@
 {
     "$schema": "https://vega.github.io/schema/vega/v3.0.json",
-    "width": 800,
-    "height": 450,
-    "autosize": "pad",
+    "width": 900,
+    "height": 600,
+    "autosize": "none",
     "data": [
+        {
+            "name": "data",
+            "url": "data.json",
+            "format": {
+                "type": "json"
+            }
+        },
         {
             "name": "buurten",
             "url": "buurten.topo.json",
             "format": {
                 "type": "topojson",
                 "feature": "Gebieden"
-            }
+            },
+            "transform": [
+                {
+                    "type": "lookup",
+                    "from": "data",
+                    "key": "name",
+                    "fields": ["properties.NAAM"],
+                    "values": [
+                        "vulling",
+                        "meldingen",
+                        "stortingen"
+                    ]
+                },
+                {
+                    "type": "filter",
+                    "expr": "datum.vulling != null"
+                }
+            ]
         }
     ],
     "projections": [

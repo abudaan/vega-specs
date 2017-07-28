@@ -27,8 +27,17 @@ window.addEventListener('DOMContentLoaded', () => {
                 // .hover()
                 .run();
 
+            try{
+                view.addSignalListener('data', function(name, data){
+                    console.log(data);
+                });
+            } catch(e) {
+                console.log(e);
+            }
+
             setTimeout(() => {
-                console.log(view.data('buurten'));
+                console.log('data', view.data('data'));
+                console.log('buurten', view.data('buurten'));
             }, 500);
 
         })
