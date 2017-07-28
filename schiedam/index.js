@@ -1,7 +1,7 @@
 
 window.addEventListener('DOMContentLoaded', () => {
 
-    fetch('spec3.json')
+    fetch('spec2.json')
         .then((response) => {
             if (response.status >= 400) {
                 throw new Error("Bad response from server");
@@ -27,17 +27,21 @@ window.addEventListener('DOMContentLoaded', () => {
                 // .hover()
                 .run();
 
-            try{
-                view.addSignalListener('data', function(name, data){
+            try {
+                view.addSignalListener('data', function (name, data) {
                     console.log(data);
                 });
-            } catch(e) {
+            } catch (e) {
                 console.log(e);
             }
 
             setTimeout(() => {
-                console.log('data', view.data('data'));
-                console.log('buurten', view.data('buurten'));
+                try {
+                    console.log('data', view.data('data'));
+                    console.log('buurten', view.data('buurten'));
+                } catch (e) {
+                    console.log(e);
+                }
             }, 500);
 
         })
