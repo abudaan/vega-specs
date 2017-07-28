@@ -1,0 +1,40 @@
+{
+    "$schema": "https://vega.github.io/schema/vega/v3.0.json",
+    "description": "none",
+    "width": 900,
+    "height": 600,
+    "signals": [
+        {
+            "name": "location",
+            "value": "dikke pik"
+        }
+    ],
+    "marks": [
+        {
+            "type": "text",
+            "name": "info",
+            "interactive": false,
+            "encode": {
+                "enter": {
+                    "x": {
+                        "value": 100
+                    },
+                    "y": {
+                        "value": 100
+                    },
+                    "fill": {
+                        "value": "black"
+                    },
+                    "fontSize": {
+                        "value": 20
+                    }
+                },
+                "update": {
+                    "text": {
+                        "signal": "location"
+                    }
+                }
+            }
+        }
+    ]
+}

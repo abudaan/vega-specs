@@ -2,72 +2,26 @@
     "$schema": "https://vega.github.io/schema/vega/v3.0.json",
     "width": 800,
     "height": 450,
-    "autosize": "none",
+    "autosize": "pad",
     "data": [
         {
             "name": "buurten",
             "url": "buurten.topo.json",
             "format": {
                 "type": "topojson",
-                "feature": "buurten-schiedam"
-            },
-            "transform": [
-                {
-                    "type": "geopath",
-                    "projection": "projection"
-                }
-            ]
-        }
-    ],
-    "signals": [
-        {
-            "name": "scale",
-            "value": 1200,
-            "bind": {
-                "input": "range",
-                "min": 500,
-                "max": 3000
-            }
-        },
-        {
-            "name": "translateX",
-            "value": 450,
-            "bind": {
-                "input": "range",
-                "min": -500,
-                "max": 1200
-            }
-        },
-        {
-            "name": "translateY",
-            "value": 260,
-            "bind": {
-                "input": "range",
-                "min": -300,
-                "max": 700
+                "feature": "Gebieden"
             }
         }
     ],
     "projections": [
         {
             "name": "projection",
-            "type": "mercator",
-            "scale": {
-                "signal": "scale"
-            },
-            "translate": [
-                {
-                    "signal": "translateX"
-                },
-                {
-                    "signal": "translateY"
-                }
-            ]
+            "type": "mercator"
         }
     ],
     "marks": [
         {
-            "type": "path",
+            "type": "shape",
             "from": {
                 "data": "buurten"
             },
@@ -88,7 +42,13 @@
                         "field": "path"
                     }
                 }
-            }
+            },
+            "transform": [
+                {
+                    "type": "geoshape",
+                    "projection": "projection"
+                }
+            ]
         }
     ]
 }
