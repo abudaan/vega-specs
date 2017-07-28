@@ -1,7 +1,7 @@
 
 window.addEventListener('DOMContentLoaded', () => {
 
-    fetch('spec2.json')
+    fetch('spec6.json')
         .then((response) => {
             if (response.status >= 400) {
                 throw new Error("Bad response from server");
@@ -24,7 +24,7 @@ window.addEventListener('DOMContentLoaded', () => {
             // }).addTo(map);
 
             var view = new vega.View(vega.parse(spec)).renderer('svg').initialize('#app')
-                // .hover()
+                .hover()
                 .run();
 
             try {
@@ -38,6 +38,10 @@ window.addEventListener('DOMContentLoaded', () => {
             setTimeout(() => {
                 try {
                     console.log('data', view.data('data'));
+                } catch (e) {
+                    console.log(e);
+                }
+                try {
                     console.log('buurten', view.data('buurten'));
                 } catch (e) {
                     console.log(e);

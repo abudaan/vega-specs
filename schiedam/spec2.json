@@ -22,7 +22,7 @@
             "url": "buurten.topo.json",
             "format": {
                 "type": "topojson",
-                "feature": "buurten-schiedam"
+                "feature": "Gebieden"
             },
             "transform": [
                 {
