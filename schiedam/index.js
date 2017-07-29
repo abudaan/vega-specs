@@ -10,7 +10,7 @@ window.addEventListener('DOMContentLoaded', () => {
         })
         .then((spec) => {
 
-            const map = L.map('app').setView([51.9309303, 4.3491274], 13);
+            const map = L.map('app').setView([51.9309303, 4.3491274], 12);
 
             L.tileLayer(
                 'http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
