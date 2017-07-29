@@ -1,0 +1,51 @@
+{
+    "$schema": "https://vega.github.io/schema/vega/v3.0.json",
+    "autosize": "none",
+    "data": [
+        {
+            "name": "buurten",
+            "url": "buurten.topo.json",
+            "format": {
+                "type": "topojson",
+                "feature": "Gebieden"
+            }
+        }
+    ],
+    "marks": [
+        {
+            "type": "shape",
+            "from": {
+                "data": "buurten"
+            },
+            "encode": {
+                "enter": {
+                    "fillOpacity": {
+                        "value": 0.2
+                    }
+                },
+                "update": {
+                    "strokeWidth": {
+                        "value": 1
+                    },
+                    "stroke": {
+                        "value": "#aaa"
+                    },
+                    "fill": {
+                        "value": "#00ee00"
+                    }
+                },
+                "hover": {
+                    "fill": {
+                        "value": "#0000ff"
+                    }
+                }
+            },
+            "transform": [
+                {
+                    "type": "geoshape",
+                    "projection": "projection"
+                }
+            ]
+        }
+    ]
+}

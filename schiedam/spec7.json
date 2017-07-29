@@ -1,0 +1,102 @@
+{
+    "$schema": "https://vega.github.io/schema/vega/v3.0.json",
+    "autosize": "none",
+    "data": [
+        {
+            "name": "buurten",
+            "url": "buurten.topo.json",
+            "format": {
+                "type": "topojson",
+                "feature": "Gebieden"
+            }
+        }
+    ],
+    "marks": [
+        {
+            "type": "text",
+            "name": "info",
+            "interactive": false,
+            "encode": {
+                "enter": {
+                    "x": {
+                        "value": 600
+                    },
+                    "y": {
+                        "value": 50
+                    },
+                    "fill": {
+                        "value": "#333"
+                    },
+                    "fontSize": {
+                        "value": 20
+                    },
+                    "align": {
+                        "value": "left"
+                    }
+                },
+                "update": {
+                    "text": {
+                        "signal": "buurt_naam"
+                    }
+                }
+            }
+        },
+        {
+            "type": "shape",
+            "name": "buurt",
+            "from": {
+                "data": "buurten"
+            },
+            "encode": {
+                "enter": {
+                    "fillOpacity": {
+                        "value": 0.2
+                    }
+                },
+                "update": {
+                    "strokeWidth": {
+                        "value": 0.5
+                    },
+                    "stroke": {
+                        "value": "#666"
+                    },
+                    "fill": {
+                        "value": "#00ee00"
+                    }
+                },
+                "hover": {
+                    "fill": {
+                        "value": "#0000ff"
+                    }
+                }
+            },
+            "transform": [
+                {
+                    "type": "geoshape",
+                    "projection": "projection"
+                }
+            ]
+        }
+    ],
+    "signals": [
+        {
+            "name": "buurt_info",
+            "value": null,
+            "on": [
+                {
+                    "events": "@buurt:mouseover",
+                    "update": "datum"
+                },
+                {
+                    "events": "@buurt:mouseout",
+                    "update": "null"
+                }
+            ]
+        },
+        {
+            "name": "buurt_naam",
+            "value": null,
+            "update": "buurt_info ? buurt_info.properties.NAAM : null"
+        }
+    ]
+}
