@@ -42,31 +42,65 @@ window.addEventListener('DOMContentLoaded', () => {
                 renderer: 'svg',
                 delayRepaint: true,
             })
-            map.on('layeradd', function (e) {
-                setTimeout(function () {
-                    // console.log('layer', e.layer);
-                    // console.log('spec', e.layer._spec);
-                    // console.log('map', e.layer._map);
-                    // console.log('view', e.layer._view);
-                    vegaTooltip.vega(e.layer._view, {
-                        showAllFields: false,
-                        fields: [
-                            {
-                                formatType: "number",
-                                field: "stortingen"
-                            },
-                            {
-                                formatType: "number",
-                                field: "vulling"
-                            },
-                            {
-                                formatType: "number",
-                                field: "meldingen"
-                            }
-                        ]
-                    });
-                }, 0)
-            })
+
+            let view;
+            setTimeout(function () {
+                view = l._view;
+                // vegaTooltip.vega(view, {
+                //     // showAllFields: true,
+                //     fields: [
+                //         {
+                //             formatType: "number",
+                //             field: "stortingen"
+                //         },
+                //         {
+                //             formatType: "number",
+                //             field: "vulling"
+                //         },
+                //         {
+                //             formatType: "number",
+                //             field: "meldingen"
+                //         }
+                //     ]
+                // });
+                view.addSignalListener('date_start', function (name, data) {
+                    console.log(name, data);
+                });
+                view.addSignalListener('date_end', function (name, data) {
+                    console.log(name, data);
+                });
+
+            }, 0)
+
+            setTimeout(function () {
+                console.log(view.data('reports'));
+            }, 500);
+
+            // map.on('layeradd', function (e) {
+            //     setTimeout(function () {
+            //         // console.log('layer', e.layer);
+            //         // console.log('spec', e.layer._spec);
+            //         // console.log('map', e.layer._map);
+            //         // console.log('view', e.layer._view);
+            //         vegaTooltip.vega(e.layer._view, {
+            //             showAllFields: false,
+            //             fields: [
+            //                 {
+            //                     formatType: "number",
+            //                     field: "stortingen"
+            //                 },
+            //                 {
+            //                     formatType: "number",
+            //                     field: "vulling"
+            //                 },
+            //                 {
+            //                     formatType: "number",
+            //                     field: "meldingen"
+            //                 }
+            //             ]
+            //         });
+            //     }, 0)
+            // })
             arr = l.addTo(map);
             // console.log(arr);
             // setTimeout(function(){

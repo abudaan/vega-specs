@@ -19,9 +19,13 @@
             ]
         },
         {
-            "name": "buurt_info",
-            "value": "no info",
-            "update": "buurt_hover ? 'meldingen: ' + buurt_hover.meldingen + 'vulling:' + buurt_hover.vulling + 'stortingen:' + buurt_hover.stortingen : null"
+            "name": "mouse_xy",
+            "on": [
+                {
+                    "events": "mousemove",
+                    "update": "xy()"
+                }
+            ]
         },
         {
             "name": "tooltip_mouse_xy",
@@ -31,9 +35,50 @@
                     "update": "xy()"
                 }
             ]
+        },
+        {
+            "name": "date_start",
+            "value": null,
+            "update": "datetime(2014, 1, 8)"
+        },
+        {
+            "name": "date_end",
+            "value": null,
+            "update": "datetime(2014, 1, 25)"
         }
     ],
     "data": [
+        {
+            "name": "reports",
+            "url": "reports.csv",
+            "format": {
+                "type": "dsv",
+                "delimiter": ";"
+            },
+            "transform": [
+                {
+                    "type": "formula",
+                    "as": "datetime",
+                    "expr": "datetime(datum.date)"
+                },
+                {
+                    "type": "geopoint",
+                    "projection": "projection",
+                    "fields": [
+                        "x",
+                        "y"
+                    ],
+                    "as": [
+                        "x2",
+                        "y2"
+                    ]
+                },
+                {
+                    "type": "filter",
+                    "expr": "datum.datetime > date_start && datum.datetime < date_end"
+                }
+            ]
+        },
         {
             "name": "data",
             "url": "data.json",
@@ -147,13 +192,41 @@
                 },
                 "update": {
                     "text": {
-                        "signal": "buurt_info"
+                        "signal": "mouse_xy"
                     },
                     "x": {
-                        "signal": "tooltip_mouse_xy[0]"
+                        "signal": "mouse_xy[0]"
                     },
                     "y": {
-                        "signal": "tooltip_mouse_xy[1]"
+                        "signal": "mouse_xy[1]"
+                    }
+                }
+            }
+        },
+        {
+            "type": "image",
+            "name": "report_image",
+            "from": {
+                "data": "reports"
+            },
+            "encode": {
+                "enter": {
+                    "url": {
+                        "value": "./afval.png"
+                    },
+                    "x": {
+                        "field": "x2"
+                    },
+                    "y": {
+                        "field": "y2"
+                    }
+                },
+                "update": {
+                    "x": {
+                        "field": "x2"
+                    },
+                    "y": {
+                        "field": "y2"
                     }
                 }
             }
