@@ -1,0 +1,162 @@
+{
+    "$schema": "https://vega.github.io/schema/vega/v3.0.json",
+    "width": 900,
+    "height": 600,
+    "autosize": "none",
+    "signals": [
+        {
+            "name": "buurt_hover",
+            "value": null,
+            "on": [
+                {
+                    "events": "@buurt:mouseover",
+                    "update": "datum"
+                },
+                {
+                    "events": "@buurt:mouseout",
+                    "update": "null"
+                }
+            ]
+        },
+        {
+            "name": "buurt_info",
+            "value": "no info",
+            "update": "buurt_hover ? 'meldingen: ' + buurt_hover.meldingen + 'vulling:' + buurt_hover.vulling + 'stortingen:' + buurt_hover.stortingen : null"
+        },
+        {
+            "name": "tooltip_mouse_xy",
+            "on": [
+                {
+                    "events": "@buurt:mouseover",
+                    "update": "xy()"
+                }
+            ]
+        }
+    ],
+    "data": [
+        {
+            "name": "data",
+            "url": "data.json",
+            "format": {
+                "type": "json"
+            }
+        },
+        {
+            "name": "buurten",
+            "url": "buurten.topo.json",
+            "format": {
+                "type": "topojson",
+                "feature": "Gebieden"
+            },
+            "transform": [
+                {
+                    "type": "geopath",
+                    "projection": "projection"
+                },
+                {
+                    "type": "lookup",
+                    "from": "data",
+                    "key": "name",
+                    "fields": [
+                        "properties.NAAM"
+                    ],
+                    "values": [
+                        "vulling",
+                        "meldingen",
+                        "stortingen"
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "buurten2",
+            "source": "buurten",
+            "transform": [
+                {
+                    "type": "lookup",
+                    "from": "data",
+                    "key": "name",
+                    "fields": [
+                        "properties.NAAM"
+                    ],
+                    "values": [
+                        "vulling",
+                        "meldingen",
+                        "stortingen"
+                    ]
+                },
+                {
+                    "type": "filter",
+                    "expr": "datum.vulling != null"
+                }
+            ]
+        }
+    ],
+    "marks": [
+        {
+            "type": "path",
+            "name": "buurt",
+            "from": {
+                "data": "buurten"
+            },
+            "encode": {
+                "enter": {
+                    "fillOpacity": {
+                        "value": 0.3
+                    },
+                    "strokeWidth": {
+                        "value": 1
+                    },
+                    "stroke": {
+                        "value": "#ee0000"
+                    },
+                    "fill": {
+                        "value": "#00ee00"
+                    }
+                },
+                "update": {
+                    "path": {
+                        "field": "path"
+                    }
+                }
+            }
+        },
+        {
+            "type": "text",
+            "name": "buurt-infoob",
+            "encode": {
+                "enter": {
+                    "font": {
+                        "value": "Butcherman Caps"
+                    },
+                    "align": {
+                        "value": "left"
+                    },
+                    "fontSize": {
+                        "value": 35
+                    },
+                    "width": {
+                        "value": 50
+                    },
+                    "baseline": {
+                        "value": "bottom"
+                    },
+                    "fill": {
+                        "value": "#333"
+                    }
+                },
+                "update": {
+                    "text": {
+                        "signal": "buurt_info"
+                    },
+                    "x": {
+                        "signal": "tooltip_mouse_xy[0]"
+                    },
+                    "y": {
+                        "signal": "tooltip_mouse_xy[1]"
+                    }
+                }
+            }
+        }
+    ]
+}

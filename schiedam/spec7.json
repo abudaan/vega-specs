@@ -9,6 +9,28 @@
                 "type": "topojson",
                 "feature": "Gebieden"
             }
+        },
+        {
+            "name": "containers",
+            "url": "containers.topo.json",
+            "format": {
+                "type": "topojson",
+                "feature": "containers.geo"
+            },
+            "transform": [
+                {
+                    "type": "geopoint",
+                    "projection": "projection",
+                    "fields": [
+                        "geometry.coordinates.0",
+                        "geometry.coordinates.1"
+                    ],
+                    "as": [
+                        "x",
+                        "y"
+                    ]
+                }
+            ]
         }
     ],
     "marks": [
@@ -76,6 +98,28 @@
                     "projection": "projection"
                 }
             ]
+        },
+        {
+            "type": "image",
+            "name": "container",
+            "from": {
+                "data": "containers"
+            },
+            "encode": {
+                "enter": {
+                    "url": {
+                        "value": "./afval.png"
+                    }
+                },
+                "update": {
+                    "x": {
+                        "field": "x"
+                    },
+                    "y": {
+                        "field": "y"
+                    }
+                }
+            }
         }
     ],
     "signals": [

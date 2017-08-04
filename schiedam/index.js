@@ -1,7 +1,7 @@
 
 window.addEventListener('DOMContentLoaded', () => {
 
-    fetch('spec7.json')
+    fetch('spec3a.json')
         .then((response) => {
             if (response.status >= 400) {
                 throw new Error("Bad response from server");
@@ -21,12 +21,41 @@ window.addEventListener('DOMContentLoaded', () => {
 
             const vegaLayer = L.vega(spec, {
                 // Make sure the legend stays in place
+                renderer: 'svg',
                 delayRepaint: true,
             }).addTo(map);
 
+            // var i = 0;
+            // var checker = setInterval(function(){
+            //     if(document.querySelectorAll('.mark-text text').length > 0){
+            //         document.querySelectorAll('.mark-text text').forEach(function(element){
+            //             element.style.fill = 'red';
+            //         });
+            //         clearInterval(checker);
+            //     }
+            //     i++;
+            //     console.log('not yet rendered: ' + i)
+            // }, 1)
+
+            // console.log(vegaLayer);
+
+            // view.runAfter
+
             // var view = new vega.View(vega.parse(spec)).renderer('svg').initialize('#app')
             //     .hover()
-            //     .run();
+            //     .run()
+
+            // var i = 0;
+            // var checker = setInterval(function(){
+            //     if(document.querySelectorAll('.mark-text text').length > 0){
+            //         document.querySelectorAll('.mark-text text').forEach(function(element){
+            //             element.style.fill = 'red';
+            //         });
+            //         clearInterval(checker);
+            //     }
+            //     i++;
+            //     console.log('not yet rendered: ' + i)
+            // }, 1)
 
             // try {
             //     view.addSignalListener('data', function (name, data) {
