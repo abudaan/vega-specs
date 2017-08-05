@@ -9,7 +9,7 @@ export default (spec, id, renderer, withMap, callback) => {
     if (withMap) {
         const map = L.map(id, {
             zoomAnimation: false,
-        }).setView([51.9309303, 4.3491274], 13);
+        }).setView([51.927754415373855, 4.38680648803711], 13);
 
         delete spec.projections;
 

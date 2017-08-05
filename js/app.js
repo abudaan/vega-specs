@@ -1,4 +1,7 @@
-import TestSpec from '../specs/spec1';
+import R from 'ramda';
+import TestSpec1 from '../specs/spec1';
+import TestSpec2 from '../specs/spec2';
+import TestSpec3 from '../specs/spec3';
 import createView from './util/create-vega-view';
 
 const toolTipOptions = {
@@ -20,13 +23,13 @@ const toolTipOptions = {
 };
 
 window.addEventListener('DOMContentLoaded', () => {
-    createView(TestSpec, 'app', 'canvas', true, (view) => {
-        if (view && view.signals) {
-            view.signals.forEach((signal) => {
+    createView(TestSpec3, 'app', 'canvas', false, (view) => {
+        if (view && view._signals) {
+            R.forEach((signal) => {
                 view.addSignalListener(signal, (name, data) => {
                     console.log(name, data);
                 });
-            });
+            }, R.keys(view._signals));
         }
         if (view && view.data) {
             const stamp = Date.now();
