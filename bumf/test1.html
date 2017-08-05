@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Test 1</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.1.0/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.1.0/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/vega@3.0.0-rc2/build/vega.js"></script>
+    <script src="./lib/leaflet-vega"></script>
+</head>
+
+<body>
+
+    <div id="map" style="width: 1200px; height: 1024px;"></div>
+
+    <script>
+
+        function createView(withMap, callback) {
+            if (withMap) {
+                const map = L.map('app').setView([51.9309303, 4.3491274], 13);
+                delete spec.projections;
+
+                L.tileLayer(
+                    'http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
+                        attribution: '<a href="http://openstreetmap.org">OpenStreetMap</a> contributors',
+                        maxZoom: 18
+                    }
+                ).addTo(map);
+
+                const layer = L.vega(spec, {
+                    renderer: 'svg',
+                    // Make sure the legend stays in place
+                    delayRepaint: true,
+                }).addTo(map);
+
+                setTimeout(function () {
+                    callback(layer._view);
+                }, 0);
+
+            } else {
+                const view = new vega.View(vega.parse(spec)).renderer('svg').initialize('#app')
+                    .hover()
+                    .run()
+                callback(view);
+            }
+        }
+
+        console.log(spec);
+        window.addEventListener('DOMContentLoaded', () => {
+            createView(false, function () {
+                vegaTooltip.vega(view, {
+                    // showAllFields: true,
+                    fields: [
+                        {
+                            formatType: "number",
+                            field: "stortingen"
+                        },
+                        {
+                            formatType: "number",
+                            field: "vulling"
+                        },
+                        {
+                            formatType: "number",
+                            field: "meldingen"
+                        }
+                    ]
+                });
+                view.addSignalListener('date_start', function (name, data) {
+                    console.log(name, data);
+                });
+                view.addSignalListener('date_end', function (name, data) {
+                    console.log(name, data);
+                });
+
+                setTimeout(function () {
+                    console.log(view.data('reports'));
+                }, 500);
+            });
+
+            // var i = 0;
+            // var checker = setInterval(function(){
+            //     if(document.querySelectorAll('.mark-text text').length > 0){
+            //         document.querySelectorAll('.mark-text text').forEach(function(element){
+            //             element.style.fill = 'red';
+            //         });
+            //         clearInterval(checker);
+            //     }
+            //     i++;
+            //     console.log('not yet rendered: ' + i)
+            // }, 1)
+
+        });
+
+    </script>
+</body>
+</html>

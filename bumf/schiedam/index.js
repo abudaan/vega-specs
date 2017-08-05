@@ -28,24 +28,31 @@ window.addEventListener('DOMContentLoaded', () => {
         })
         .then((spec) => {
 
-            const map = L.map('app').setView([51.9309303, 4.3491274], 12);
+            // const map = L.map('app').setView([51.9309303, 4.3491274], 13);
+            // delete spec.projections;
 
-            L.tileLayer(
-                'http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
-                    attribution: '<a href="http://openstreetmap.org">OpenStreetMap</a> contributors',
-                    maxZoom: 18
-                }
-            ).addTo(map);
+            // L.tileLayer(
+            //     'http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
+            //         attribution: '<a href="http://openstreetmap.org">OpenStreetMap</a> contributors',
+            //         maxZoom: 18
+            //     }
+            // ).addTo(map);
 
-            const l = L.vega(spec, {
-                // Make sure the legend stays in place
-                renderer: 'svg',
-                delayRepaint: true,
-            })
+            // const layer = L.vega(spec, {
+            //     // Make sure the legend stays in place
+            //     renderer: 'svg',
+            //     delayRepaint: true,
+            // }).addTo(map);
 
             let view;
+
+            view = new vega.View(vega.parse(spec)).renderer('svg').initialize('#app')
+                .hover()
+                .run()
+
+
             setTimeout(function () {
-                view = l._view;
+                // view = layer._view;
                 // vegaTooltip.vega(view, {
                 //     // showAllFields: true,
                 //     fields: [
@@ -76,6 +83,7 @@ window.addEventListener('DOMContentLoaded', () => {
                 console.log(view.data('reports'));
             }, 500);
 
+
             // map.on('layeradd', function (e) {
             //     setTimeout(function () {
             //         // console.log('layer', e.layer);
@@ -101,7 +109,7 @@ window.addEventListener('DOMContentLoaded', () => {
             //         });
             //     }, 0)
             // })
-            arr = l.addTo(map);
+            // arr = l.addTo(map);
             // console.log(arr);
             // setTimeout(function(){
             //     var view = arr[1];
@@ -164,3 +172,29 @@ window.addEventListener('DOMContentLoaded', () => {
         })
         .catch(e => console.error(e))
 });
+
+
+/*
+
+,
+    "scales": [
+        {
+            "name": "date_scale",
+            "type": "time",
+            "domain": {
+                "data": "reports",
+                "field": "datetime"
+            }
+        }
+    ]
+
+,
+                {
+                    "type": "filter",
+                    "expr": "datum.datetime > selected_date_range[0] && datum.datetime < selected_date_range[1]"
+                }
+
+
+datetime(scale(data_scale, date_start))
+
+*/

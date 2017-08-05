@@ -1,17 +1,19 @@
 <!doctype html>
 <html>
-  <head>
-    <title>vega</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.1.0/dist/leaflet.css" />
-    <script src="https://unpkg.com/leaflet@1.1.0/dist/leaflet.js"></script>
-    <script src="./lib/vega.js"></script>
-    <!-- <link rel="stylesheet" media="screen" href="css/app.css"/> -->
-  </head>
-  <body>
-    <div id="schiedam"></div>
-    <div id="world"></div>
-    <script src="./index.js"></script>
+
+<head>
+	<title>vega</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	<link rel="stylesheet" type="text/css" href="https://unpkg.com/leaflet@1.1.0/dist/leaflet.css" />
+	<link rel="stylesheet" type="text/css" href="../lib/vega-tooltip.css">
+	<link rel="stylesheet" type="text/css" href="./css/main.css" />
+	<script src="./lib/vega.js"></script>
+</head>
+
+<body>
+	<div id="app"></div>
+	<script src="./build/app.js"></script>
 </body>
+
 </html>

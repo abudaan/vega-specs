@@ -1,19 +1,37 @@
 {
     "name": "fffact",
     "version": "1.0.0",
-    "main": "index.js",
-    "repository": "git@github.com:abudaan/fffact",
+    "description": "wrestling with Vega",
+    "main": "./js/app.js",
+    "scripts": {
+        "watch": "watchify ./js/app.js -t [ babelify ] -o ./build/app.js --debug --verbose",
+        "server": "python -m SimpleHTTPServer",
+        "start": "npm run watch && npm run server"
+    },
     "author": "abudaan",
     "license": "MIT",
-    "scripts": {
-        "build": "babel-node index.es6.js > index.js"
+    "devDependencies": {
+        "babel-cli": "6.24.0",
+        "babel-eslint": "^7.2.3",
+        "babel-preset-es2015": "6.13.2",
+        "babel-preset-stage-0": "6.5.0",
+        "babelify": "^7.3.0",
+        "core-js": "^2.4.1",
+        "eslint": "3.19.0",
+        "eslint-config-airbnb": "14.1.0",
+        "eslint-plugin-babel": "4.1.1",
+        "eslint-plugin-flowtype": "2.30.4",
+        "eslint-plugin-import": "2.2.0",
+        "eslint-plugin-jsx-a11y": "4.0.0",
+        "eslint-plugin-react": "6.10.0",
+        "flow-bin": "0.42.0",
+        "watchify": "^3.9.0"
     },
     "dependencies": {
-        "babel-cli": "^6.24.1",
-        "babel-polyfill": "^6.23.0",
-        "babel-preset-env": "^1.6.0",
-        "isomorphic-fetch": "^2.2.1",
-        "leaflet-vega": "^0.4.0",
-        "topojson-server": "^3.0.0"
+        "leaflet": "^1.1.0",
+        "ramda": "0.23.0",
+        "vega": "^3.0.0-rc5",
+        "vega-tooltip": "^0.4.2",
+        "yamljs": "^0.2.10"
     }
 }
