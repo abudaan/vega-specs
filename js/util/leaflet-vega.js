@@ -1,10 +1,6 @@
 import L from 'leaflet';
 
-L.vega = function (spec, options) {
-    return new L.VegaLayer(spec, options);
-};
-
-L.VegaLayer = (L.Layer ? L.Layer : L.Class).extend({
+const VegaLayer = (L.Layer ? L.Layer : L.Class).extend({
 
     options: {
         // FIXME: uses window.vega
@@ -257,4 +253,5 @@ L.VegaLayer = (L.Layer ? L.Layer : L.Class).extend({
 
 });
 
-L.VegaLayer.version = '0.4.0';
+export default (spec, options) => new VegaLayer(spec, options);
+

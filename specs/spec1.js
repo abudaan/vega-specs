@@ -1,3 +1,4 @@
+// const dataPath = 'http://localhost:8000/data/';// './data/';
 const dataPath = './data/';
 const imagePath = './img/';
 
@@ -74,24 +75,25 @@ const signals = [
 const data = [
     {
         name: 'reports',
+        // url: `${dataPath}reports.csv?${Date.now()}`,
         url: `${dataPath}reports.csv`,
         format: {
             type: 'dsv',
             delimiter: ';',
         },
         transform: [
-            {
-                type: 'geopoint',
-                projection: 'projection',
-                fields: [
-                    'x',
-                    'y',
-                ],
-                as: [
-                    'x2',
-                    'y2',
-                ],
-            },
+            // {
+            //     type: 'geopoint',
+            //     projection: 'projection',
+            //     fields: [
+            //         'x',
+            //         'y',
+            //     ],
+            //     as: [
+            //         'x2',
+            //         'y2',
+            //     ],
+            // },
             {
                 type: 'formula',
                 as: 'datetime',
@@ -193,7 +195,7 @@ const marks = [
     },
     {
         type: 'text',
-        name: 'buurt-infoob',
+        name: 'buurt-info',
         encode: {
             enter: {
                 font: {
@@ -255,6 +257,20 @@ const marks = [
                 },
             },
         },
+        transform: [
+            {
+                type: 'geopoint',
+                projection: 'projection',
+                fields: [
+                    'x',
+                    'y',
+                ],
+                as: [
+                    'x2',
+                    'y2',
+                ],
+            },
+        ],
     },
     {
         type: 'text',

@@ -1,11 +1,16 @@
 // import vega from 'vega';
-import L from 'leaflet';
+// import L from 'leaflet';
+// import LeafletVega from './leaflet-vega';
 
 const vega = window.vega;
+const L = window.L;
 
-export default (spec, id, withMap, callback) => {
+export default (spec, id, renderer, withMap, callback) => {
     if (withMap) {
-        const map = L.map(id).setView([51.9309303, 4.3491274], 13);
+        const map = L.map(id, {
+            zoomAnimation: false,
+        }).setView([51.9309303, 4.3491274], 13);
+
         delete spec.projections;
 
         L.tileLayer(
@@ -16,7 +21,7 @@ export default (spec, id, withMap, callback) => {
         ).addTo(map);
 
         const layer = L.vega(spec, {
-            renderer: 'svg',
+            renderer,
             // Make sure the legend stays in place
             delayRepaint: true,
         }).addTo(map);
@@ -25,7 +30,7 @@ export default (spec, id, withMap, callback) => {
             callback(layer._view);
         }, 0);
     } else {
-        const view = new vega.View(vega.parse(spec)).renderer('svg').initialize(`#${id}`)
+        const view = new vega.View(vega.parse(spec)).renderer(renderer).initialize(`#${id}`)
             .hover()
             .run();
 
