@@ -203,7 +203,7 @@ const marks = [
                     value: 'left',
                 },
                 fontSize: {
-                    value: 35,
+                    value: 12,
                 },
                 width: {
                     value: 50,
