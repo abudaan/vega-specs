@@ -7,13 +7,13 @@ import TestSpec5 from '../specs/spec5';
 import createView from './util/create-vega-view';
 
 window.addEventListener('DOMContentLoaded', () => {
-    const spec = TestSpec5;
+    const spec = TestSpec4;
 
     createView({
         spec,
         id: 'app',
-        renderer: 'svg',
-        addLeaflet: true,
+        renderer: 'canvas',
+        addLeaflet: false,
         addTooltip: true,
         tooltipOptions: {
             showAllFields: false,
@@ -21,7 +21,17 @@ window.addEventListener('DOMContentLoaded', () => {
                 {
                     formatType: 'string',
                     field: 'properties.NAAM',
-                    title: 'name',
+                    title: 'buurt',
+                },
+                {
+                    formatType: 'string',
+                    field: 'properties.CODE',
+                    title: 'code',
+                },
+                {
+                    formatType: 'string',
+                    field: 'properties.TYPE',
+                    title: 'type',
                 },
             ],
         },

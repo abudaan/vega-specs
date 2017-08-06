@@ -1,5 +1,7 @@
-const dataPath = `${window.location.protocol}//${window.location.host}/data/`;
-const imagePath = `${window.location.protocol}//${window.location.host}/img/`;
+// const dataPath = `${window.location.protocol}//${window.location.host}/data/`;
+// const imagePath = `${window.location.protocol}//${window.location.host}/img/`;
+const dataPath = './data/';
+const imagePath = './img/';
 
 const signals = [
     {
@@ -125,9 +127,9 @@ const marks = [
                 },
             },
             hover: {
-                tooltip: {
-                    signal: 'buurt_hover_naam',
-                },
+                // tooltip: {
+                //     signal: 'buurt_hover_naam',
+                // },
                 stroke: {
                     value: '#ee0000',
                 },
@@ -205,6 +207,9 @@ const marks = [
                 },
                 y: {
                     value: 30,
+                },
+                fill: {
+                    value: 'white',
                 },
             },
             update: {
