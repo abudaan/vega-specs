@@ -27,11 +27,12 @@ const signals = [
     },
     {
         name: 'latitude',
-        value: 51.9309303,
+        value: 51.927754415373855,
+
     },
     {
         name: 'longitude',
-        value: 4.3491274,
+        value: 4.38680648803711,
     },
 ];
 
