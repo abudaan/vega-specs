@@ -26,7 +26,21 @@ window.addEventListener('DOMContentLoaded', () => {
             ],
         },
         callback: (view) => {
-            console.log(view);
+            view.addSignalListener('update_css', (name, value) => {
+                if (value === 0) {
+                    document.querySelectorAll('.text-webfont text').forEach((element) => {
+                        element.style.fill = 'red';
+                        element.style.fontFamily = 'Butcherman Caps';
+                        element.style.fontSize = 40;
+                    });
+                } else {
+                    document.querySelectorAll('.text-webfont text').forEach((element) => {
+                        element.style.fill = 'white';
+                        element.style.fontFamily = 'sans-serif';
+                        element.style.fontSize = 25;
+                    });
+                }
+            });
         },
     });
 
@@ -39,22 +53,5 @@ window.addEventListener('DOMContentLoaded', () => {
         w.document.open();
         w.document.write(`<html><body><pre>${json}</pre></body></html>`);
         w.document.close();
-    });
-
-    let toggle = 0;
-    document.getElementById('update-css').addEventListener('click', () => {
-        if (toggle === 0) {
-            document.querySelectorAll('.mark-text text').forEach((element) => {
-                element.style.fill = 'red';
-                element.style.fontSize = 40;
-            });
-            toggle = 1;
-        } else {
-            document.querySelectorAll('.mark-text text').forEach((element) => {
-                element.style.fill = 'white';
-                element.style.fontSize = 25;
-            });
-            toggle = 0;
-        }
     });
 });

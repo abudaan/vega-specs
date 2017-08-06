@@ -15,6 +15,16 @@ const signals = [
             },
         ],
     },
+    {
+        name: 'update_css',
+        value: 1,
+        on: [
+            {
+                events: '@update_css_text:click',
+                update: 'update_css == 1 ? 0 : 1',
+            },
+        ],
+    },
 ];
 
 
@@ -25,6 +35,33 @@ const data = [
 const marks = [
     {
         type: 'text',
+        name: 'update_css_text',
+        encode: {
+            enter: {
+                align: {
+                    value: 'left',
+                },
+                fill: {
+                    value: 'white',
+                },
+                fontSize: {
+                    value: 13,
+                },
+                x: {
+                    signal: '(width/2) - 100',
+                },
+                y: {
+                    signal: 'height/2',
+                },
+                text: {
+                    value: '[click here to update css]',
+                },
+            },
+        },
+    },
+    {
+        type: 'text',
+        name: 'text-webfont',
         encode: {
             enter: {
                 align: {
@@ -34,10 +71,10 @@ const marks = [
                     value: 'white',
                 },
                 font: {
-                    value: 'Butcherman Caps',
+                    value: 'sans-serif',
                 },
                 fontSize: {
-                    value: 25,
+                    value: 18,
                 },
             },
             update: {
@@ -45,11 +82,17 @@ const marks = [
                     value: 'Vega using webfonts',
                 },
                 x: {
-                    signal: 'mouse_xy[0]',
+                    signal: 'mouse_xy[0] + 10',
                 },
                 y: {
-                    signal: 'mouse_xy[1]',
+                    signal: 'mouse_xy[1] + 10',
                 },
+                // x: {
+                //     value: 100,
+                // },
+                // y: {
+                //     value: 100,
+                // },
             },
         },
     },
