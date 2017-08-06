@@ -1,2 +1,2 @@
 # vega-specs
-Documented Vega3 specs
+Experimenting with Vega3 specs

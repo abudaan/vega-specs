@@ -1,6 +1,5 @@
-// const dataPath = 'http://localhost:8000/data/';// './data/';
-const dataPath = './data/';
-const imagePath = './img/';
+const dataPath = `${window.location.protocol}//${window.location.host}/data/`;
+const imagePath = `${window.location.protocol}//${window.location.host}/img/`;
 
 const signals = [
     {
@@ -255,8 +254,8 @@ const scales = [
 
 export default {
     $schema: 'https://vega.github.io/schema/vega/v3.0.json',
-    width: 900,
-    height: 600,
+    width: 720,
+    height: 720,
     autosize: 'none',
     scales,
     signals,

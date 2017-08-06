@@ -34,14 +34,36 @@ const setup = ({ spec, view, addLeaflet, addTooltip, tooltipOptions, callback })
 };
 
 
+const createVegaView = ({ spec, id, renderer, addLeaflet, addTooltip, tooltipOptions, callback }) => {
+    const view = new vega.View(vega.parse(spec)).renderer(renderer).initialize(`#${id}`)
+        .hover()
+        .run();
+
+    setup({
+        spec,
+        view,
+        addLeaflet,
+        addTooltip,
+        tooltipOptions,
+        callback,
+    });
+};
+
+
 export default ({ spec, id, renderer = 'canvas', addLeaflet = false, addTooltip = false, tooltipOptions = {}, callback = () => { } }) => {
     if (addLeaflet) {
-        const zoom = R.find(R.propEq('name', 'zoom'))(spec.signals).value;
-        const latitude = R.find(R.propEq('name', 'latitude'))(spec.signals).value;
-        const longitude = R.find(R.propEq('name', 'longitude'))(spec.signals).value;
+        const zoom = R.find(R.propEq('name', 'zoom'))(spec.signals);
+        const latitude = R.find(R.propEq('name', 'latitude'))(spec.signals);
+        const longitude = R.find(R.propEq('name', 'longitude'))(spec.signals);
+
+        if (R.isNil(zoom) || R.isNil(latitude) || R.isNil(longitude)) {
+            createVegaView({ spec, id, renderer, addLeaflet, addTooltip, tooltipOptions, callback });
+            return;
+        }
+
         const map = L.map(id, {
             zoomAnimation: false,
-        }).setView([latitude, longitude], zoom);
+        }).setView([latitude.value, longitude.value], zoom.value);
 
         delete spec.projections;
 
@@ -70,17 +92,6 @@ export default ({ spec, id, renderer = 'canvas', addLeaflet = false, addTooltip 
             });
         }, 0);
     } else {
-        const view = new vega.View(vega.parse(spec)).renderer(renderer).initialize(`#${id}`)
-            .hover()
-            .run();
-
-        setup({
-            spec,
-            view,
-            addLeaflet,
-            addTooltip,
-            tooltipOptions,
-            callback,
-        });
+        createVegaView({ spec, id, renderer, addLeaflet, addTooltip, tooltipOptions, callback });
     }
 };

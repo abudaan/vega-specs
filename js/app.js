@@ -3,13 +3,16 @@ import TestSpec1 from '../specs/spec1';
 import TestSpec2 from '../specs/spec2';
 import TestSpec3 from '../specs/spec3';
 import TestSpec4 from '../specs/spec4';
+import TestSpec5 from '../specs/spec5';
 import createView from './util/create-vega-view';
 
 window.addEventListener('DOMContentLoaded', () => {
+    const spec = TestSpec5;
+
     createView({
-        spec: TestSpec4,
+        spec,
         id: 'app',
-        renderer: 'canvas',
+        renderer: 'svg',
         addLeaflet: true,
         addTooltip: true,
         tooltipOptions: {
@@ -31,10 +34,27 @@ window.addEventListener('DOMContentLoaded', () => {
         // const json = encodeURIComponent(JSON.stringify(TestSpec4));
         // window.open(`data:application/json, ${json}`, '_blank');
 
-        const json = JSON.stringify(TestSpec4, null, 4);
+        const json = JSON.stringify(spec, null, 4);
         const w = window.open();
         w.document.open();
         w.document.write(`<html><body><pre>${json}</pre></body></html>`);
         w.document.close();
+    });
+
+    let toggle = 0;
+    document.getElementById('update-css').addEventListener('click', () => {
+        if (toggle === 0) {
+            document.querySelectorAll('.mark-text text').forEach((element) => {
+                element.style.fill = 'red';
+                element.style.fontSize = 40;
+            });
+            toggle = 1;
+        } else {
+            document.querySelectorAll('.mark-text text').forEach((element) => {
+                element.style.fill = 'white';
+                element.style.fontSize = 25;
+            });
+            toggle = 0;
+        }
     });
 });
