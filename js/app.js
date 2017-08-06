@@ -26,4 +26,15 @@ window.addEventListener('DOMContentLoaded', () => {
             console.log(view);
         },
     });
+
+    document.getElementById('generate-spec').addEventListener('click', () => {
+        // const json = encodeURIComponent(JSON.stringify(TestSpec4));
+        // window.open(`data:application/json, ${json}`, '_blank');
+
+        const json = JSON.stringify(TestSpec4, null, '\t');
+        const x = window.open();
+        x.document.open();
+        x.document.write(`<html><body><pre>${json}</pre></body></html>`);
+        x.document.close();
+    });
 });
