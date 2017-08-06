@@ -26,21 +26,21 @@ window.addEventListener('DOMContentLoaded', () => {
             ],
         },
         callback: (view) => {
-            view.addSignalListener('update_css', (name, value) => {
-                if (value === 0) {
-                    document.querySelectorAll('.text-webfont text').forEach((element) => {
-                        element.style.fill = 'red';
-                        element.style.fontFamily = 'Butcherman Caps';
-                        element.style.fontSize = 40;
-                    });
-                } else {
-                    document.querySelectorAll('.text-webfont text').forEach((element) => {
-                        element.style.fill = 'white';
-                        element.style.fontFamily = 'sans-serif';
-                        element.style.fontSize = 25;
-                    });
-                }
-            });
+            // view.addSignalListener('update_css', (name, value) => {
+            //     if (value === 0) {
+            //         document.querySelectorAll('.text-webfont text').forEach((element) => {
+            //             element.style.fill = 'red';
+            //             element.style.fontFamily = 'Butcherman Caps';
+            //             element.style.fontSize = 40;
+            //         });
+            //     } else {
+            //         document.querySelectorAll('.text-webfont text').forEach((element) => {
+            //             element.style.fill = 'white';
+            //             element.style.fontFamily = 'sans-serif';
+            //             element.style.fontSize = 25;
+            //         });
+            //     }
+            // });
         },
     });
 
