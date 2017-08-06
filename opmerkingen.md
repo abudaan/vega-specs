@@ -4,12 +4,12 @@ Hieronder antwoorden op vragen van Richard en verder nog wat opmerkingen over di
 
 ## Webfonts
 
-Webfonts kun je gebruiken in een Vega spec. Het is ook mogelijk om met css de styling van een Vega spec aan te passen, maar dat kan alleen nadat de spec gerenderd is en als de SVG renderer gebruikt wordt. Zie dit [testje](http://abumarkub.net/fffact/webfonts-css).
+Webfonts kun je gebruiken in een Vega spec. Het is ook mogelijk om met css de styling van een Vega spec aan te passen, maar dat kan alleen nadat de spec gerenderd is en als de svg renderer gebruikt wordt. Zie dit [testje](http://abumarkub.net/fffact/webfonts-css).
 
 
 ## Labels bij de assen van een grafiek
 
-Alles wat met SVG kan is mogelijk.
+Alles wat met svg kan is mogelijk.
 
 ## Animaties
 
@@ -29,14 +29,12 @@ Tile maps worden niet ondersteund, zie dit [issue](https://github.com/vega/vega/
 
 ## Tooltips
 
-In een Vega spec kun je standaard HTML tooltips gebruiken die mouseover verschijnen als je het `title` attribuut een van een HTML tag een waarde geeft. De opmaak hiervan is systeem-specifiek en kan niet aangepast worden.
+In een Vega spec kun je standaard html tooltips gebruiken die mouseover verschijnen als je het `title` attribuut een van een html tag een waarde geeft. De opmaak hiervan is systeem-specifiek en kan niet aangepast worden.
 
-In de officiële Vega repository op Github staat de [vega-tooltip](https://github.com/vega/vega-tooltip plugin. Deze plugin wordt in de javascript runtime aan een Vega view gekoppeld en is dus *geen* onderdeel van de spec.
+In de officiële Vega repository op Github staat de [vega-tooltip](https://github.com/vega/vega-tooltip) plugin. Deze plugin wordt in de javascript runtime aan een Vega view gekoppeld en is dus *geen* onderdeel van de spec.
 
 De plugin werkt niet samen met leaflet-vega:
 
 - [test met leaflet en native tooltips](http://abumarkub.net/fffact/2)
-- [test tooltip plugin](http://abumarkub.net/fffact/2a)
-
-
+- [test met de tooltip plugin](http://abumarkub.net/fffact/2a)
 
