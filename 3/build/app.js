@@ -5,19 +5,23 @@ var _ramda = require('ramda');
 
 var _ramda2 = _interopRequireDefault(_ramda);
 
-var _spec = require('../src/specs/spec4');
+var _spec4a = require('../src/specs/spec4a');
 
-var _spec2 = _interopRequireDefault(_spec);
+var _spec4a2 = _interopRequireDefault(_spec4a);
 
 var _createVegaView = require('../src/util/create-vega-view');
 
 var _createVegaView2 = _interopRequireDefault(_createVegaView);
 
+var _generateSpec = require('../src/util/generate-spec');
+
+var _generateSpec2 = _interopRequireDefault(_generateSpec);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 window.addEventListener('DOMContentLoaded', function () {
     (0, _createVegaView2.default)({
-        spec: _spec2.default,
+        spec: _spec4a2.default,
         id: 'app',
         renderer: 'canvas',
         addLeaflet: false,
@@ -37,39 +41,15 @@ window.addEventListener('DOMContentLoaded', function () {
                 field: 'properties.TYPE',
                 title: 'type'
             }]
-        },
-        callback: function callback(view) {
-            // view.addSignalListener('update_css', (name, value) => {
-            //     if (value === 0) {
-            //         document.querySelectorAll('.text-webfont text').forEach((element) => {
-            //             element.style.fill = 'red';
-            //             element.style.fontFamily = 'Butcherman Caps';
-            //             element.style.fontSize = 40;
-            //         });
-            //     } else {
-            //         document.querySelectorAll('.text-webfont text').forEach((element) => {
-            //             element.style.fill = 'white';
-            //             element.style.fontFamily = 'sans-serif';
-            //             element.style.fontSize = 25;
-            //         });
-            //     }
-            // });
         }
     });
 
     document.getElementById('generate-spec').addEventListener('click', function () {
-        // const json = encodeURIComponent(JSON.stringify(TestSpec4));
-        // window.open(`data:application/json, ${json}`, '_blank');
-
-        var json = JSON.stringify(_spec2.default, null, 4);
-        var w = window.open();
-        w.document.open();
-        w.document.write('<html><body><pre>' + json + '</pre></body></html>');
-        w.document.close();
+        return (0, _generateSpec2.default)(_spec4a2.default);
     });
 });
 
-},{"../src/specs/spec4":311,"../src/util/create-vega-view":313,"ramda":2}],2:[function(require,module,exports){
+},{"../src/specs/spec4a":311,"../src/util/create-vega-view":313,"../src/util/generate-spec":314,"ramda":2}],2:[function(require,module,exports){
 module.exports = {
   F: require('./src/F'),
   T: require('./src/T'),
@@ -10798,4 +10778,21 @@ exports.default = function (_ref3) {
     }
 };
 
-},{"ramda":2}]},{},[1]);
+},{"ramda":2}],314:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+exports.default = function (spec) {
+    // const json = encodeURIComponent(JSON.stringify(TestSpec4));
+    // window.open(`data:application/json, ${json}`, '_blank');
+    var json = JSON.stringify(spec, null, 4);
+    var w = window.open();
+    w.document.open();
+    w.document.write("<html><body><pre>" + json + "</pre></body></html>");
+    w.document.close();
+};
+
+},{}]},{},[1]);

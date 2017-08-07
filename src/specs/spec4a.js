@@ -129,9 +129,9 @@ const marks = [
                 },
             },
             hover: {
-                tooltip: {
-                    signal: 'buurt_hover_naam',
-                },
+                // tooltip: {
+                //     signal: 'buurt_hover_naam',
+                // },
                 stroke: {
                     value: '#ee0000',
                 },

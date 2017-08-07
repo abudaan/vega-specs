@@ -5,13 +5,17 @@ var _ramda = require('ramda');
 
 var _ramda2 = _interopRequireDefault(_ramda);
 
-var _spec = require('../src/specs/spec5');
+var _spec = require('../src/specs/spec4');
 
 var _spec2 = _interopRequireDefault(_spec);
 
 var _createVegaView = require('../src/util/create-vega-view');
 
 var _createVegaView2 = _interopRequireDefault(_createVegaView);
+
+var _generateSpec = require('../src/util/generate-spec');
+
+var _generateSpec2 = _interopRequireDefault(_generateSpec);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -20,56 +24,17 @@ window.addEventListener('DOMContentLoaded', function () {
         spec: _spec2.default,
         id: 'app',
         renderer: 'canvas',
-        addLeaflet: false,
-        addTooltip: true,
-        tooltipOptions: {
-            showAllFields: false,
-            fields: [{
-                formatType: 'string',
-                field: 'properties.NAAM',
-                title: 'buurt'
-            }, {
-                formatType: 'string',
-                field: 'properties.CODE',
-                title: 'code'
-            }, {
-                formatType: 'string',
-                field: 'properties.TYPE',
-                title: 'type'
-            }]
-        },
-        callback: function callback(view) {
-            view.addSignalListener('update_css', function (name, value) {
-                if (value === 0) {
-                    document.querySelectorAll('.text-webfont text').forEach(function (element) {
-                        element.style.fill = 'red';
-                        element.style.fontFamily = 'Butcherman Caps';
-                        element.style.fontSize = 40;
-                    });
-                } else {
-                    document.querySelectorAll('.text-webfont text').forEach(function (element) {
-                        element.style.fill = 'white';
-                        element.style.fontFamily = 'sans-serif';
-                        element.style.fontSize = 25;
-                    });
-                }
-            });
-        }
+        addLeaflet: true,
+        addTooltip: false,
+        tooltipOptions: {}
     });
 
     document.getElementById('generate-spec').addEventListener('click', function () {
-        // const json = encodeURIComponent(JSON.stringify(TestSpec4));
-        // window.open(`data:application/json, ${json}`, '_blank');
-
-        var json = JSON.stringify(_spec2.default, null, 4);
-        var w = window.open();
-        w.document.open();
-        w.document.write('<html><body><pre>' + json + '</pre></body></html>');
-        w.document.close();
+        return (0, _generateSpec2.default)(_spec2.default);
     });
 });
 
-},{"../src/specs/spec5":311,"../src/util/create-vega-view":312,"ramda":2}],2:[function(require,module,exports){
+},{"../src/specs/spec4":311,"../src/util/create-vega-view":313,"../src/util/generate-spec":314,"ramda":2}],2:[function(require,module,exports){
 module.exports = {
   F: require('./src/F'),
   T: require('./src/T'),
@@ -10417,94 +10382,216 @@ module.exports = _curry3(function zipWith(fn, a, b) {
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-var dataPath = window.location.protocol + '//' + window.location.host + '/data/';
-var imagePath = window.location.protocol + '//' + window.location.host + '/img/';
+
+var _config = require('../util/config');
+
+var _config2 = _interopRequireDefault(_config);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var _getPaths = (0, _config2.default)(),
+    dataPath = _getPaths.dataPath,
+    imagePath = _getPaths.imagePath;
 
 var signals = [{
-    name: 'mouse_xy',
+    name: 'buurt_hover',
+    value: null,
     on: [{
-        events: {
-            type: 'mousemove',
-            target: 'window',
-            throttle: 10
-        },
-        update: 'xy()'
+        events: '@buurt:mouseover',
+        update: 'datum'
+    }, {
+        events: '@buurt:mouseout',
+        update: 'null'
     }]
 }, {
-    name: 'update_css',
-    value: 1,
-    on: [{
-        events: '@update_css_text:click',
-        update: 'update_css == 1 ? 0 : 1'
+    name: 'buurt_hover_naam',
+    update: 'buurt_hover ? buurt_hover.properties.NAAM : null'
+}, {
+    name: 'zoom',
+    value: 13
+}, {
+    name: 'latitude',
+    value: 51.927754415373855
+
+}, {
+    name: 'longitude',
+    value: 4.38680648803711
+}];
+
+var data = [{
+    name: 'buurten',
+    url: dataPath + 'buurten.topo.json',
+    format: {
+        type: 'topojson',
+        feature: 'Gebieden'
+    },
+    transform: [{
+        type: 'geopath',
+        projection: 'projection'
+    }]
+}, {
+    name: 'containers',
+    url: dataPath + 'containers.topo.json',
+    format: {
+        type: 'topojson',
+        feature: 'containers.geo'
+    },
+    transform: [{
+        type: 'geopoint',
+        projection: 'projection',
+        fields: ['geometry.coordinates[0]', 'geometry.coordinates[1]'],
+        as: ['x', 'y']
+    }]
+}, {
+    name: 'scholen',
+    url: dataPath + 'scholen.topo.json',
+    format: {
+        type: 'topojson',
+        feature: 'scholen.geo'
+    },
+    transform: [{
+        type: 'geopoint',
+        projection: 'projection',
+        fields: ['geometry.coordinates[0]', 'geometry.coordinates[1]'],
+        as: ['x', 'y']
     }]
 }];
 
-var data = [];
-
 var marks = [{
-    type: 'text',
-    name: 'update_css_text',
+    type: 'path',
+    name: 'buurt',
+    from: {
+        data: 'buurten'
+    },
     encode: {
         enter: {
-            align: {
-                value: 'left'
+            fillOpacity: {
+                value: 0.3
+            },
+            strokeWidth: {
+                value: 1
             },
             fill: {
-                value: 'white'
+                value: '#00ee00'
+            }
+        },
+        update: {
+            stroke: {
+                value: '#fff'
             },
-            fontSize: {
-                value: 13
+            path: {
+                field: 'path'
+            }
+        },
+        hover: {
+            tooltip: {
+                signal: 'buurt_hover_naam'
+            },
+            stroke: {
+                value: '#ee0000'
+            }
+        }
+    }
+}, {
+    type: 'image',
+    name: 'container_image',
+    from: {
+        data: 'containers'
+    },
+    encode: {
+        enter: {
+            url: {
+                value: imagePath + 'afval.png'
             },
             x: {
-                signal: '(width/2) - 100'
+                field: 'x'
             },
             y: {
-                signal: 'height/2'
+                field: 'y'
+            }
+        },
+        update: {
+            x: {
+                field: 'x'
             },
-            text: {
-                value: '[click here to update css]'
+            y: {
+                field: 'y'
+            }
+        }
+    }
+}, {
+    type: 'image',
+    name: 'scholen_image',
+    from: {
+        data: 'scholen'
+    },
+    encode: {
+        enter: {
+            url: {
+                value: imagePath + 'school.png'
+            },
+            x: {
+                field: 'x'
+            },
+            y: {
+                field: 'y'
+            }
+        },
+        update: {
+            x: {
+                field: 'x'
+            },
+            y: {
+                field: 'y'
             }
         }
     }
 }, {
     type: 'text',
-    name: 'text-webfont',
     encode: {
         enter: {
             align: {
                 value: 'left'
             },
+            fontSize: {
+                value: 15
+            },
+            x: {
+                value: 60
+            },
+            y: {
+                value: 30
+            },
             fill: {
                 value: 'white'
-            },
-            font: {
-                value: 'sans-serif'
-            },
-            fontSize: {
-                value: 18
             }
         },
         update: {
             text: {
-                value: 'Vega using webfonts'
-            },
-            x: {
-                signal: 'mouse_xy[0] + 10'
-            },
-            y: {
-                signal: 'mouse_xy[1] + 10'
+                signal: 'buurt_hover_naam'
             }
-            // x: {
-            //     value: 100,
-            // },
-            // y: {
-            //     value: 100,
-            // },
         }
     }
 }];
 
-var projections = [];
+var projections = [{
+    name: 'projection',
+    type: 'mercator',
+    scale: {
+        signal: '256*pow(2,zoom)/2/PI'
+    },
+    rotate: [{
+        signal: '-longitude'
+    }, 0, 0],
+    center: [0, {
+        signal: 'latitude'
+    }],
+    translate: [{
+        signal: 'width/2'
+    }, {
+        signal: 'height/2'
+    }]
+}];
 
 var scales = [];
 
@@ -10520,7 +10607,32 @@ exports.default = {
     projections: projections
 };
 
-},{}],312:[function(require,module,exports){
+},{"../util/config":312}],312:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+exports.default = function () {
+    var dataPath = window.location.protocol + '//' + window.location.host + '/data/';
+    var imagePath = window.location.protocol + '//' + window.location.host + '/img/';
+
+    if (window.location.hostname === 'github') {
+        dataPath = window.location.protocol + '//' + window.location.host + '/vega-specs/data/';
+        imagePath = window.location.protocol + '//' + window.location.host + '/vega-specs/img/';
+    } else if (window.location.hostname === 'abumarkub') {
+        dataPath = window.location.protocol + '//' + window.location.host + '/fffact/data/';
+        imagePath = window.location.protocol + '//' + window.location.host + '/fffact/img/';
+    }
+
+    return {
+        dataPath: dataPath,
+        imagePath: imagePath
+    };
+};
+
+},{}],313:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -10651,4 +10763,21 @@ exports.default = function (_ref3) {
     }
 };
 
-},{"ramda":2}]},{},[1]);
+},{"ramda":2}],314:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+exports.default = function (spec) {
+    // const json = encodeURIComponent(JSON.stringify(TestSpec4));
+    // window.open(`data:application/json, ${json}`, '_blank');
+    var json = JSON.stringify(spec, null, 4);
+    var w = window.open();
+    w.document.open();
+    w.document.write("<html><body><pre>" + json + "</pre></body></html>");
+    w.document.close();
+};
+
+},{}]},{},[1]);

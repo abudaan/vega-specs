@@ -3,7 +3,7 @@
     "version": "1.0.0",
     "description": "wrestling with Vega3",
     "scripts": {
-        "watch": "watchify ./2/app.js -t [ babelify ] -o ./2/build/app.js --debug --verbose",
+        "watch": "watchify ./3/app.js -t [ babelify ] -o ./3/build/app.js --debug --verbose",
         "server": "python -m SimpleHTTPServer",
         "start": "npm run server & npm run watch",
         "build_2": "browserify ./2/app.js -t [ babelify ] -o ./2/build/app.js",
