@@ -1,14 +1,8 @@
 import R from 'ramda';
-import TestSpec1 from '../specs/spec1';
-import TestSpec2 from '../specs/spec2';
-import TestSpec3 from '../specs/spec3';
-import TestSpec4 from '../specs/spec4';
-import TestSpec5 from '../specs/spec5';
-import createView from './util/create-vega-view';
+import spec from '../src/specs/spec5';
+import createView from '../src/util/create-vega-view';
 
 window.addEventListener('DOMContentLoaded', () => {
-    const spec = TestSpec4;
-
     createView({
         spec,
         id: 'app',
@@ -36,21 +30,21 @@ window.addEventListener('DOMContentLoaded', () => {
             ],
         },
         callback: (view) => {
-            // view.addSignalListener('update_css', (name, value) => {
-            //     if (value === 0) {
-            //         document.querySelectorAll('.text-webfont text').forEach((element) => {
-            //             element.style.fill = 'red';
-            //             element.style.fontFamily = 'Butcherman Caps';
-            //             element.style.fontSize = 40;
-            //         });
-            //     } else {
-            //         document.querySelectorAll('.text-webfont text').forEach((element) => {
-            //             element.style.fill = 'white';
-            //             element.style.fontFamily = 'sans-serif';
-            //             element.style.fontSize = 25;
-            //         });
-            //     }
-            // });
+            view.addSignalListener('update_css', (name, value) => {
+                if (value === 0) {
+                    document.querySelectorAll('.text-webfont text').forEach((element) => {
+                        element.style.fill = 'red';
+                        element.style.fontFamily = 'Butcherman Caps';
+                        element.style.fontSize = 40;
+                    });
+                } else {
+                    document.querySelectorAll('.text-webfont text').forEach((element) => {
+                        element.style.fill = 'white';
+                        element.style.fontFamily = 'sans-serif';
+                        element.style.fontSize = 25;
+                    });
+                }
+            });
         },
     });
 

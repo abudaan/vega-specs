@@ -1,12 +1,15 @@
 {
     "name": "fffact",
     "version": "1.0.0",
-    "description": "wrestling with Vega",
-    "main": "./js/app.js",
+    "description": "wrestling with Vega3",
     "scripts": {
-        "watch": "watchify ./js/app.js -t [ babelify ] -o ./build/app.js --debug --verbose",
+        "watch": "watchify ./2/app.js -t [ babelify ] -o ./2/build/app.js --debug --verbose",
         "server": "python -m SimpleHTTPServer",
-        "start": "npm run server & npm run watch"
+        "start": "npm run server & npm run watch",
+        "build_2": "browserify ./2/app.js -t [ babelify ] -o ./2/build/app.js",
+        "build_3": "browserify ./3/app.js -t [ babelify ] -o ./3/build/app.js",
+        "build_4": "browserify ./4/app.js -t [ babelify ] -o ./4/build/app.js",
+        "build": "npm run build_2 && npm run build_3 && npm run build_4"
     },
     "author": "abudaan",
     "license": "MIT",
@@ -16,6 +19,7 @@
         "babel-preset-es2015": "6.13.2",
         "babel-preset-stage-0": "6.5.0",
         "babelify": "^7.3.0",
+        "browserify": "^14.4.0",
         "core-js": "^2.4.1",
         "eslint": "3.19.0",
         "eslint-config-airbnb": "14.1.0",

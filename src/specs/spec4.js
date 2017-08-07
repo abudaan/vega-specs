@@ -1,7 +1,9 @@
-// const dataPath = `${window.location.protocol}//${window.location.host}/data/`;
-// const imagePath = `${window.location.protocol}//${window.location.host}/img/`;
-const dataPath = './data/';
-const imagePath = './img/';
+import getPaths from '../util/config';
+
+const {
+    dataPath,
+    imagePath,
+} = getPaths();
 
 const signals = [
     {
