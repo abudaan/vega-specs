@@ -98,6 +98,6 @@ Folders named with a number contain tests; e.g. folder `2` contains test 2.
 - **src**: the es6 code
     - **specs**: the es6 file that export the Vega specs
     - **util**
-- **package.json: contains build and watch scripts
+- **package.json**: contains build and watch scripts
     - `npm run build` builds all examples
     - `npm run watch` compiles continuously, edit the command to match the test that you're working on
