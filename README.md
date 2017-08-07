@@ -52,7 +52,7 @@ const view = new vega.View(vega.parse(spec))
     .hover()
     .run();
 ```
-And I have added functionality to print the object as JSON to a new browser tab:
+And I have added functionality to print the object as JSON to a new browser tab to allow you to save the spec as separate `.vg.json` file:
 
 ```javascript
 const json = JSON.stringify(spec, null, 4);
