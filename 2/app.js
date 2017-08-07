@@ -2,6 +2,9 @@ import spec from '../src/specs/spec5';
 import createView from '../src/util/create-vega-view';
 import generateSpec from '../src/util/generate-spec';
 
+// Vega using webfonts and show how you can update css properties after the spec
+// has been rendered
+
 window.addEventListener('DOMContentLoaded', () => {
     createView({
         spec,

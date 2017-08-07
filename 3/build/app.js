@@ -1,10 +1,6 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 'use strict';
 
-var _ramda = require('ramda');
-
-var _ramda2 = _interopRequireDefault(_ramda);
-
 var _spec4a = require('../src/specs/spec4a');
 
 var _spec4a2 = _interopRequireDefault(_spec4a);
@@ -18,6 +14,8 @@ var _generateSpec = require('../src/util/generate-spec');
 var _generateSpec2 = _interopRequireDefault(_generateSpec);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// Shows tooltips over a map using vega-tooltip plugin
 
 window.addEventListener('DOMContentLoaded', function () {
     (0, _createVegaView2.default)({
@@ -49,7 +47,7 @@ window.addEventListener('DOMContentLoaded', function () {
     });
 });
 
-},{"../src/specs/spec4a":311,"../src/util/create-vega-view":313,"../src/util/generate-spec":314,"ramda":2}],2:[function(require,module,exports){
+},{"../src/specs/spec4a":311,"../src/util/create-vega-view":313,"../src/util/generate-spec":314}],2:[function(require,module,exports){
 module.exports = {
   F: require('./src/F'),
   T: require('./src/T'),

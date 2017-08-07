@@ -19,6 +19,8 @@ var _generateSpec2 = _interopRequireDefault(_generateSpec);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+// Vega rendering a map using leaflet-vega
+
 window.addEventListener('DOMContentLoaded', function () {
     (0, _createVegaView2.default)({
         spec: _spec2.default,

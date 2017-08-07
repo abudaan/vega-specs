@@ -1,7 +1,8 @@
-import R from 'ramda';
 import spec from '../src/specs/spec4a';
 import createView from '../src/util/create-vega-view';
 import generateSpec from '../src/util/generate-spec';
+
+// Shows tooltips over a map using vega-tooltip plugin
 
 window.addEventListener('DOMContentLoaded', () => {
     createView({
