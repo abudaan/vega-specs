@@ -18,17 +18,17 @@ const setup = ({ spec, view, addLeaflet, addTooltip, tooltipOptions, callback })
         vegaTooltip.vega(view, tooltipOptions);
     }
 
-    R.forEach((signal) => {
-        view.addSignalListener(signal.name, (name, data) => {
-            console.log(name, data);
-        });
-    }, spec.signals || []);
+    // R.forEach((signal) => {
+    //     view.addSignalListener(signal.name, (name, data) => {
+    //         console.log(name, data);
+    //     });
+    // }, spec.signals || []);
 
-    setTimeout(() => {
-        R.forEach((data) => {
-            console.log(data.name, view.data(data.name));
-        }, spec.data || []);
-    }, 300);
+    // setTimeout(() => {
+    //     R.forEach((data) => {
+    //         console.log(data.name, view.data(data.name));
+    //     }, spec.data || []);
+    // }, 300);
 
     callback(view);
 };

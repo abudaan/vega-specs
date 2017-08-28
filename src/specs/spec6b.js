@@ -17,10 +17,6 @@ const data = [
 
 const signals = [
     {
-        name: 'realWidth',
-        value: 680, // width - padding
-    },
-    {
         name: 'brush',
         value: 0,
         on: [
@@ -100,7 +96,7 @@ const scales = [
     {
         name: 'xOverview',
         type: 'time',
-        range: [0, 720],
+        range: [0, { signal: 'width' }],
         domain: { data: 'sp500', field: 'date' },
     },
     {

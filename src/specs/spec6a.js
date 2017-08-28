@@ -26,7 +26,7 @@ const scales = [
     {
         name: 'xDetail',
         type: 'time',
-        range: [0, 680],
+        range: [0, { signal: 'width' }],
         domain: { data: 'sp500', field: 'date' },
         domainRaw: { signal: 'detailDomain' },
     },
@@ -108,7 +108,7 @@ export default {
     $schema: 'https://vega.github.io/schema/vega/v3.0.json',
     width: 720,
     height: 500,
-    padding: 30,
+    padding: 20,
     autosize: 'none',
     scales,
     signals,

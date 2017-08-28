@@ -3,7 +3,7 @@
     "version": "1.0.0",
     "description": "wrestling with Vega3",
     "scripts": {
-        "watch": "watchify ./6/app.js -t [ babelify ] -o ./6/build/app.js --debug --verbose",
+        "watch": "watchify ./7/app.js -t [ babelify ] -o ./7/build/app.js --debug --verbose",
         "server": "python -m SimpleHTTPServer 9001",
         "start": "npm run server & npm run watch",
         "build_2": "browserify ./2/app.js -t [ babelify ] -o ./2/build/app.js",
@@ -11,6 +11,7 @@
         "build_4": "browserify ./4/app.js -t [ babelify ] -o ./4/build/app.js",
         "build_5": "browserify ./5/app.js -t [ babelify ] -o ./5/build/app.js",
         "build_6": "browserify ./6/app.js -t [ babelify ] -o ./6/build/app.js",
+        "build_7": "browserify ./7/app.js -t [ babelify ] -o ./7/build/app.js",
         "build": "npm run build_2 && npm run build_3 && npm run build_4 && npm run build_5 && npm run build_6"
     },
     "author": "abudaan",
