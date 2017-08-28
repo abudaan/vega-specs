@@ -1,6 +1,9 @@
-// const dataPath = 'http://localhost:8000/data/';// './data/';
-const dataPath = './data/';
-const imagePath = './img/';
+import getPaths from '../util/config';
+
+const {
+    dataPath,
+    imagePath,
+} = getPaths();
 
 const signals = [
     {
