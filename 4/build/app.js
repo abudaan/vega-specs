@@ -10672,17 +10672,17 @@ var setup = function setup(_ref) {
         vegaTooltip.vega(view, tooltipOptions);
     }
 
-    _ramda2.default.forEach(function (signal) {
-        view.addSignalListener(signal.name, function (name, data) {
-            console.log(name, data);
-        });
-    }, spec.signals || []);
+    // R.forEach((signal) => {
+    //     view.addSignalListener(signal.name, (name, data) => {
+    //         console.log(name, data);
+    //     });
+    // }, spec.signals || []);
 
-    setTimeout(function () {
-        _ramda2.default.forEach(function (data) {
-            console.log(data.name, view.data(data.name));
-        }, spec.data || []);
-    }, 300);
+    // setTimeout(() => {
+    //     R.forEach((data) => {
+    //         console.log(data.name, view.data(data.name));
+    //     }, spec.data || []);
+    // }, 300);
 
     callback(view);
 };

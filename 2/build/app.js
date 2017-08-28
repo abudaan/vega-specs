@@ -22,7 +22,7 @@ window.addEventListener('DOMContentLoaded', function () {
     (0, _createVegaView2.default)({
         spec: _spec2.default,
         id: 'app',
-        renderer: 'svg',
+        renderer: 'canvas',
         addLeaflet: false,
         addTooltip: false,
         tooltipOptions: {},
@@ -50,7 +50,7 @@ window.addEventListener('DOMContentLoaded', function () {
     });
 });
 
-},{"../src/specs/spec5":311,"../src/util/create-vega-view":312,"../src/util/generate-spec":313}],2:[function(require,module,exports){
+},{"../src/specs/spec5":311,"../src/util/create-vega-view":313,"../src/util/generate-spec":314}],2:[function(require,module,exports){
 module.exports = {
   F: require('./src/F'),
   T: require('./src/T'),
@@ -10398,8 +10398,16 @@ module.exports = _curry3(function zipWith(fn, a, b) {
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-var dataPath = window.location.protocol + '//' + window.location.host + '/data/';
-var imagePath = window.location.protocol + '//' + window.location.host + '/img/';
+
+var _config = require('../util/config');
+
+var _config2 = _interopRequireDefault(_config);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var _getPaths = (0, _config2.default)(),
+    dataPath = _getPaths.dataPath,
+    imagePath = _getPaths.imagePath;
 
 var signals = [{
     name: 'mouse_xy',
@@ -10501,7 +10509,32 @@ exports.default = {
     projections: projections
 };
 
-},{}],312:[function(require,module,exports){
+},{"../util/config":312}],312:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+exports.default = function () {
+    var dataPath = window.location.protocol + '//' + window.location.host + '/data/';
+    var imagePath = window.location.protocol + '//' + window.location.host + '/img/';
+
+    if (window.location.hostname.indexOf('github') !== -1) {
+        dataPath = window.location.protocol + '//' + window.location.host + '/vega-specs/data/';
+        imagePath = window.location.protocol + '//' + window.location.host + '/vega-specs/img/';
+    } else if (window.location.hostname.indexOf('abumarkub') !== -1) {
+        dataPath = window.location.protocol + '//' + window.location.host + '/fffact/data/';
+        imagePath = window.location.protocol + '//' + window.location.host + '/fffact/img/';
+    }
+
+    return {
+        dataPath: dataPath,
+        imagePath: imagePath
+    };
+};
+
+},{}],313:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -10539,17 +10572,17 @@ var setup = function setup(_ref) {
         vegaTooltip.vega(view, tooltipOptions);
     }
 
-    _ramda2.default.forEach(function (signal) {
-        view.addSignalListener(signal.name, function (name, data) {
-            console.log(name, data);
-        });
-    }, spec.signals || []);
+    // R.forEach((signal) => {
+    //     view.addSignalListener(signal.name, (name, data) => {
+    //         console.log(name, data);
+    //     });
+    // }, spec.signals || []);
 
-    setTimeout(function () {
-        _ramda2.default.forEach(function (data) {
-            console.log(data.name, view.data(data.name));
-        }, spec.data || []);
-    }, 300);
+    // setTimeout(() => {
+    //     R.forEach((data) => {
+    //         console.log(data.name, view.data(data.name));
+    //     }, spec.data || []);
+    // }, 300);
 
     callback(view);
 };
@@ -10633,7 +10666,7 @@ exports.default = function (_ref3) {
     }
 };
 
-},{"ramda":2}],313:[function(require,module,exports){
+},{"ramda":2}],314:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {

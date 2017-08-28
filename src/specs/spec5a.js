@@ -58,7 +58,7 @@ const marks = [
                     signal: 'height/2',
                 },
                 text: {
-                    value: '[click here to update css]',
+                    value: '[click here to update font]',
                 },
             },
         },
@@ -83,13 +83,22 @@ const marks = [
             },
             update: {
                 text: {
-                    value: 'Vega using webfonts',
+                    value: 'Vega using webfont',
                 },
                 x: {
                     signal: 'mouse_xy[0] + 10',
                 },
                 y: {
                     signal: 'mouse_xy[1] + 10',
+                },
+                fill: {
+                    signal: 'update_css == 0 ? "red" : "white"',
+                },
+                font: {
+                    signal: 'update_css == 0 ? "Butcherman Caps" : "sans-serif"',
+                },
+                fontSize: {
+                    signal: 'update_css == 0 ? 40 : 18',
                 },
                 // x: {
                 //     value: 100,
