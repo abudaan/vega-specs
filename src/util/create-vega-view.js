@@ -22,12 +22,12 @@ const setup = ({ spec, view, addLeaflet, addTooltip, tooltipOptions, callback })
         view.addSignalListener(signal.name, (name, data) => {
             console.log(name, data);
         });
-    }, spec.signals);
+    }, spec.signals || []);
 
     setTimeout(() => {
         R.forEach((data) => {
             console.log(data.name, view.data(data.name));
-        }, spec.data);
+        }, spec.data || []);
     }, 300);
 
     callback(view);
@@ -52,9 +52,10 @@ const createVegaView = ({ spec, id, renderer, addLeaflet, addTooltip, tooltipOpt
 
 export default ({ spec, id, renderer = 'canvas', addLeaflet = false, addTooltip = false, tooltipOptions = {}, callback = () => { } }) => {
     if (addLeaflet) {
-        const zoom = R.find(R.propEq('name', 'zoom'))(spec.signals);
-        const latitude = R.find(R.propEq('name', 'latitude'))(spec.signals);
-        const longitude = R.find(R.propEq('name', 'longitude'))(spec.signals);
+        const signals = spec.signals || [];
+        const zoom = R.find(R.propEq('name', 'zoom'))(signals);
+        const latitude = R.find(R.propEq('name', 'latitude'))(signals);
+        const longitude = R.find(R.propEq('name', 'longitude'))(signals);
 
         if (R.isNil(zoom) || R.isNil(latitude) || R.isNil(longitude)) {
             createVegaView({ spec, id, renderer, addLeaflet, addTooltip, tooltipOptions, callback });

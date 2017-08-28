@@ -10543,12 +10543,12 @@ var setup = function setup(_ref) {
         view.addSignalListener(signal.name, function (name, data) {
             console.log(name, data);
         });
-    }, spec.signals);
+    }, spec.signals || []);
 
     setTimeout(function () {
         _ramda2.default.forEach(function (data) {
             console.log(data.name, view.data(data.name));
-        }, spec.data);
+        }, spec.data || []);
     }, 300);
 
     callback(view);
@@ -10590,9 +10590,10 @@ exports.default = function (_ref3) {
         callback = _ref3$callback === undefined ? function () {} : _ref3$callback;
 
     if (addLeaflet) {
-        var zoom = _ramda2.default.find(_ramda2.default.propEq('name', 'zoom'))(spec.signals);
-        var latitude = _ramda2.default.find(_ramda2.default.propEq('name', 'latitude'))(spec.signals);
-        var longitude = _ramda2.default.find(_ramda2.default.propEq('name', 'longitude'))(spec.signals);
+        var signals = spec.signals || [];
+        var zoom = _ramda2.default.find(_ramda2.default.propEq('name', 'zoom'))(signals);
+        var latitude = _ramda2.default.find(_ramda2.default.propEq('name', 'latitude'))(signals);
+        var longitude = _ramda2.default.find(_ramda2.default.propEq('name', 'longitude'))(signals);
 
         if (_ramda2.default.isNil(zoom) || _ramda2.default.isNil(latitude) || _ramda2.default.isNil(longitude)) {
             createVegaView({ spec: spec, id: id, renderer: renderer, addLeaflet: addLeaflet, addTooltip: addTooltip, tooltipOptions: tooltipOptions, callback: callback });
