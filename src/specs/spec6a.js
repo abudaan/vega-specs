@@ -89,17 +89,23 @@ const axes = [
 
 const marks = [
     {
-        type: 'area',
-        from: { data: 'sp500' },
-        encode: {
-            update: {
-                x: { scale: 'xDetail', field: 'date' },
-                y: { scale: 'yDetail', field: 'price' },
-                y2: { scale: 'yDetail', value: 0 },
-                fill: { value: 'coral' },
-                fillOpacity: { value: 1 },
+        type: 'group',
+        clip: { value: true },
+        marks: [
+            {
+                type: 'area',
+                from: { data: 'sp500' },
+                encode: {
+                    update: {
+                        x: { scale: 'xDetail', field: 'date' },
+                        y: { scale: 'yDetail', field: 'price' },
+                        y2: { scale: 'yDetail', value: 0 },
+                        fill: { value: 'coral' },
+                        fillOpacity: { value: 1 },
+                    },
+                },
             },
-        },
+        ],
     },
 ];
 
@@ -108,7 +114,7 @@ export default {
     $schema: 'https://vega.github.io/schema/vega/v3.0.json',
     width: 720,
     height: 500,
-    padding: 20,
+    padding: 30,
     autosize: 'none',
     scales,
     signals,

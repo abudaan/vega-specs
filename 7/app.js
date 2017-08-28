@@ -46,9 +46,9 @@ window.addEventListener('DOMContentLoaded', () => {
         },
     });
 
-    document.getElementById('generate-spec')
-    .addEventListener('click', () => {
-        generateSpec(spec1);
-        generateSpec(spec2);
-    });
+    document.getElementById('generate-spec1')
+    .addEventListener('click', () => generateSpec(spec1));
+
+    document.getElementById('generate-spec2')
+    .addEventListener('click', () => generateSpec(spec2));
 });

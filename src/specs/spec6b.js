@@ -178,7 +178,7 @@ export default {
     $schema: 'https://vega.github.io/schema/vega/v3.0.json',
     width: 720,
     height: 70,
-    padding: 20,
+    padding: 30,
     autosize: 'none',
     scales,
     signals,
