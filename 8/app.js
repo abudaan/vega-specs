@@ -1,6 +1,6 @@
 import R from 'ramda';
-import spec1 from '../src/specs/spec8';
-import spec2 from '../src/specs/spec6b';
+import spec1 from '../src/specs/spec8a';
+import spec2 from '../src/specs/spec8b';
 import createView from '../src/util/create-vega-view';
 import generateSpec from '../src/util/generate-spec';
 
@@ -20,7 +20,7 @@ window.addEventListener('DOMContentLoaded', () => {
         spec: spec1,
         id: 'app1',
         renderer: 'canvas',
-        addLeaflet: true,
+        addLeaflet: false,
         addTooltip: false,
         tooltipOptions: {},
         callback: (view) => {
@@ -35,7 +35,7 @@ window.addEventListener('DOMContentLoaded', () => {
         spec: spec2,
         id: 'app2',
         renderer: 'canvas',
-        addLeaflet: true,
+        addLeaflet: false,
         addTooltip: false,
         tooltipOptions: {},
         callback: (view) => {
@@ -45,6 +45,7 @@ window.addEventListener('DOMContentLoaded', () => {
             }
         },
     });
+
 
     document.getElementById('generate-spec1')
     .addEventListener('click', () => generateSpec(spec1));
