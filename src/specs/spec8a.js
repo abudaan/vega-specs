@@ -6,26 +6,27 @@ const {
     imagePath,
 } = getPaths();
 
-const startDate = new Date(2014, 1, 1);
-const endDate = new Date(2015, 1, 15);
 
-console.log(startDate, endDate);
+const startDate = new Date(2014, 0, 1, 1);
+const endDate = new Date(2015, 5, 30, 1);
+console.log('start:', startDate, 'end:', endDate);
 
 const signals = [
-    {
-        name: 'detailDomain',
-        // update: '[datetime(2014, 0, 1), datetime(2015, 0, 1)]',
-        value: `[${startDate}, ${endDate}]`,
-    },
+    // {
+    //     name: 'detailDomain',
+    //     // update: '[datetime(2014, 0, 1), datetime(2015, 0, 1)]',
+    //     // update: `[${startDate}, ${endDate}]`,
+    //     value: `[${startDate}, ${endDate}]`,
+    // },
     {
         name: 'start_date',
-        // value: `${startDate}`,
-        update: 'datetime(detailDomain[0])',
+        value: `${startDate.getTime()}`,
+        // update: 'toDate(detailDomain[0])',
     },
     {
         name: 'end_date',
-        // value: `${endDate}`,
-        update: 'datetime(detailDomain[1])',
+        value: `${endDate.getTime()}`,
+        // update: 'toDate(detailDomain[1])',
     },
 ];
 
@@ -52,14 +53,14 @@ const data = [
             {
                 type: 'filter',
                 // expr: 'datum.date2 > datetime(2014, 0, 1) && datum.date2 < datetime(2015, 0, 4)',
-                expr: 'datum.date2 > start_date && datum.date2 < end_date',
+                expr: 'datum.date2 >= start_date && datum.date2 <= end_date',
             },
             {
                 type: 'aggregate',
-                groupby: ['name', 'bu_code'],
                 fields: ['reports', 'dumps', 'fillperc'],
                 ops: ['sum', 'sum', 'average'],
                 as: ['reports', 'dumps', 'fillperc'],
+                groupby: ['name', 'bu_code'],
             },
         ],
     },
@@ -72,14 +73,15 @@ const marks = [
         from: { data: 'reports' },
         encode: {
             update: {
-                x: { scale: 'x', field: 'reports' },
+                x: { scale: 'x', field: 'fillperc' },
                 y: { scale: 'y', field: 'dumps' },
-                size: { scale: 'size', field: 'fillperc' },
+                size: { scale: 'size', field: 'reports' },
                 shape: { value: 'circle' },
                 strokeWidth: { value: 2 },
-                opacity: { value: 0.5 },
-                stroke: { value: '#4682b4' },
-                fill: { value: 'transparent' },
+                // opacity: { value: 0.5 },
+                stroke: { value: 'red' },
+                fill: { value: 'red' },
+                // fill: { value: 'transparent' },
             },
         },
     },
@@ -93,29 +95,30 @@ const scales = [
     {
         name: 'x',
         type: 'linear',
-        round: true,
-        nice: true,
-        zero: true,
-        domain: { data: 'reports', field: 'reports' },
+        // round: true,
+        // nice: true,
+        // zero: true,
+        // domain: { data: 'reports', field: 'reports' },
+        domain: [0, 100],
         range: 'width',
     },
     {
         name: 'y',
         type: 'linear',
-        round: true,
-        nice: true,
-        zero: true,
+        // round: true,
+        // nice: true,
+        // zero: true,
         domain: { data: 'reports', field: 'dumps' },
         range: 'height',
     },
     {
         name: 'size',
         type: 'linear',
-        round: true,
-        nice: false,
-        zero: true,
-        domain: { data: 'reports', field: 'fillperc' },
-        range: [50, 400],
+        // round: true,
+        // nice: false,
+        // zero: true,
+        domain: { data: 'reports', field: 'reports' },
+        range: [1, 1000],
     },
 ];
 
@@ -128,23 +131,6 @@ const axes = [
         orient: 'bottom',
         tickCount: 5,
         title: 'reports',
-        encode: {
-            ticks: {
-                enter: {
-                    stroke: { value: '#ffffff' },
-                },
-            },
-            labels: {
-                enter: {
-                    fill: { value: '#ffffff' },
-                },
-            },
-            domain: {
-                enter: {
-                    stroke: { value: '#ffffff' },
-                },
-            },
-        },
     },
     {
         scale: 'y',
@@ -152,26 +138,18 @@ const axes = [
         domain: true,
         orient: 'left',
         titlePadding: 5,
-        title: 'dumps',
-        encode: {
-            ticks: {
-                enter: {
-                    stroke: { value: '#ffffff' },
-                },
-            },
-            labels: {
-                enter: {
-                    fill: { value: '#ffffff' },
-                },
-            },
-            domain: {
-                enter: {
-                    stroke: { value: '#ffffff' },
-                },
-            },
-        },
+        title: 'fillperc',
     },
 ];
+
+const config = {
+    axis: {
+        domainColor: 'white',
+        gridColor: 'white',
+        labelColor: 'white',
+        tickColor: 'white',
+    },
+};
 
 export default {
     $schema: 'https://vega.github.io/schema/vega/v3.0.json',
@@ -179,6 +157,7 @@ export default {
     height: 600,
     padding: { left: 40, top: 20, right: 20, bottom: 20 },
     autosize: 'none',
+    config,
     axes,
     scales,
     signals,

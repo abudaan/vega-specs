@@ -18,12 +18,6 @@ const data = [
             },
         },
         transform: [
-            // {
-            //     type: 'formula',
-            //     as: 'year_month',
-            //     expr: 'year(datum.date) + "_" + (month(datum.date) + 1)',
-            // },
-            // {
             //     type: 'formula',
             //     as: 'month',
             //     expr: 'month(datum.date)',
@@ -37,11 +31,18 @@ const data = [
                 type: 'aggregate',
                 groupby: ['date'],
             },
-            // {
-            //     type: 'formula',
-            //     as: 'count',
-            //     expr: 'datum.count / 100',
-            // },
+            {
+                type: 'formula',
+                as: 'year_month',
+                expr: 'year(datum.date) + "_" + month(datum.date)',
+            },
+            {
+                type: 'collect',
+                sort: {
+                    field: 'date',
+                    order: 'ascending',
+                },
+            },
         ],
     },
 ];
@@ -114,8 +115,8 @@ const scales = [
         domain: { data: 'reports', field: 'count' },
         type: 'linear',
         range: [{ signal: 'height' }, 0],
-        nice: true,
-        zero: true,
+        // nice: true,
+        // zero: true,
     },
 ];
 
@@ -124,44 +125,10 @@ const axes = [
     {
         orient: 'bottom',
         scale: 'xOverview',
-        encode: {
-            ticks: {
-                enter: {
-                    stroke: { value: 'white' },
-                },
-            },
-            domain: {
-                enter: {
-                    stroke: { value: 'white' },
-                },
-            },
-            labels: {
-                enter: {
-                    fill: { value: 'white' },
-                },
-            },
-        },
     },
     {
         orient: 'left',
         scale: 'yOverview',
-        encode: {
-            ticks: {
-                enter: {
-                    stroke: { value: 'white' },
-                },
-            },
-            domain: {
-                enter: {
-                    stroke: { value: 'white' },
-                },
-            },
-            labels: {
-                enter: {
-                    fill: { value: 'white' },
-                },
-            },
-        },
     },
 ];
 
@@ -232,12 +199,21 @@ const marks = [
 ];
 
 
+const config = {
+    axis: {
+        gridColor: 'white',
+        labelColor: 'white',
+        tickColor: 'white',
+    },
+};
+
 export default {
     $schema: 'https://vega.github.io/schema/vega/v3.0.json',
     width: 720,
     height: 70,
     padding: 30,
     autosize: 'none',
+    config,
     scales,
     signals,
     axes,

@@ -19,10 +19,34 @@ window.addEventListener('DOMContentLoaded', () => {
     createView({
         spec: spec1,
         id: 'app1',
-        renderer: 'canvas',
+        renderer: 'svg',
         addLeaflet: false,
-        addTooltip: false,
-        tooltipOptions: {},
+        addTooltip: true,
+        tooltipOptions: {
+            showAllFields: false,
+            fields: [
+                {
+                    formatType: 'string',
+                    field: 'name',
+                    title: 'buurt',
+                },
+                {
+                    formatType: 'number',
+                    field: 'reports',
+                    title: 'reports',
+                },
+                {
+                    formatType: 'number',
+                    field: 'dumps',
+                    title: 'dumps',
+                },
+                {
+                    formatType: 'number',
+                    field: 'fillperc',
+                    title: 'fillperc',
+                },
+            ],
+        },
         callback: (view) => {
             view1 = view;
             if (view1 !== null && view2 !== null) {
