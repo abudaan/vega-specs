@@ -69,8 +69,13 @@ I have created a few tests that all address different functionality of Vega, I w
 
 ### test 2
 
-Using webfonts and css in Vega specs.
+Using webfonts and css in Vega specs using SVG renderer.
 [[live demo]](https://abudaan.github.io/vega-specs/2/)
+
+### test 2a
+
+Using webfonts and css in Vega specs using canvas renderer.
+[[live demo]](https://abudaan.github.io/vega-specs/2a/)
 
 ### test 3
 
@@ -81,6 +86,12 @@ Render tooltips on top of a map using [Vega-tooltip](https://github.com/vega/veg
 
 Render a Vega spec to a layer in Leaflet using [leaflet-vega](https://github.com/nyurik/leaflet-vega).
 [[live demo]](https://abudaan.github.io/vega-specs/4/)
+
+
+### test 8
+
+Scatterplot with selectable date range. Note: these are 2 separate specs!
+[[live demo]](https://abudaan.github.io/vega-specs/8/)
 
 This is an ongoing project: more tests will follow.
 

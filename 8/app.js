@@ -19,7 +19,7 @@ window.addEventListener('DOMContentLoaded', () => {
     createView({
         spec: spec1,
         id: 'app1',
-        renderer: 'svg',
+        renderer: 'canvas',
         addLeaflet: false,
         addTooltip: true,
         tooltipOptions: {
