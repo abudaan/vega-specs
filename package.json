@@ -13,7 +13,8 @@
         "build_5": "browserify ./5/app.js -t [ babelify ] -o ./5/build/app.js",
         "build_6": "browserify ./6/app.js -t [ babelify ] -o ./6/build/app.js",
         "build_7": "browserify ./7/app.js -t [ babelify ] -o ./7/build/app.js",
-        "build": "npm run build_2 && npm run build_2a && npm run build_3 && npm run build_4 && npm run build_5 && npm run build_6 && npm run build_7"
+        "build_8": "browserify ./8/app.js -t [ babelify ] -o ./8/build/app.js",
+        "build": "npm run build_2 && npm run build_2a && npm run build_3 && npm run build_4 && npm run build_5 && npm run build_6 && npm run build_7 && npm run build_8"
     },
     "author": "abudaan",
     "license": "MIT",
