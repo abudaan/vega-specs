@@ -9,24 +9,24 @@ const {
 
 const startDate = new Date(2014, 0, 1, 1);
 const endDate = new Date(2015, 5, 30, 1);
-console.log('start:', startDate, 'end:', endDate);
+// console.log('start:', startDate, 'end:', endDate);
 
 const signals = [
-    // {
-    //     name: 'detailDomain',
-    //     // update: '[datetime(2014, 0, 1), datetime(2015, 0, 1)]',
-    //     // update: `[${startDate}, ${endDate}]`,
-    //     value: `[${startDate}, ${endDate}]`,
-    // },
+    {
+        name: 'detailDomain',
+        // update: '[datetime(2014, 0, 1), datetime(2015, 0, 1)]',
+        // update: `[${startDate}, ${endDate}]`,
+        value: `[${startDate}, ${endDate}]`,
+    },
     {
         name: 'start_date',
-        value: `${startDate.getTime()}`,
-        // update: 'toDate(detailDomain[0])',
+        // value: `${startDate.getTime()}`,
+        update: 'toDate(detailDomain[0])',
     },
     {
         name: 'end_date',
-        value: `${endDate.getTime()}`,
-        // update: 'toDate(detailDomain[1])',
+        // value: `${endDate.getTime()}`,
+        update: 'toDate(detailDomain[1])',
     },
 ];
 
@@ -62,6 +62,13 @@ const data = [
                 as: ['reports', 'dumps', 'fillperc'],
                 groupby: ['name', 'bu_code'],
             },
+            {
+                type: 'impute',
+                key: 'name',
+                field: 'fillperc',
+                method: 'value',
+                value: 0,
+            },
         ],
     },
 ];
@@ -79,8 +86,8 @@ const marks = [
                 shape: { value: 'circle' },
                 strokeWidth: { value: 2 },
                 // opacity: { value: 0.5 },
-                stroke: { value: 'red' },
-                fill: { value: 'red' },
+                stroke: { scale: 'color', field: 'name' },
+                fill: { scale: 'color', field: 'name' },
                 // fill: { value: 'transparent' },
             },
         },
@@ -119,6 +126,12 @@ const scales = [
         // zero: true,
         domain: { data: 'reports', field: 'reports' },
         range: [1, 1000],
+    },
+    {
+        name: 'color',
+        type: 'ordinal',
+        range: { scheme: 'tableau20' },
+        domain: { data: 'reports', field: 'name' },
     },
 ];
 

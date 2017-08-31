@@ -6,6 +6,11 @@ const {
 } = getPaths();
 
 
+const startRange = [
+    new Date(2014, 0, 1, 1),
+    new Date(2015, 5, 30, 1),
+];
+
 const data = [
     {
         name: 'reports',
@@ -89,6 +94,7 @@ const signals = [
     },
     {
         name: 'detailDomain',
+        value: startRange,
         on: [
             {
                 events: { signal: 'brush' },
@@ -156,7 +162,7 @@ const marks = [
         encode: {
             enter: {
                 y: { value: 0 },
-                height: { value: 70 },
+                height: { signal: 'height' },
                 fill: { value: '#333' },
                 fillOpacity: { value: 0.2 },
             },
@@ -172,7 +178,7 @@ const marks = [
         encode: {
             enter: {
                 y: { value: 0 },
-                height: { value: 70 },
+                height: { signal: 'height' },
                 width: { value: 1 },
                 fill: { value: 'firebrick' },
             },
@@ -187,7 +193,7 @@ const marks = [
         encode: {
             enter: {
                 y: { value: 0 },
-                height: { value: 70 },
+                height: { signal: 'height' },
                 width: { value: 1 },
                 fill: { value: 'yellow' },
             },
@@ -201,16 +207,18 @@ const marks = [
 
 const config = {
     axis: {
+        domainColor: 'white',
         gridColor: 'white',
         labelColor: 'white',
         tickColor: 'white',
     },
 };
 
+
 export default {
     $schema: 'https://vega.github.io/schema/vega/v3.0.json',
     width: 720,
-    height: 70,
+    height: 120,
     padding: 30,
     autosize: 'none',
     config,
