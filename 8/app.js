@@ -48,6 +48,8 @@ window.addEventListener('DOMContentLoaded', () => {
             ],
         },
         callback: (view) => {
+            // view.logLevel(vega.Debug);
+            // view.run('aap');
             view1 = view;
             if (view1 !== null && view2 !== null) {
                 connect();

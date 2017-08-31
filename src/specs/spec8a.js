@@ -14,18 +14,14 @@ const endDate = new Date(2015, 5, 30, 1);
 const signals = [
     {
         name: 'detailDomain',
-        // update: '[datetime(2014, 0, 1), datetime(2015, 0, 1)]',
-        // update: `[${startDate}, ${endDate}]`,
-        value: `[${startDate}, ${endDate}]`,
+        value: [startDate, endDate],
     },
     {
         name: 'start_date',
-        // value: `${startDate.getTime()}`,
         update: 'toDate(detailDomain[0])',
     },
     {
         name: 'end_date',
-        // value: `${endDate.getTime()}`,
         update: 'toDate(detailDomain[1])',
     },
 ];
@@ -53,6 +49,7 @@ const data = [
             {
                 type: 'filter',
                 // expr: 'datum.date2 > datetime(2014, 0, 1) && datum.date2 < datetime(2015, 0, 4)',
+                // expr: '!isNaN(start_date) ? datum.date2 >= start_date && datum.date2 <= end_date : datum.date2 > 0',
                 expr: 'datum.date2 >= start_date && datum.date2 <= end_date',
             },
             {
@@ -166,6 +163,7 @@ const config = {
 
 export default {
     $schema: 'https://vega.github.io/schema/vega/v3.0.json',
+    description: 'scatterplot',
     width: 900,
     height: 600,
     padding: { left: 40, top: 20, right: 20, bottom: 20 },

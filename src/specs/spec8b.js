@@ -57,6 +57,7 @@ const signals = [
     {
         name: 'brush',
         value: 0,
+        // value: [0, 500],
         on: [
             {
                 events: 'mousedown',
@@ -95,6 +96,7 @@ const signals = [
     {
         name: 'detailDomain',
         value: startRange,
+        // value: 0,
         on: [
             {
                 events: { signal: 'brush' },
@@ -217,6 +219,7 @@ const config = {
 
 export default {
     $schema: 'https://vega.github.io/schema/vega/v3.0.json',
+    description: 'controller',
     width: 900,
     height: 140,
     padding: 40,

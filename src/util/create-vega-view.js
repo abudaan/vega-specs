@@ -20,24 +20,35 @@ const setup = ({ spec, view, addLeaflet, addTooltip, tooltipOptions, callback })
 
     R.forEach((signal) => {
         view.addSignalListener(signal.name, (name, data) => {
-            console.log(name, data);
+            console.log(spec.description, name, data);
         });
     }, spec.signals || []);
 
-    setTimeout(() => {
+
+    const numDataSources = spec.data.length;
+    let numLoaded = 0;
+    const dataPoller = setInterval(() => {
         R.forEach((data) => {
-            console.log(data.name, view.data(data.name));
+            const loaded = view.data(data.name);
+            if (loaded !== null) {
+                console.log('[DATA]:', spec.description, data.name, loaded);
+                numLoaded += 1;
+            }
+            if (numLoaded === numDataSources) {
+                // console.log('all data loaded');
+                clearInterval(dataPoller);
+            }
         }, spec.data || []);
-    }, 300);
+    }, 10);
 
     callback(view);
 };
 
 
 const createVegaView = ({ spec, id, renderer, addLeaflet, addTooltip, tooltipOptions, callback }) => {
-    const view = new vega.View(vega.parse(spec)).renderer(renderer).initialize(`#${id}`)
-        .hover()
-        .run();
+    const view = new vega.View(vega.parse(spec)).renderer(renderer).initialize(`#${id}`);
+        // .hover()
+        // .run();
 
     setup({
         spec,
