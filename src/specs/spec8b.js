@@ -218,8 +218,8 @@ const config = {
 export default {
     $schema: 'https://vega.github.io/schema/vega/v3.0.json',
     width: 720,
-    height: 120,
-    padding: 30,
+    height: 140,
+    padding: 40,
     autosize: 'none',
     config,
     scales,
