@@ -1,4 +1,4 @@
-import spec from '../src/specs/spec4a';
+import spec from '../src/specs/spec4';
 import createView from '../src/js/util/create-vega-view';
 import generateSpec from '../src/js/util/generate-spec';
 
