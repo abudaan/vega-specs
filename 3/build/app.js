@@ -47,7 +47,7 @@ window.addEventListener('DOMContentLoaded', function () {
     });
 });
 
-},{"../src/js/util/create-vega-view":441,"../src/js/util/generate-spec":442,"../src/specs/spec4a":443}],2:[function(require,module,exports){
+},{"../src/js/util/create-vega-view":440,"../src/js/util/generate-spec":441,"../src/specs/spec4a":442}],2:[function(require,module,exports){
 
 },{}],3:[function(require,module,exports){
 // https://d3js.org/d3-format/ Version 1.2.0. Copyright 2017 Mike Bostock.
@@ -75350,31 +75350,6 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-exports.default = function () {
-    var dataPath = window.location.protocol + '//' + window.location.host + '/data/';
-    var imagePath = window.location.protocol + '//' + window.location.host + '/img/';
-
-    if (window.location.hostname.indexOf('github') !== -1) {
-        dataPath = window.location.protocol + '//' + window.location.host + '/vega-specs/data/';
-        imagePath = window.location.protocol + '//' + window.location.host + '/vega-specs/img/';
-    } else if (window.location.hostname.indexOf('abumarkub') !== -1) {
-        dataPath = window.location.protocol + '//' + window.location.host + '/fffact/data/';
-        imagePath = window.location.protocol + '//' + window.location.host + '/fffact/img/';
-    }
-
-    return {
-        dataPath: dataPath,
-        imagePath: imagePath
-    };
-};
-
-},{}],441:[function(require,module,exports){
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
 var _ramda = require('ramda');
 
 var _ramda2 = _interopRequireDefault(_ramda);
@@ -75517,7 +75492,7 @@ exports.default = function (_ref3) {
     }
 };
 
-},{"leaflet":11,"ramda":12,"vega":439,"vega-tooltip":433}],442:[function(require,module,exports){
+},{"leaflet":11,"ramda":12,"vega":439,"vega-tooltip":433}],441:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -75534,235 +75509,243 @@ exports.default = function (spec) {
     w.document.close();
 };
 
-},{}],443:[function(require,module,exports){
+},{}],442:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _config = require('../js/util/config');
+exports.default = function (paths) {
+    var dataPath = paths.dataPath,
+        imagePath = paths.imagePath;
 
-var _config2 = _interopRequireDefault(_config);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var _getPaths = (0, _config2.default)(),
-    dataPath = _getPaths.dataPath,
-    imagePath = _getPaths.imagePath;
-
-var signals = [{
-    name: 'buurt_hover',
-    value: null,
-    on: [{
-        events: '@buurt:mouseover',
-        update: 'datum'
+    var signals = [{
+        name: 'buurt_hover',
+        value: null,
+        on: [{
+            events: '@buurt:mouseover',
+            update: 'datum'
+        }, {
+            events: '@buurt:mouseout',
+            update: 'null'
+        }]
     }, {
-        events: '@buurt:mouseout',
-        update: 'null'
-    }]
-}, {
-    name: 'buurt_hover_naam',
-    update: 'buurt_hover ? buurt_hover.properties.NAAM : null'
-}, {
-    name: 'zoom',
-    value: 13
-}, {
-    name: 'latitude',
-    value: 51.927754415373855
-
-}, {
-    name: 'longitude',
-    value: 4.38680648803711
-}];
-
-var data = [{
-    name: 'buurten',
-    url: dataPath + 'buurten.topo.json',
-    format: {
-        type: 'topojson',
-        feature: 'Gebieden'
-    },
-    transform: [{
-        type: 'geopath',
-        projection: 'projection'
-    }]
-}, {
-    name: 'containers',
-    url: dataPath + 'containers.topo.json',
-    format: {
-        type: 'topojson',
-        feature: 'containers.geo'
-    },
-    transform: [{
-        type: 'geopoint',
-        projection: 'projection',
-        fields: ['geometry.coordinates[0]', 'geometry.coordinates[1]'],
-        as: ['x', 'y']
-    }]
-}, {
-    name: 'scholen',
-    url: dataPath + 'scholen.topo.json',
-    format: {
-        type: 'topojson',
-        feature: 'scholen.geo'
-    },
-    transform: [{
-        type: 'geopoint',
-        projection: 'projection',
-        fields: ['geometry.coordinates[0]', 'geometry.coordinates[1]'],
-        as: ['x', 'y']
-    }]
-}];
-
-var marks = [{
-    type: 'path',
-    name: 'buurt',
-    from: {
-        data: 'buurten'
-    },
-    encode: {
-        enter: {
-            fillOpacity: {
-                value: 0.3
-            },
-            strokeWidth: {
-                value: 1
-            },
-            fill: {
-                value: '#00ee00'
-            }
-        },
-        update: {
-            stroke: {
-                value: '#fff'
-            },
-            path: {
-                field: 'path'
-            }
-        },
-        hover: {
-            // tooltip: {
-            //     signal: 'buurt_hover_naam',
-            // },
-            stroke: {
-                value: '#ee0000'
-            }
-        }
-    }
-}, {
-    type: 'image',
-    name: 'container_image',
-    from: {
-        data: 'containers'
-    },
-    encode: {
-        enter: {
-            url: {
-                value: imagePath + 'afval.png'
-            },
-            x: {
-                field: 'x'
-            },
-            y: {
-                field: 'y'
-            }
-        },
-        update: {
-            x: {
-                field: 'x'
-            },
-            y: {
-                field: 'y'
-            }
-        }
-    }
-}, {
-    type: 'image',
-    name: 'scholen_image',
-    from: {
-        data: 'scholen'
-    },
-    encode: {
-        enter: {
-            url: {
-                value: imagePath + 'school.png'
-            },
-            x: {
-                field: 'x'
-            },
-            y: {
-                field: 'y'
-            }
-        },
-        update: {
-            x: {
-                field: 'x'
-            },
-            y: {
-                field: 'y'
-            }
-        }
-    }
-}, {
-    type: 'text',
-    encode: {
-        enter: {
-            align: {
-                value: 'left'
-            },
-            fontSize: {
-                value: 15
-            },
-            x: {
-                value: 60
-            },
-            y: {
-                value: 30
-            },
-            fill: {
-                value: 'white'
-            }
-        },
-        update: {
-            text: {
-                signal: 'buurt_hover_naam'
-            }
-        }
-    }
-}];
-
-var projections = [{
-    name: 'projection',
-    type: 'mercator',
-    scale: {
-        signal: '256*pow(2,zoom)/2/PI'
-    },
-    rotate: [{
-        signal: '-longitude'
-    }, 0, 0],
-    center: [0, {
-        signal: 'latitude'
-    }],
-    translate: [{
-        signal: 'width/2'
+        name: 'buurt_hover_naam',
+        update: 'buurt_hover ? buurt_hover.properties.NAAM : null'
     }, {
-        signal: 'height/2'
-    }]
-}];
+        name: 'zoom',
+        value: 13
+    }, {
+        name: 'latitude',
+        value: 51.927754415373855
 
-var scales = [];
+    }, {
+        name: 'longitude',
+        value: 4.38680648803711
+    }];
 
-exports.default = {
-    $schema: 'https://vega.github.io/schema/vega/v3.0.json',
-    width: 720,
-    height: 720,
-    autosize: 'none',
-    scales: scales,
-    signals: signals,
-    data: data,
-    marks: marks,
-    projections: projections
+    var data = [{
+        name: 'buurten',
+        url: dataPath + 'buurten.topo.json',
+        format: {
+            type: 'topojson',
+            feature: 'Gebieden'
+        },
+        transform: [{
+            type: 'geopath',
+            projection: 'projection'
+        }]
+    }, {
+        name: 'containers',
+        url: dataPath + 'containers.topo.json',
+        format: {
+            type: 'topojson',
+            feature: 'containers.geo'
+        },
+        transform: [{
+            type: 'geopoint',
+            projection: 'projection',
+            fields: ['geometry.coordinates[0]', 'geometry.coordinates[1]'],
+            as: ['x', 'y']
+        }]
+    }, {
+        name: 'scholen',
+        url: dataPath + 'scholen.topo.json',
+        format: {
+            type: 'topojson',
+            feature: 'scholen.geo'
+        },
+        transform: [{
+            type: 'geopoint',
+            projection: 'projection',
+            fields: ['geometry.coordinates[0]', 'geometry.coordinates[1]'],
+            as: ['x', 'y']
+        }]
+    }];
+
+    var marks = [{
+        type: 'path',
+        name: 'buurt',
+        from: {
+            data: 'buurten'
+        },
+        encode: {
+            enter: {
+                fillOpacity: {
+                    value: 0.3
+                },
+                strokeWidth: {
+                    value: 1
+                },
+                fill: {
+                    value: '#00ee00'
+                }
+            },
+            update: {
+                stroke: {
+                    value: '#fff'
+                },
+                path: {
+                    field: 'path'
+                }
+            },
+            hover: {
+                // tooltip: {
+                //     signal: 'buurt_hover_naam',
+                // },
+                stroke: {
+                    value: '#ee0000'
+                }
+            }
+        }
+    }, {
+        type: 'image',
+        name: 'container_image',
+        from: {
+            data: 'containers'
+        },
+        encode: {
+            enter: {
+                url: {
+                    value: imagePath + 'afval.png'
+                },
+                x: {
+                    field: 'x'
+                },
+                y: {
+                    field: 'y'
+                }
+            },
+            update: {
+                x: {
+                    field: 'x'
+                },
+                y: {
+                    field: 'y'
+                }
+            }
+        }
+    }, {
+        type: 'image',
+        name: 'scholen_image',
+        from: {
+            data: 'scholen'
+        },
+        encode: {
+            enter: {
+                url: {
+                    value: imagePath + 'school.png'
+                },
+                x: {
+                    field: 'x'
+                },
+                y: {
+                    field: 'y'
+                }
+            },
+            update: {
+                x: {
+                    field: 'x'
+                },
+                y: {
+                    field: 'y'
+                }
+            }
+        }
+    }, {
+        type: 'text',
+        encode: {
+            enter: {
+                align: {
+                    value: 'left'
+                },
+                fontSize: {
+                    value: 15
+                },
+                x: {
+                    value: 60
+                },
+                y: {
+                    value: 30
+                },
+                fill: {
+                    value: 'white'
+                }
+            },
+            update: {
+                text: {
+                    signal: 'buurt_hover_naam'
+                }
+            }
+        }
+    }];
+
+    var projections = [{
+        name: 'projection',
+        type: 'mercator',
+        scale: {
+            signal: '256*pow(2,zoom)/2/PI'
+        },
+        rotate: [{
+            signal: '-longitude'
+        }, 0, 0],
+        center: [0, {
+            signal: 'latitude'
+        }],
+        translate: [{
+            signal: 'width/2'
+        }, {
+            signal: 'height/2'
+        }]
+    }];
+
+    var scales = [];
+    var axes = [];
+    var legends = [];
+    var encode = {};
+    var config = {};
+
+    return {
+        $schema: 'https://vega.github.io/schema/vega/v3.0.json',
+        title: '',
+        description: '',
+        background: '',
+        width: 720,
+        height: 720,
+        padding: {},
+        autosize: 'none',
+        config: config,
+        signals: signals,
+        data: data,
+        scales: scales,
+        projections: projections,
+        axes: axes,
+        legends: legends,
+        marks: marks,
+        encode: encode
+    };
 };
 
-},{"../js/util/config":440}]},{},[1]);
+},{}]},{},[1]);
