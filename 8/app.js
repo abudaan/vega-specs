@@ -1,14 +1,28 @@
 import R from 'ramda';
 import spec1 from '../src/specs/spec8a';
 import spec2 from '../src/specs/spec8b';
-import createView from '../src/util/create-vega-view';
-import generateSpec from '../src/util/generate-spec';
+import createView from '../src/js/util/create-vega-view';
+import generateSpec from '../src/js/util/generate-spec';
 
 // Vega rendering a map using leaflet-vega
 
 window.addEventListener('DOMContentLoaded', () => {
     let view1 = null;
     let view2 = null;
+
+    const tooltip = document.createElement('div');
+    tooltip.style.position = 'absolute';
+    tooltip.style.zIndex = 100;
+    // tooltip.style.width = '100px';
+    // tooltip.style.height = '100px';
+    tooltip.style.backgroundColor = 'white';
+    tooltip.style.top = '-1000px';
+    tooltip.style.left = '100px';
+    tooltip.style.color = '#000';
+    tooltip.style.textAlign = 'center';
+    tooltip.style.padding = '10px';
+    document.body.appendChild(tooltip);
+
 
     const connect = () => {
         view2.addSignalListener('detailDomain', (name, value) => {
@@ -21,7 +35,7 @@ window.addEventListener('DOMContentLoaded', () => {
         id: 'app1',
         renderer: 'canvas',
         addLeaflet: false,
-        addTooltip: true,
+        addTooltip: false,
         tooltipOptions: {
             showAllFields: false,
             fields: [
@@ -50,6 +64,18 @@ window.addEventListener('DOMContentLoaded', () => {
         callback: (view) => {
             // view.logLevel(vega.Debug);
             // view.run('aap');
+            view.hover();
+            view.tooltipHandler((event, item, name) => {
+                if (event.vegaType === 'mouseout') {
+                    tooltip.style.top = `${event.clientY}px`;
+                    tooltip.style.left = `${event.clientX + 20}px`;
+                    tooltip.innerHTML = name;
+                    tooltip.innerHTML += `<br>${item.datum.fillperc}%`;
+                } else {
+                    tooltip.style.top = '-1000px';
+                    tooltip.innerHTML = '';
+                }
+            });
             view1 = view;
             if (view1 !== null && view2 !== null) {
                 connect();

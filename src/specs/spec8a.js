@@ -1,5 +1,5 @@
 
-import getPaths from '../util/config';
+import getPaths from '../js/util/config';
 
 const {
     dataPath,
@@ -86,6 +86,16 @@ const marks = [
                 stroke: { scale: 'color', field: 'name' },
                 fill: { scale: 'color', field: 'name' },
                 // fill: { value: 'transparent' },
+            },
+            enter: {
+                tooltip: {
+                    field: 'name',
+                },
+            },
+            hover: {
+                tooltip: {
+                    field: 'name',
+                },
             },
         },
     },

@@ -1,4 +1,4 @@
-import getPaths from '../util/config';
+import getPaths from '../js/util/config';
 
 const {
     dataPath,

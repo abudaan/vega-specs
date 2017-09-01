@@ -1,11 +1,7 @@
-// import L from 'leaflet';
-// import vega from 'vega';
-// import LeafletVega from './leaflet-vega';
 import R from 'ramda';
-
-const vega = window.vega;
-const vegaTooltip = window.vegaTooltip;
-const L = window.L;
+import L from 'leaflet';
+import { parse, View } from 'vega';
+import { vega as vegaTooltip } from 'vega-tooltip';
 
 const setup = ({ spec, view, addLeaflet, addTooltip, tooltipOptions, callback }) => {
     if (R.isNil(view)) {
@@ -14,15 +10,16 @@ const setup = ({ spec, view, addLeaflet, addTooltip, tooltipOptions, callback })
         return;
     }
 
-    if (addTooltip && !addLeaflet) {
-        vegaTooltip.vega(view, tooltipOptions);
+    // console.log('hier', addTooltip, tooltipOptions);
+    if (addTooltip) { // && !addLeaflet) {
+        vegaTooltip(view, tooltipOptions);
     }
 
-    R.forEach((signal) => {
-        view.addSignalListener(signal.name, (name, data) => {
-            console.log(spec.description, name, data);
-        });
-    }, spec.signals || []);
+    // R.forEach((signal) => {
+    //     view.addSignalListener(signal.name, (name, data) => {
+    //         console.log(spec.description, name, data);
+    //     });
+    // }, spec.signals || []);
 
 
     const numDataSources = spec.data.length;
@@ -46,7 +43,7 @@ const setup = ({ spec, view, addLeaflet, addTooltip, tooltipOptions, callback })
 
 
 const createVegaView = ({ spec, id, renderer, addLeaflet, addTooltip, tooltipOptions, callback }) => {
-    const view = new vega.View(vega.parse(spec)).renderer(renderer).initialize(`#${id}`);
+    const view = new View(parse(spec)).renderer(renderer).initialize(`#${id}`);
         // .hover()
         // .run();
 
@@ -92,7 +89,9 @@ export default ({ spec, id, renderer = 'canvas', addLeaflet = false, addTooltip 
             delayRepaint: true,
         }).addTo(map);
 
+
         setTimeout(() => {
+            // console.log(layer);
             const view = layer._view;
             setup({
                 spec,

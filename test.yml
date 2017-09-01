@@ -1,0 +1,19 @@
+specs:
+    - url: spec1.vg.json
+      name: spec1
+      subscribe:
+        # import 'qliq' as 'klik', i.e.: map external signal with
+        # name 'qliq' to internal signal with name 'klik'
+        - [qliq, klik]
+
+    - url: spec2.vg.json
+      name: spec2
+      subscribe:
+        # import 'qliq' as 'click'
+        - [qliq, click]
+
+    - url: spec3.vg.json
+      name: spec3
+      publish:
+        # export 'klikkerdeklik' as 'qliq'
+        - [klikkerdeklik, qliq]

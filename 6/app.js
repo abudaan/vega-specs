@@ -1,7 +1,7 @@
 import R from 'ramda';
 import spec from '../src/specs/spec6b';
-import createView from '../src/util/create-vega-view';
-import generateSpec from '../src/util/generate-spec';
+import createView from '../src/js/util/create-vega-view';
+import generateSpec from '../src/js/util/generate-spec';
 
 // Vega rendering a map using leaflet-vega
 

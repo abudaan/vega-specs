@@ -1,6 +1,6 @@
 import spec from '../src/specs/spec4a';
-import createView from '../src/util/create-vega-view';
-import generateSpec from '../src/util/generate-spec';
+import createView from '../src/js/util/create-vega-view';
+import generateSpec from '../src/js/util/generate-spec';
 
 // Shows tooltips over a map using vega-tooltip plugin
 
