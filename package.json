@@ -3,7 +3,7 @@
     "version": "1.0.0",
     "description": "wrestling with Vega3",
     "scripts": {
-        "watch": "watchify ./3/app.js -t [ babelify ] -o ./3/build/app.js --debug --verbose",
+        "watch": "watchify ./2/app.js -t [ babelify ] -o ./2/build/app.js --debug --verbose",
         "server": "python -m SimpleHTTPServer 9001",
         "start": "npm run server & npm run watch",
         "build_2": "browserify ./2/app.js -t [ babelify ] -o ./2/build/app.js",
@@ -47,9 +47,11 @@
         "leaflet-vega": "^0.4.0",
         "node-sass": "^4.5.3",
         "ramda": "0.23.0",
+        "rxjs": "^5.4.3",
         "vega": "^3.0.2",
         "vega-tooltip": "^0.4.3",
         "webpack": "^3.5.5",
+        "xstream": "^10.9.0",
         "yamljs": "^0.3.0"
     }
 }
