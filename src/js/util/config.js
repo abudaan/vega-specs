@@ -1,13 +1,13 @@
 export default () => {
-    let dataPath = `${window.location.protocol}//${window.location.host}/data/`;
-    let imagePath = `${window.location.protocol}//${window.location.host}/img/`;
+    let dataPath = `${window.location.protocol}//${window.location.host}/public/data/`;
+    let imagePath = `${window.location.protocol}//${window.location.host}/public/img/`;
 
     if (window.location.hostname.indexOf('github') !== -1) {
-        dataPath = `${window.location.protocol}//${window.location.host}/vega-specs/data/`;
-        imagePath = `${window.location.protocol}//${window.location.host}/vega-specs/img/`;
+        dataPath = `${window.location.protocol}//${window.location.host}/vega-specs/public/data/`;
+        imagePath = `${window.location.protocol}//${window.location.host}/vega-specs/public/img/`;
     } else if (window.location.hostname.indexOf('abumarkub') !== -1) {
-        dataPath = `${window.location.protocol}//${window.location.host}/fffact/data/`;
-        imagePath = `${window.location.protocol}//${window.location.host}/fffact/img/`;
+        dataPath = `${window.location.protocol}//${window.location.host}/fffact/public/data/`;
+        imagePath = `${window.location.protocol}//${window.location.host}/fffact/public/img/`;
     }
 
     return {

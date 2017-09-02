@@ -5,8 +5,10 @@
     "license": "MIT",
     "author": "abudaan",
     "scripts": {
+        "watch2": "watchify ./4/app.js -t [ babelify ] -o ./4/build/app.js --debug --verbose",
+        "start2": "npm run server & npm run watch2",
         "server": "python -m SimpleHTTPServer 9001",
-        "start": "npm run server & npm run watch & npm run watch-css",
+        "start": "npm run server & npm run watch",
         "watch": "watchify ./src/js/index.js -t [ babelify ] -o ./public/js/app.js --debug --verbose",
         "watch-css": "node-sass -w ./src/styles/main.sass > ./public/css/app.css"
     },

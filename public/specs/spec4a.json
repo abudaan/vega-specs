@@ -66,7 +66,6 @@
     ],
     "description": "",
     "encode": {},
-    "height": 720,
     "legends": [],
     "marks": [
         {
@@ -106,7 +105,7 @@
             "encode": {
                 "enter": {
                     "url": {
-                        "value": "http://localhost:9001/public/public/img/afval.png"
+                        "value": "http://localhost:9001/public/img/afval.png"
                     },
                     "x": {
                         "field": "x"
@@ -252,6 +251,13 @@
     ],
     "title": "",
     "width": 720,
+    "height": 720,
+    "padding": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 0
+    },
     "runtime": {
         "publish": [
             {

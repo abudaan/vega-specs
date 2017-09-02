@@ -26,7 +26,11 @@
             "type": "mercator"
         }
     ],
-    "scales": [],
+    "scales": [
+        {
+            "name": "show_hood"
+        }
+    ],
     "signals": [],
     "marks": [
         {
@@ -53,6 +57,32 @@
                     "projection": "projection"
                 }
             ]
+        },
+        {
+            "type": "text",
+            "encode": {
+                "align": {
+                    "value": "left"
+                },
+                "fontSize": {
+                    "value": 45
+                },
+                "x": {
+                    "value": 60
+                },
+                "y": {
+                    "value": 30
+                },
+                "fill": {
+                    "value": "red"
+                },
+                "value": "empty"
+            },
+            "update": {
+                "value": {
+                    "signal": "show_hood"
+                }
+            }
         }
     ],
     "runtime": {

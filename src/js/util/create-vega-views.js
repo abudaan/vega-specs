@@ -9,35 +9,20 @@ const Rx = require('rxjs/Rx');
 
 initLeafletVega();
 
-const addLeaflet = async (id, spec) => {
-    if (R.isNil(spec.runtime.leaflet)) {
-        return {
-            id,
-            spec,
-            view: new View(parse(spec)),
-            append: true,
-        };
-    }
-
+export const createLeafletVega = async (id, spec, view) => {
     const signals = spec.signals || [];
     const zoom = R.find(R.propEq('name', 'zoom'))(signals);
     const latitude = R.find(R.propEq('name', 'latitude'))(signals);
     const longitude = R.find(R.propEq('name', 'longitude'))(signals);
 
     if (R.isNil(zoom) || R.isNil(latitude) || R.isNil(longitude)) {
-        return {
-            id,
-            spec,
-            view: new View(parse(spec)),
-            append: true,
-        };
+        console.error('incomplete map spec');
+        return;
     }
 
-    const map = L.map('map', {
+    const map = L.map(id, {
         zoomAnimation: false,
     }).setView([latitude.value, longitude.value], zoom.value);
-
-    delete spec.projections;
 
     L.tileLayer(
         'http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
@@ -46,22 +31,11 @@ const addLeaflet = async (id, spec) => {
         },
     ).addTo(map);
 
-    const layer = L.vega(spec, {
-        renderer: spec.runtime.renderer,
+    L.vega(view, {
+        renderer: spec.runtime.renderer || 'canvas',
         // Make sure the legend stays in place
         delayRepaint: true,
     }).addTo(map);
-
-    async function init() {
-        setTimeout(() => layer._view, 0);
-    }
-    const view = await init();
-    return {
-        id,
-        spec,
-        view,
-        append: false,
-    };
 };
 
 
@@ -71,8 +45,12 @@ const loadSpecs = async (urls: string[]) => {
     await Promise.all(urls.map(async (url) => {
         const spec = await fetchJSON(url);
         const id = `spec_${i}`;
-        const data = await addLeaflet(id, spec);
-        specs[id] = data;
+        const view = new View(parse(spec));
+        specs[id] = {
+            id,
+            spec,
+            view,
+        };
         i += 1;
     }));
     return specs;
@@ -130,7 +108,7 @@ const subscribeToStream = (data, streams) => {
 };
 
 
-export default urls =>
+export const createViews = urls =>
     new Promise((resolve, reject) => {
         loadSpecs(urls)
             .then((specs) => {

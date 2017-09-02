@@ -44,8 +44,8 @@ const setup = ({ spec, view, addLeaflet, addTooltip, tooltipOptions, callback })
 
 const createVegaView = ({ spec, id, renderer, addLeaflet, addTooltip, tooltipOptions, callback }) => {
     const view = new View(parse(spec)).renderer(renderer).initialize(`#${id}`);
-        // .hover()
-        // .run();
+    // .hover()
+    // .run();
 
     setup({
         spec,
@@ -74,8 +74,6 @@ export default ({ spec, id, renderer = 'canvas', addLeaflet = false, addTooltip 
             zoomAnimation: false,
         }).setView([latitude.value, longitude.value], zoom.value);
 
-        delete spec.projections;
-
         L.tileLayer(
             'http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
                 attribution: '<a href="http://openstreetmap.org">OpenStreetMap</a> contributors',
@@ -83,7 +81,8 @@ export default ({ spec, id, renderer = 'canvas', addLeaflet = false, addTooltip 
             },
         ).addTo(map);
 
-        const layer = L.vega(spec, {
+        const view = new View(parse(spec));
+        L.vega(view, {
             renderer,
             // Make sure the legend stays in place
             delayRepaint: true,
@@ -92,7 +91,7 @@ export default ({ spec, id, renderer = 'canvas', addLeaflet = false, addTooltip 
 
         setTimeout(() => {
             // console.log(layer);
-            const view = layer._view;
+            // const view = layer.view;
             setup({
                 spec,
                 view,

@@ -9,8 +9,6 @@ initLeafletVega();
 // Vega rendering a map using leaflet-vega
 
 window.addEventListener('DOMContentLoaded', () => {
-
-
     const tooltip = document.createElement('div');
     tooltip.style.position = 'absolute';
     tooltip.style.zIndex = 1000;
@@ -53,22 +51,22 @@ window.addEventListener('DOMContentLoaded', () => {
         },
         callback: (view) => {
             // view.hover();
-        //     view.tooltipHandler((event, item, name) => {
-        //         console.log(event);
-        //         if (event.vegaType === 'mouseover') {
-        //             tooltip.style.top = `${event.clientY}px`;
-        //             tooltip.style.left = `${event.clientX + 20}px`;
-        //             tooltip.innerHTML = name;
-        //             // tooltip.innerHTML += `<br>${item.datum.fillperc}%`;
-        //         } else {
-        //             tooltip.style.top = '-1000px';
-        //             tooltip.innerHTML = '';
-        //         }
-        //     });
+            //     view.tooltipHandler((event, item, name) => {
+            //         console.log(event);
+            //         if (event.vegaType === 'mouseover') {
+            //             tooltip.style.top = `${event.clientY}px`;
+            //             tooltip.style.left = `${event.clientX + 20}px`;
+            //             tooltip.innerHTML = name;
+            //             // tooltip.innerHTML += `<br>${item.datum.fillperc}%`;
+            //         } else {
+            //             tooltip.style.top = '-1000px';
+            //             tooltip.innerHTML = '';
+            //         }
+            //     });
         },
     });
 
 
     document.getElementById('generate-spec')
-    .addEventListener('click', () => generateSpec(spec));
+        .addEventListener('click', () => generateSpec(spec));
 });
