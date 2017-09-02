@@ -6,8 +6,8 @@ import { exec } from 'child_process';
 
 
 const paths = {
-    dataPath: 'http://localhost:9001/data/',
-    imagePath: 'http://localhost:9001/img/',
+    dataPath: 'http://localhost:9001/public/data/',
+    imagePath: 'http://localhost:9001/public/img/',
 };
 
 const create = folder => new Promise((resolve, reject) => {
@@ -15,7 +15,7 @@ const create = folder => new Promise((resolve, reject) => {
     // const max = R.length(files);
 
     import('../src/specs/spec4a.js')
-    .then(
+        .then(
         (module) => {
             const spec = JSON.stringify(module.default(paths));
             const file = path.join(__dirname, '../specs/spec4a.json');
@@ -37,9 +37,9 @@ const create = folder => new Promise((resolve, reject) => {
             reject(err);
         },
     )
-    .catch((error) => {
-        console.log(error);
-    });
+        .catch((error) => {
+            console.log(error);
+        });
 });
 
 // export default create;

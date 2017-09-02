@@ -5,6 +5,7 @@ import L from 'leaflet';
 import { parse, View } from 'vega';
 
 export default () => {
+    console.log('initialized:', L.VegaLayer);
     if (L.VegaLayer) {
         return;
     }
@@ -206,7 +207,7 @@ export default () => {
                 }
 
                 names = new Set(names);
-                for (let obj of spec[section]) {
+                for (const obj of spec[section]) {
                     // If obj has a name field, delete that name from the names
                     // Set will silently ignore delete() for undefined names
                     if (obj.name) names.delete(obj.name);
@@ -232,18 +233,18 @@ export default () => {
             };
 
             const mapSignals = ['zoom', 'latitude', 'longitude'];
-            for (let sig of findUndefined('signals', mapSignals)) {
+            for (const sig of findUndefined('signals', mapSignals)) {
                 spec.signals.push({ name: sig });
             }
 
-            for (let prj of findUndefined('projections', ['projection'])) {
+            for (const prj of findUndefined('projections', ['projection'])) {
                 spec.projections.push({
                     name: prj,
                     type: 'mercator',
                     scale: { signal: '256*pow(2,zoom)/2/PI' },
                     rotate: [{ signal: '-longitude' }, 0, 0],
                     center: [0, { signal: 'latitude' }],
-                    translate: [{ signal: 'width/2' }, { signal: 'height/2' }]
+                    translate: [{ signal: 'width/2' }, { signal: 'height/2' }],
                 });
             }
 

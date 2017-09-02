@@ -5,18 +5,10 @@
     "license": "MIT",
     "author": "abudaan",
     "scripts": {
-        "build": "npm run build_2 && npm run build_2a && npm run build_3 && npm run build_4 && npm run build_5 && npm run build_6 && npm run build_7 && npm run build_8",
-        "build_2": "browserify ./2/app.js -t [ babelify ] -o ./2/build/app.js",
-        "build_2a": "browserify ./2a/app.js -t [ babelify ] -o ./2a/build/app.js",
-        "build_3": "browserify ./3/app.js -t [ babelify ] -o ./3/build/app.js",
-        "build_4": "browserify ./4/app.js -t [ babelify ] -o ./4/build/app.js",
-        "build_5": "browserify ./5/app.js -t [ babelify ] -o ./5/build/app.js",
-        "build_6": "browserify ./6/app.js -t [ babelify ] -o ./6/build/app.js",
-        "build_7": "browserify ./7/app.js -t [ babelify ] -o ./7/build/app.js",
-        "build_8": "browserify ./8/app.js -t [ babelify ] -o ./8/build/app.js",
         "server": "python -m SimpleHTTPServer 9001",
-        "start": "npm run server & npm run watch",
-        "watch": "watchify ./src/js/index.js -t [ babelify ] -o ./public/js/app.js --debug --verbose"
+        "start": "npm run server & npm run watch & npm run watch-css",
+        "watch": "watchify ./src/js/index.js -t [ babelify ] -o ./public/js/app.js --debug --verbose",
+        "watch-css": "node-sass -w ./src/styles/main.sass > ./public/css/app.css"
     },
     "dependencies": {
         "cson-parser": "^2.0.0",
