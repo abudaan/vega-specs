@@ -1,0 +1,66 @@
+{
+    "$schema": "https://vega.github.io/schema/vega/v3.0.json",
+    "description": "map",
+    "width": 900,
+    "height": 560,
+    "autosize": "none",
+    "padding": {
+        "top": 0,
+        "left": 0,
+        "right": 0,
+        "bottom": 0
+    },
+    "data": [
+        {
+            "name": "world",
+            "url": "data/world-110m.json",
+            "format": {
+                "type": "topojson",
+                "feature": "countries"
+            }
+        }
+    ],
+    "projections": [
+        {
+            "name": "projection",
+            "type": "mercator"
+        }
+    ],
+    "scales": [],
+    "signals": [],
+    "marks": [
+        {
+            "type": "shape",
+            "from": {
+                "data": "world"
+            },
+            "encode": {
+                "enter": {
+                    "strokeWidth": {
+                        "value": 0.5
+                    },
+                    "stroke": {
+                        "value": "#bbb"
+                    },
+                    "fill": {
+                        "value": "#e5e8d3"
+                    }
+                }
+            },
+            "transform": [
+                {
+                    "type": "geoshape",
+                    "projection": "projection"
+                }
+            ]
+        }
+    ],
+    "fffact": {
+        "subscribe": [
+            {
+                "signal": "hover",
+                "as": "show_hood"
+            }
+        ]
+    }
+}

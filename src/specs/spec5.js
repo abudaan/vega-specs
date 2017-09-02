@@ -121,4 +121,9 @@ export default {
     data,
     marks,
     projections,
+    fffact: {
+        publish: [
+            { signal: 'mouse_xy', as: 'mouse' },
+        ],
+    },
 };

@@ -50,6 +50,11 @@ window.addEventListener('DOMContentLoaded', () => {
                 // view2.signal('mouse_pos', value);
             });
 
+            mouse.subscribe((value) => {
+                console.log('other spec', value);
+                // view2.signal('mouse_pos', value);
+            });
+
             view.addSignalListener('update_css', (name, value) => {
                 if (value === 0) {
                     document.querySelectorAll('.text-webfont text').forEach((element) => {

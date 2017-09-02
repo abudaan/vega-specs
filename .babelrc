@@ -1,9 +1,23 @@
 {
     "presets": [
-        "es2015",
-        "stage-0"
+        [
+            "env",
+            {
+                "targets": {
+                    "browsers": [
+                        "last 2 Chrome versions"
+                    ]
+                }
+            }
+        ]
     ],
     "plugins": [
-    	"dynamic-import-node"
+        "transform-flow-strip-types",
+        [
+            "transform-object-rest-spread",
+            {
+                "useBuiltIns": true
+            }
+        ]
     ]
 }
