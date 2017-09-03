@@ -17,7 +17,7 @@
                     "type": "geopath"
                 }
             ],
-            "url": "http://localhost:9001/public/data/buurten.topo.json"
+            "url": "./data/buurten.topo.json"
         },
         {
             "format": {
@@ -39,7 +39,7 @@
                     "type": "geopoint"
                 }
             ],
-            "url": "http://localhost:9001/public/data/containers.topo.json"
+            "url": "./data/containers.topo.json"
         },
         {
             "format": {
@@ -61,7 +61,7 @@
                     "type": "geopoint"
                 }
             ],
-            "url": "http://localhost:9001/public/data/scholen.topo.json"
+            "url": "./data/scholen.topo.json"
         }
     ],
     "description": "",
@@ -105,7 +105,7 @@
             "encode": {
                 "enter": {
                     "url": {
-                        "value": "http://localhost:9001/public/img/afval.png"
+                        "value": "./img/afval.png"
                     },
                     "x": {
                         "field": "x"
@@ -133,7 +133,7 @@
             "encode": {
                 "enter": {
                     "url": {
-                        "value": "http://localhost:9001/public/img/school.png"
+                        "value": "./img/school.png"
                     },
                     "x": {
                         "field": "x"
