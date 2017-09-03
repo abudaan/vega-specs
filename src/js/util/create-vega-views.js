@@ -9,7 +9,7 @@ const Rx = require('rxjs/Rx');
 
 initLeafletVega();
 
-export const createLeafletVega = async (id, spec, view) => {
+const createLeafletVega = async (elem, spec, view) => {
     const signals = spec.signals || [];
     const zoom = R.find(R.propEq('name', 'zoom'))(signals);
     const latitude = R.find(R.propEq('name', 'latitude'))(signals);
@@ -20,7 +20,7 @@ export const createLeafletVega = async (id, spec, view) => {
         return;
     }
 
-    const map = L.map(id, {
+    const map = L.map(elem, {
         zoomAnimation: false,
     }).setView([latitude.value, longitude.value], zoom.value);
 
@@ -98,18 +98,66 @@ const subscribeToStream = (data, streams) => {
     R.forEach((subscribe) => {
         const s = streams[subscribe.signal];
         if (R.isNil(s)) {
-            console.error(`no stream for signal ${subscribe.signal}`);
+            console.error(`no stream for signal "${subscribe.signal}"`);
+            return;
+        }
+        if (R.isNil(R.find(R.propEq('name', subscribe.as))(spec.signals))) {
+            console.error(`no signal "${subscribe.as}" found in spec`);
             return;
         }
         s.subscribe((value) => {
-            view.signal(subscribe.as, value);
+            // console.log(subscribe.as, value);
+            view.signal(subscribe.as, value).run();
         });
     }, spec.runtime.subscribe);
 };
 
 
-export const createViews = urls =>
-    new Promise((resolve, reject) => {
+const addViews = (specs, divs) => {
+    specs.forEach((d, i) => {
+        const {
+            id,
+            spec,
+            view,
+        } = d;
+        const div = divs[i];
+        if (spec.runtime.leaflet === true) {
+            createLeafletVega(div, spec, view);
+        } else {
+            view.renderer(spec.runtime.renderer || 'canvas')
+                .initialize(`#${id}`);
+        }
+    });
+};
+
+
+const addDivs = (specs, container, cssClass) => {
+    const divs = [];
+    specs.forEach((d) => {
+        const elem = document.createElement('div');
+        const {
+            id,
+            spec,
+        } = d;
+        elem.id = id;
+        elem.className = cssClass;
+        elem.style.width = `${spec.width}px`;
+        elem.style.height = `${spec.height}px`;
+        container.appendChild(elem);
+        divs.push(elem);
+    });
+    return divs;
+};
+
+
+const createViews = (data) => {
+    const {
+        container,
+        cssClass,
+        urls,
+    } = data;
+
+    return new Promise((resolve, reject) => {
         loadSpecs(urls)
             .then((specs) => {
                 let streams = {};
@@ -121,7 +169,16 @@ export const createViews = urls =>
                     subscribeToStream(spec, streams);
                 }, R.values(specs));
 
-                resolve(R.map(id => specs[id], R.keys(specs)));
+                const specsArray = R.map(id => specs[id], R.keys(specs));
+                const divs = addDivs(specsArray, container, cssClass);
+                setTimeout(() => {
+                    addViews(specsArray, divs);
+                    resolve('done');
+                }, 0);
             });
     });
+};
+
+
+export default createViews;
 

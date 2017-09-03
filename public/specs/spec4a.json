@@ -261,7 +261,7 @@
     "runtime": {
         "publish": [
             {
-                "signal": "buurt_hover",
+                "signal": "buurt_hover_naam",
                 "as": "hover"
             }
         ],

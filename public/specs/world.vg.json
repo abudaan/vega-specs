@@ -31,7 +31,12 @@
             "name": "show_hood"
         }
     ],
-    "signals": [],
+    "signals": [
+        {
+            "name": "show_hood",
+            "value": "no hood selected"
+        }
+    ],
     "marks": [
         {
             "type": "shape",
@@ -61,26 +66,27 @@
         {
             "type": "text",
             "encode": {
-                "align": {
-                    "value": "left"
+                "enter": {
+                    "align": {
+                        "value": "left"
+                    },
+                    "fontSize": {
+                        "value": 45
+                    },
+                    "x": {
+                        "value": 60
+                    },
+                    "y": {
+                        "value": 60
+                    },
+                    "fill": {
+                        "value": "red"
+                    }
                 },
-                "fontSize": {
-                    "value": 45
-                },
-                "x": {
-                    "value": 60
-                },
-                "y": {
-                    "value": 30
-                },
-                "fill": {
-                    "value": "red"
-                },
-                "value": "empty"
-            },
-            "update": {
-                "value": {
-                    "signal": "show_hood"
+                "update": {
+                    "text": {
+                        "signal": "show_hood"
+                    }
                 }
             }
         }
