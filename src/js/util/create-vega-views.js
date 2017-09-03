@@ -46,6 +46,9 @@ const loadSpecs = async (urls: string[]) => {
         const spec = await fetchJSON(url);
         const id = `spec_${i}`;
         const view = new View(parse(spec));
+        if (spec.runtime && spec.runtime.tooltipOptions) {
+            vegaTooltip(view, spec.runtime.tooltipOptions);
+        }
         specs[id] = {
             id,
             spec,

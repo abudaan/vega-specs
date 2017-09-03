@@ -266,6 +266,26 @@
             }
         ],
         "renderer": "canvas",
-        "leaflet": true
+        "leaflet": true,
+        "tooltipOptions": {
+            "showAllFields": false,
+            "fields": [
+                {
+                    "formatType": "string",
+                    "field": "properties.NAAM",
+                    "title": "buurt"
+                },
+                {
+                    "formatType": "string",
+                    "field": "properties.CODE",
+                    "title": "code"
+                },
+                {
+                    "formatType": "string",
+                    "field": "properties.TYPE",
+                    "title": "type"
+                }
+            ]
+        }
     }
 }

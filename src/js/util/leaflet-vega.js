@@ -4,8 +4,8 @@
 import L from 'leaflet';
 
 export default () => {
-    console.log('initialized:', L.VegaLayer);
     if (L.VegaLayer) {
+        console.info('VegaLayer has already been initialized:', L.VegaLayer);
         return;
     }
 
