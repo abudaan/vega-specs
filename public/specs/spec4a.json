@@ -66,6 +66,7 @@
     ],
     "description": "",
     "encode": {},
+    "height": 720,
     "legends": [],
     "marks": [
         {
@@ -216,6 +217,38 @@
             "type": "mercator"
         }
     ],
+    "runtime": {
+        "cssClass": null,
+        "divId": null,
+        "leaflet": true,
+        "publish": [
+            {
+                "as": "hover",
+                "signal": "buurt_hover_naam"
+            }
+        ],
+        "renderer": "canvas",
+        "tooltipOptions": {
+            "fields": [
+                {
+                    "field": "properties.NAAM",
+                    "formatType": "string",
+                    "title": "buurt"
+                },
+                {
+                    "field": "properties.CODE",
+                    "formatType": "string",
+                    "title": "code"
+                },
+                {
+                    "field": "properties.TYPE",
+                    "formatType": "string",
+                    "title": "type"
+                }
+            ],
+            "showAllFields": false
+        }
+    },
     "scales": [],
     "signals": [
         {
@@ -250,42 +283,5 @@
         }
     ],
     "title": "",
-    "width": 720,
-    "height": 720,
-    "padding": {
-        "left": 0,
-        "right": 0,
-        "top": 0,
-        "bottom": 0
-    },
-    "runtime": {
-        "publish": [
-            {
-                "signal": "buurt_hover_naam",
-                "as": "hover"
-            }
-        ],
-        "renderer": "canvas",
-        "leaflet": true,
-        "tooltipOptions": {
-            "showAllFields": false,
-            "fields": [
-                {
-                    "formatType": "string",
-                    "field": "properties.NAAM",
-                    "title": "buurt"
-                },
-                {
-                    "formatType": "string",
-                    "field": "properties.CODE",
-                    "title": "code"
-                },
-                {
-                    "formatType": "string",
-                    "field": "properties.TYPE",
-                    "title": "type"
-                }
-            ]
-        }
-    }
+    "width": 720
 }

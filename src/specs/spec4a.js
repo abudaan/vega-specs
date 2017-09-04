@@ -260,6 +260,39 @@ export default (paths) => {
     const encode = {};
     const config = {};
 
+    const runtime = {
+        publish: [
+            {
+                signal: 'buurt_hover_naam',
+                as: 'hover',
+            },
+        ],
+        renderer: 'canvas',
+        divId: null,
+        cssClass: null,
+        leaflet: true,
+        tooltipOptions: {
+            showAllFields: false,
+            fields: [
+                {
+                    formatType: 'string',
+                    field: 'properties.NAAM',
+                    title: 'buurt',
+                },
+                {
+                    formatType: 'string',
+                    field: 'properties.CODE',
+                    title: 'code',
+                },
+                {
+                    formatType: 'string',
+                    field: 'properties.TYPE',
+                    title: 'type',
+                },
+            ],
+        },
+    };
+
     return {
         $schema: 'https://vega.github.io/schema/vega/v3.0.json',
         title: '',
@@ -278,5 +311,6 @@ export default (paths) => {
         legends,
         marks,
         encode,
+        runtime,
     };
 };
