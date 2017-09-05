@@ -1,4 +1,4 @@
-import createViews from './util/create-vega-views';
+import createViews from 'vega-multi-view';
 
 window.addEventListener('DOMContentLoaded', () => {
     const data = {

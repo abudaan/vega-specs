@@ -3,6 +3,7 @@ import sourcemaps from 'gulp-sourcemaps';
 import gutil from 'gulp-util';
 import rename from 'gulp-rename';
 import babili from 'gulp-babili';
+import rollup from 'gulp-rollup';
 import sass from 'gulp-sass';
 import concat from 'gulp-concat';
 import autoprefixer from 'gulp-autoprefixer';
@@ -12,6 +13,7 @@ import source from 'vinyl-source-stream';
 import browserify from 'browserify';
 import watchify from 'watchify';
 import babelify from 'babelify';
+import babel from 'rollup-plugin-babel';
 // import envify from 'envify';
 // import uglifyify from 'uglifyify';
 // import collapse from 'bundle-collapser';
@@ -45,16 +47,10 @@ const rebundle = b => b.bundle()
     .pipe(source('index.js'))
     .pipe(buffer())
     .pipe(gulp.dest(path.join(targets.js)))
-    .pipe(babili({
-        mangle: {
-            keepClassName: true,
-        },
-    }))
     .pipe(rename((t) => {
-        t.basename = 'appa';
+        t.basename = 'app';
     }))
     .pipe(gulp.dest(targets.js));
-
 // .pipe(reload());
 
 gulp.task('watch_js', () => {
@@ -91,6 +87,45 @@ gulp.task('watch_js', () => {
     });
 
     return rebundle(b);
+});
+
+gulp.task('build_js2', () => {
+    gulp.src(sources.js)
+        .pipe(sourcemaps.init())
+        .pipe(rollup({
+            allowRealFiles: true, // !IMPORTANT, it avoids the hypothetical file system error
+            entry: sources.main_js,
+            plugins: [
+                babel({
+                    exclude: 'node_modules/**',
+                    presets: [['es2015', { loose: true, modules: false }], 'stage-0'],
+                    // plugins: [
+                    //     'transform-flow-strip-types',
+                    // ],
+                    // presets: [
+                    //     [
+                    //         'env',
+                    //         {
+                    //             targets: {
+                    //                 browsers: [
+                    //                     'last 2 Chrome versions',
+                    //                 ],
+                    //                 node: 'current',
+                    //             },
+                    //         },
+                    //     ],
+                    //     {
+                    //         modules: false,
+                    //     },
+                    // ],
+                    // babelrc: false,
+                    // format: 'cjs',
+                }),
+            ],
+            moduleName: 'testing',
+        }))
+        .pipe(sourcemaps.write())
+        .pipe(gulp.dest(targets.js));
 });
 
 gulp.task('build_js', () => {
@@ -133,8 +168,8 @@ gulp.task('build_js', () => {
                 keepClassName: true,
             },
         }))
-        .pipe(rename((t) => {
-            t.basename = 'appa';
-        }))
+        // .pipe(rename((t) => {
+        //     t.basename = 'app';
+        // }))
         .pipe(gulp.dest(targets.js));
 });
