@@ -13,13 +13,13 @@
         "watch-css": "node-sass -w ./src/styles/main.sass > ./public/css/app.css"
     },
     "dependencies": {
+        "event-stream": "3.3.4",
         "ramda": "0.23.0",
         "sort-package-json": "^1.7.1",
         "vega-multi-view": "https://github.com/abudaan/vega-multi-view"
     },
     "devDependencies": {
         "babel-cli": "^6.26.0",
-        "gulp-rollup": "^2.14.0",
         "babel-eslint": "^7.2.3",
         "babel-plugin-dynamic-import-node": "^1.0.2",
         "babel-plugin-syntax-dynamic-import": "^6.18.0",
@@ -40,11 +40,13 @@
         "eslint-plugin-jsx-a11y": "4.0.0",
         "eslint-plugin-react": "6.10.0",
         "flow-bin": "0.42.0",
+        "glob": "^7.1.2",
         "gulp": "^3.9.1",
         "gulp-autoprefixer": "^4.0.0",
         "gulp-babili": "^0.1.4",
         "gulp-concat": "^2.6.1",
         "gulp-rename": "^1.2.2",
+        "gulp-rollup": "^2.14.0",
         "gulp-sass": "^3.1.0",
         "gulp-sourcemaps": "^2.6.1",
         "gulp-util": "^3.0.8",

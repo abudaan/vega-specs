@@ -14,12 +14,9 @@ import browserify from 'browserify';
 import watchify from 'watchify';
 import babelify from 'babelify';
 import babel from 'rollup-plugin-babel';
-// import envify from 'envify';
-// import uglifyify from 'uglifyify';
-// import collapse from 'bundle-collapser';
-// import del from 'del';
+import es from 'event-stream';
+import glob from 'glob';
 import path from 'path';
-
 
 const sources = {
     js: './src/js/**/*.js',
@@ -30,6 +27,26 @@ const targets = {
     // js: './public/js/app2.js',
     js: './public/js/',
 };
+
+
+gulp.task('build', (done) => {
+    glob('./experiments/**/app.js', (err, files) => {
+        if (err) {
+            done(err);
+        }
+        console.log(files);
+        done();
+        // const tasks = files.map(entry => browserify({ entries: [entry] })
+        //     .bundle()
+        //     .pipe(source(entry))
+        //     .pipe(rename({
+        //         extname: '.bundle.js',
+        //     }))
+        //     .pipe(gulp.dest('./dist')));
+        // es.merge(tasks).on('end', done);
+    });
+});
+
 
 const logBrowserifyError = (e) => {
     gutil.log(gutil.colors.red(e.message));
@@ -47,11 +64,7 @@ const rebundle = b => b.bundle()
     .pipe(source('index.js'))
     .pipe(buffer())
     .pipe(gulp.dest(path.join(targets.js)))
-    .pipe(rename((t) => {
-        t.basename = 'app';
-    }))
     .pipe(gulp.dest(targets.js));
-// .pipe(reload());
 
 gulp.task('watch_js', () => {
     const opts = {
