@@ -1,9 +1,4 @@
-export default (paths) => {
-    const {
-        dataPath,
-        imagePath,
-    } = paths;
-
+export default () => {
     const signals = [
         {
             name: 'mouse_xy',
@@ -40,7 +35,7 @@ export default (paths) => {
             type: 'text',
             name: 'update_css_text',
             encode: {
-                enter: {
+                update: {
                     align: {
                         value: 'left',
                     },

@@ -1,19 +1,26 @@
-import createViews from 'vega-multi-view';
-import spec from '../../specs/spec5';
-import generateSpec from '../../src/js/util/generate-spec';
+import createViews, { showSpecInTab } from 'vega-multi-view';
+import generateSpec from '../../specs/spec5';
 
 // Vega using webfonts and show how you can update css properties after the spec
 // has been rendered
 
 window.addEventListener('DOMContentLoaded', () => {
-    createViews({
-        spec: spec.default(),
-        id: 'app',
+    const spec = generateSpec();
+    spec.runtime = {
+        element: 'app',
+        run: true,
+    };
+    const data = {
+        specs: spec,
         renderer: 'svg',
-        addLeaflet: false,
-        addTooltip: false,
-        tooltipOptions: {},
-        callback: (view) => {
+        debug: true,
+    };
+
+
+    createViews(data)
+        .then(
+        (result) => {
+            const view = result[0].view;
             view.addSignalListener('update_css', (name, value) => {
                 if (value === 0) {
                     document.querySelectorAll('.text-webfont text').forEach((element) => {
@@ -30,8 +37,11 @@ window.addEventListener('DOMContentLoaded', () => {
                 }
             });
         },
-    });
+        (error) => {
+            console.log(error);
+        },
+    );
 
-    document.getElementById('generate-spec')
-        .addEventListener('click', () => generateSpec(spec));
+    document.getElementById('show-spec')
+        .addEventListener('click', () => showSpecInTab(spec));
 });
