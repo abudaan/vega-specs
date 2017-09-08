@@ -25,25 +25,6 @@ const targets = {
     js: './public/js/',
 };
 
-gulp.task('build', (done) => {
-    glob('./experiments/**/app.js', (err, files) => {
-        if (err) {
-            done(err);
-        }
-        console.log(files);
-        done();
-        // const tasks = files.map(entry => browserify({ entries: [entry] })
-        //     .bundle()
-        //     .pipe(source(entry))
-        //     .pipe(rename({
-        //         extname: '.bundle.js',
-        //     }))
-        //     .pipe(gulp.dest('./dist')));
-        // es.merge(tasks).on('end', done);
-    });
-});
-
-
 const logBrowserifyError = (e) => {
     gutil.log(gutil.colors.red(e.message));
     // if(e.codeFrame){
@@ -55,12 +36,58 @@ const logBrowserifyError = (e) => {
     // }
 };
 
-const rebundle = b => b.bundle()
+const rebundle = (b, target) => b.bundle()
     .on('error', logBrowserifyError)
-    .pipe(source('index.js'))
+    .pipe(source('app.bundle.js'))
     .pipe(buffer())
-    .pipe(gulp.dest(path.join(targets.js)))
-    .pipe(gulp.dest(targets.js));
+    .pipe(gulp.dest(target));
+
+
+gulp.task('build_all', (done) => {
+    glob('./experiments/**/app.js', (err, files) => {
+        if (err) {
+            done(err);
+        }
+        const tasks = files.map((file) => {
+            gutil.log(gutil.colors.blue('building', file));
+            const b = browserify({ entries: file, debug: true });
+            b.transform(babelify.configure({
+                compact: true,
+            }));
+
+            return b.bundle()
+                .pipe(source(file))
+                .pipe(rename({
+                    extname: '.bundle.js',
+                }))
+                .pipe(gulp.dest('./'));
+        });
+        es.merge(tasks).on('end', done);
+    });
+});
+
+
+gulp.task('watch_all', (done) => {
+    glob('./experiments/**/app.js', (err, files) => {
+        if (err) {
+            done(err);
+        }
+        const tasks = files.map((file) => {
+            gutil.log(gutil.colors.blue('watching', file));
+            const b = watchify(browserify({ entries: file, debug: true }));
+            const dir = path.dirname(file);
+            b.transform(babelify.configure({
+                compact: true,
+            }));
+            b.on('update', () => {
+                gutil.log(gutil.colors.blue('update js bundle', file));
+                rebundle(b, dir);
+            });
+            return rebundle(b, dir);
+        });
+        es.merge(tasks).on('end', done);
+    });
+});
 
 
 gulp.task('watch_js', () => {
@@ -114,3 +141,10 @@ gulp.task('build_js', () => {
         }))
         .pipe(gulp.dest(targets.js));
 });
+
+
+// gulp.task('build_css', () => gulp.src(sources.css)
+//     .pipe(sass().on('error', sass.logError))
+//     .pipe(autoprefixer())
+//     .pipe(concat('main.css'))
+//     .pipe(gulp.dest(targets.css)));

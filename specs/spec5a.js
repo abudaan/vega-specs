@@ -1,9 +1,4 @@
-export default (paths) => {
-    const {
-        dataPath,
-        imagePath,
-    } = paths;
-
+export default () => {
     const signals = [
         {
             name: 'mouse_xy',

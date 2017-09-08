@@ -16,7 +16,6 @@ window.addEventListener('DOMContentLoaded', () => {
         debug: true,
     };
 
-
     createViews(data)
         .then(
         (result) => {

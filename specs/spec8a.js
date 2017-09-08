@@ -21,6 +21,19 @@ export default (paths) => {
             name: 'end_date',
             update: 'toDate(detailDomain[1])',
         },
+        {
+            name: 'zoom',
+            value: 13,
+        },
+        {
+            name: 'latitude',
+            value: 51.927754415373855,
+
+        },
+        {
+            name: 'longitude',
+            value: 4.38680648803711,
+        },
     ];
 
     const data = [
