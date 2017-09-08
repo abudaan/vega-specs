@@ -8,11 +8,11 @@ const spec1 = generateSpec1({
     imagePath: '../../img/',
 });
 spec1.runtime = {
-    leaflet: true,
+    run: true,
     element: 'app1',
-    publish: {
-        signal: 'detailDomain',
-        as: 'range',
+    subscribe: {
+        signal: 'range',
+        as: 'detailDomain',
     },
     tooltipOptions: {
         showAllFields: false,
@@ -46,10 +46,11 @@ const spec2 = generateSpec2({
     imagePath: '../../img/',
 });
 spec2.runtime = {
+    run: true,
     element: 'app2',
-    subscribe: {
-        signal: 'range',
-        as: 'detailDomain',
+    publish: {
+        signal: 'detailDomain',
+        as: 'range',
     },
 };
 
