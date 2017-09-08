@@ -1,25 +1,13 @@
 {
     "presets": [
+        "stage-0",
         [
             "env",
             {
-                "targets": {
-                    "browsers": [
-                        "last 2 Chrome versions"
-                    ],
-                    "node": "current"
-                }
-            }
-        ]
-    ],
-    "plugins": [
-        "transform-flow-strip-types",
-        "syntax-dynamic-import",
-        "dynamic-import-node",
-        [
-            "transform-object-rest-spread",
-            {
-                "useBuiltIns": true
+                "targets": [
+                    "> 5%"
+                ],
+                "loose": true
             }
         ]
     ]

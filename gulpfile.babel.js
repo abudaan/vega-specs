@@ -3,17 +3,14 @@ import sourcemaps from 'gulp-sourcemaps';
 import gutil from 'gulp-util';
 import rename from 'gulp-rename';
 import babili from 'gulp-babili';
-import rollup from 'gulp-rollup';
 import sass from 'gulp-sass';
 import concat from 'gulp-concat';
 import autoprefixer from 'gulp-autoprefixer';
-// import connect from 'gulp-connect';
 import buffer from 'vinyl-buffer';
 import source from 'vinyl-source-stream';
 import browserify from 'browserify';
 import watchify from 'watchify';
 import babelify from 'babelify';
-import babel from 'rollup-plugin-babel';
 import es from 'event-stream';
 import glob from 'glob';
 import path from 'path';
@@ -27,7 +24,6 @@ const targets = {
     // js: './public/js/app2.js',
     js: './public/js/',
 };
-
 
 gulp.task('build', (done) => {
     glob('./experiments/**/app.js', (err, files) => {
@@ -66,6 +62,7 @@ const rebundle = b => b.bundle()
     .pipe(gulp.dest(path.join(targets.js)))
     .pipe(gulp.dest(targets.js));
 
+
 gulp.task('watch_js', () => {
     const opts = {
         debug: true,
@@ -78,20 +75,7 @@ gulp.task('watch_js', () => {
     const b = watchify(browserify(opts));
     b.add(sources.main_js);
     b.transform(babelify.configure({
-        compact: false,
-        presets: [
-            [
-                'env',
-                {
-                    targets: {
-                        browsers: [
-                            'last 2 Chrome versions',
-                        ],
-                        node: 'current',
-                    },
-                },
-            ],
-        ],
+        compact: true,
     }));
 
     b.on('update', () => {
@@ -102,44 +86,6 @@ gulp.task('watch_js', () => {
     return rebundle(b);
 });
 
-gulp.task('build_js2', () => {
-    gulp.src(sources.js)
-        .pipe(sourcemaps.init())
-        .pipe(rollup({
-            allowRealFiles: true, // !IMPORTANT, it avoids the hypothetical file system error
-            entry: sources.main_js,
-            plugins: [
-                babel({
-                    exclude: 'node_modules/**',
-                    presets: [['es2015', { loose: true, modules: false }], 'stage-0'],
-                    // plugins: [
-                    //     'transform-flow-strip-types',
-                    // ],
-                    // presets: [
-                    //     [
-                    //         'env',
-                    //         {
-                    //             targets: {
-                    //                 browsers: [
-                    //                     'last 2 Chrome versions',
-                    //                 ],
-                    //                 node: 'current',
-                    //             },
-                    //         },
-                    //     ],
-                    //     {
-                    //         modules: false,
-                    //     },
-                    // ],
-                    // babelrc: false,
-                    // format: 'cjs',
-                }),
-            ],
-            moduleName: 'testing',
-        }))
-        .pipe(sourcemaps.write())
-        .pipe(gulp.dest(targets.js));
-});
 
 gulp.task('build_js', () => {
     const opts = {
@@ -150,22 +96,7 @@ gulp.task('build_js', () => {
     b.add(sources.main_js);
     b.transform(babelify.configure({
         compact: true,
-        presets: [
-            [
-                'env',
-                {
-                    targets: {
-                        browsers: [
-                            'last 2 Chrome versions',
-                        ],
-                        node: 'current',
-                    },
-                },
-            ],
-        ],
     }));
-    // b.transform(envify({ NODE_ENV: 'development' }));
-    // b.transform('uglifyify', { global: true });
 
     return b.bundle()
         .on('error', logBrowserifyError)
@@ -174,15 +105,12 @@ gulp.task('build_js', () => {
         .pipe(sourcemaps.init({
             loadMaps: true,
         }))
-        // .pipe(sourcemaps.write(path.join(targets.dist, 'js')))
-        // .pipe(gulp.dest(targets.js))
+        .pipe(sourcemaps.write(path.join(targets.dist, 'js')))
+        .pipe(gulp.dest(targets.js))
         .pipe(babili({
             mangle: {
                 keepClassName: true,
             },
         }))
-        // .pipe(rename((t) => {
-        //     t.basename = 'app';
-        // }))
         .pipe(gulp.dest(targets.js));
 });
