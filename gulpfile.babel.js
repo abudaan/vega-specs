@@ -102,11 +102,11 @@ gulp.task('build_js', () => {
         .on('error', logBrowserifyError)
         .pipe(source('index.js'))
         .pipe(buffer())
-        .pipe(sourcemaps.init({
-            loadMaps: true,
-        }))
-        .pipe(sourcemaps.write(path.join(targets.dist, 'js')))
-        .pipe(gulp.dest(targets.js))
+        // .pipe(sourcemaps.init({
+        //     loadMaps: true,
+        // }))
+        // .pipe(sourcemaps.write(path.join(targets.js, 'js')))
+        // .pipe(gulp.dest(targets.js))
         .pipe(babili({
             mangle: {
                 keepClassName: true,
