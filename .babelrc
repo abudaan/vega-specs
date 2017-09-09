@@ -11,8 +11,7 @@
                         "not IE <= 11"
                     ]
                 },
-                "useBuiltIns": true,
-                "debug": true
+                "useBuiltIns": true
             }
         ]
     ]

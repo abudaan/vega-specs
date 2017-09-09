@@ -87,17 +87,25 @@ Render tooltips on top of a map using [Vega-tooltip](https://github.com/vega/veg
 Render a Vega spec to a layer in Leaflet using [leaflet-vega](https://github.com/nyurik/leaflet-vega).
 [[live demo]](https://abudaan.github.io/vega-specs/experiments/4/)
 
+### test 5
+
+Upper part of this [example](https://vega.github.io/vega/examples/overview-plus-detail/)
+[[live demo]](https://abudaan.github.io/vega-specs/experiments/5/)
+
+### test 6
+
+Controller part of this [example](https://vega.github.io/vega/examples/overview-plus-detail/)
+[[live demo]](https://abudaan.github.io/vega-specs/experiments/6/)
 
 ### test 7
 
-Split this [example](https://vega.github.io/vega/examples/overview-plus-detail/) in 2 separate specs
+This [example](https://vega.github.io/vega/examples/overview-plus-detail/) split into 2 separate specs, but the upper spec still receives the signal of the controller spec.
 [[live demo]](https://abudaan.github.io/vega-specs/experiments/7/)
 
 ### test 8
 
-Scatterplot with selectable date range. Note: these are 2 separate specs.
+Scatterplot with selectable date range; 2 separate specs.
 [[live demo]](https://abudaan.github.io/vega-specs/experiments/8/)
-
 
 ### test 9
 
@@ -111,15 +119,15 @@ This is an ongoing project: more tests will follow.
 
 Folders named with a number contain tests; e.g. folder `2` contains test 2.
 
-- **bumf**: sort of recycle bin, don't look inside :)
 - **css**
 - **data**: the data sources that are used in the specs
+- **experiments**: the code of the experiments as described above
 - **img**: the images that are used in the specs
-- **lib**: external libraries, leaflet-vega, vega-tooltip, etc. (unfortunately you can't import them)
 - **node_modules**: you will see this folder after you've run `yarn install` or `npm install`
-- **src**: the es6 code
-    - **specs**: the es6 file that export the Vega specs
-    - **util**
-- **package.json**: contains build and watch scripts
-    - `npm run build` builds all examples
-    - `npm run watch` compiles continuously, edit the command to match the test that you're working on
+- **scripts**: script that converts the Vega specs from javascript to json files
+- **specs**: all Vega specs both in javascript and json format
+- **gulp.babel.js**: contains build and watch scripts
+    - `gulp build_css` compiles sass to a single css
+    - `gulp build_all` builds all experiments
+    - `gulp watch_all` compiles all experiments continuously, edit the command to single out the test that you're working on:
+    - `gulp watch_all -f 9` watch only the experiment #9

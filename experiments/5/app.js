@@ -9,7 +9,6 @@ const spec = generateSpec({
 });
 spec.runtime = {
     element: 'app',
-    leaflet: true,
 };
 
 createViews({ specs: spec });

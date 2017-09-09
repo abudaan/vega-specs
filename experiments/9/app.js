@@ -19,8 +19,10 @@ const data = {
     container: document.getElementById('container'),
 };
 createViews(data)
-    .then(result => console.log(result));
-
-document.getElementById('show-spec')
-    .addEventListener('click', () => showSpecInTab(spec));
+    .then((result) => {
+        document.getElementById('show-spec-1')
+            .addEventListener('click', () => showSpecInTab(result[0].spec));
+        document.getElementById('show-spec-2')
+            .addEventListener('click', () => showSpecInTab(result[1].spec));
+    });
 

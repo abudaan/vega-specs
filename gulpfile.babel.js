@@ -60,6 +60,11 @@ gulp.task('build_all', (done) => {
                 .pipe(rename({
                     extname: '.bundle.js',
                 }))
+                // .pipe(minify({
+                //     mangle: {
+                //         keepClassName: true,
+                //     },
+                // }))
                 .pipe(gulp.dest('./'));
         });
         es.merge(tasks).on('end', done);
@@ -68,7 +73,8 @@ gulp.task('build_all', (done) => {
 
 
 gulp.task('watch_all', (done) => {
-    glob('./experiments/9/app.js', (err, files) => {
+    const w = process.argv[4] || '**';
+    glob(`./experiments/${w}/app.js`, (err, files) => {
         if (err) {
             done(err);
         }
@@ -88,7 +94,6 @@ gulp.task('watch_all', (done) => {
         es.merge(tasks).on('end', done);
     });
 });
-
 
 gulp.task('watch_js', () => {
     const opts = {
@@ -143,8 +148,8 @@ gulp.task('build_js', () => {
 });
 
 
-// gulp.task('build_css', () => gulp.src(sources.css)
-//     .pipe(sass().on('error', sass.logError))
-//     .pipe(autoprefixer())
-//     .pipe(concat('main.css'))
-//     .pipe(gulp.dest(targets.css)));
+gulp.task('build_css', () => gulp.src('./css/main.sass')
+    .pipe(sass().on('error', sass.logError))
+    .pipe(autoprefixer())
+    .pipe(concat('app.css'))
+    .pipe(gulp.dest('./css')));
