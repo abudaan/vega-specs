@@ -77,7 +77,7 @@ export default function (args) => {
 };
 ```
 
-Then I use es6 `import` to add the spec to the Vega runtime:
+Then I can import the spec anywhere and add it to the Vega runtime:
 
 ```javascript
 import createSpec from '../src/specs/spec5';
@@ -94,6 +94,8 @@ const view = new vega.View(vega.parse(spec))
     .run();
 ```
 
+To render separate specs that can listen to each other's signals I use [vega-multi-view](https://github.com/abudaan/vega-multi-view).
+
 ## Specs as JSON
 
 I have added functionality to print the object as JSON to a new browser tab to allow you to open and save the spec as separate `.vg.json` file:
@@ -107,7 +109,7 @@ w.document.close();
 ```
 All [credits](https://stackoverflow.com/questions/27705640/display-json-in-a-readable-format-in-a-new-tab) for printing JSON in a tab.
 
-Also there is a gulp script that converts specs in javascript format to specs in JSON format: `gulp create_specs`. It converts all specs in the `specs` folder, the JSON files will be written to this folder as well.
+There is a gulp script that converts specs in javascript format to specs in JSON format as well: `gulp create_specs`. It converts all specs in the `specs` folder, the JSON files are written to the same folder.
 
 ## Experiments
 
@@ -163,7 +165,7 @@ This is an ongoing project: more tests will follow.
 
 ## Project setup
 
-- **css**
+- **css**: contains both the sass files and the compiled css file
 - **data**: the data sources that are used in the specs
 - **experiments**: the code of the experiments as described above, every experiment has its own sub folder
 - **img**: the images that are used in the specs
