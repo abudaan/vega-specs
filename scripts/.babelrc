@@ -5,9 +5,6 @@
             "env",
             {
                 "targets": {
-                    "browsers": [
-                        "> 5%"
-                    ],
                     "node": "current"
                 }
             }

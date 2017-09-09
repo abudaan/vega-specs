@@ -1,9 +1,6 @@
 {
     "$schema": "https://vega.github.io/schema/vega/v3.0.json",
     "autosize": "none",
-    "axes": [],
-    "background": "",
-    "config": {},
     "data": [
         {
             "format": {
@@ -64,10 +61,7 @@
             "url": "../../data/scholen.topo.json"
         }
     ],
-    "description": "",
-    "encode": {},
     "height": 720,
-    "legends": [],
     "marks": [
         {
             "encode": {
@@ -189,12 +183,6 @@
             "type": "text"
         }
     ],
-    "padding": {
-        "bottom": 0,
-        "left": 0,
-        "right": 0,
-        "top": 0
-    },
     "projections": [
         {
             "center": [
@@ -225,38 +213,6 @@
             "type": "mercator"
         }
     ],
-    "runtime": {
-        "cssClass": null,
-        "divId": null,
-        "leaflet": true,
-        "publish": [
-            {
-                "as": "hover",
-                "signal": "buurt_hover_naam"
-            }
-        ],
-        "renderer": "canvas",
-        "tooltipOptions": {
-            "fields": [
-                {
-                    "field": "properties.NAAM",
-                    "formatType": "string",
-                    "title": "buurt"
-                },
-                {
-                    "field": "properties.CODE",
-                    "formatType": "string",
-                    "title": "code"
-                },
-                {
-                    "field": "properties.TYPE",
-                    "formatType": "string",
-                    "title": "type"
-                }
-            ],
-            "showAllFields": false
-        }
-    },
     "scales": [],
     "signals": [
         {
@@ -290,6 +246,5 @@
             "value": 4.38680648803711
         }
     ],
-    "title": "",
     "width": 720
 }

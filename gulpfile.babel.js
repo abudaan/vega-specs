@@ -14,6 +14,7 @@ import babelify from 'babelify';
 import es from 'event-stream';
 import glob from 'glob';
 import path from 'path';
+import createSpecs from './scripts/create-specs';
 
 const sources = {
     js: './src/js/**/*.js',
@@ -95,6 +96,7 @@ gulp.task('watch_all', (done) => {
     });
 });
 
+
 gulp.task('watch_js', () => {
     const opts = {
         debug: true,
@@ -153,3 +155,9 @@ gulp.task('build_css', () => gulp.src('./css/main.sass')
     .pipe(autoprefixer())
     .pipe(concat('app.css'))
     .pipe(gulp.dest('./css')));
+
+
+gulp.task('create_specs', (done) => {
+    createSpecs(path.join(__dirname, 'specs'), path.join(__dirname, 'specs'))
+        .then(() => { done(); }, (error) => { gutil.log(gutil.colors.red(error)); done(); });
+});

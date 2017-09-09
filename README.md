@@ -2,11 +2,11 @@
 
 Experimenting with Vega 3 specs.
 
-## JSON
+## Javascript Vega specifications
 
-In my experience it is very cumbersome to draft Vega specs in JSON; you can not comment out certain parts for testing and you can't add inline documentation.
+Crafting Vega specifications (specs) in JSON can be very cumbersome; you can not comment out certain parts for testing and you can't add inline documentation.
 
-Therefor I decided to assemble Vega specs from separate javascript objects:
+That is why I build up my Vega specs from separate javascript objects:
 
 ```javascript
 const signals = [
@@ -29,30 +29,74 @@ const scales = [
     ...
 ];
 
-export default {
-    $schema: 'https://vega.github.io/schema/vega/v3.0.json',
-    width: 720,
-    height: 720,
-    autosize: 'none',
-    scales,
-    signals,
-    data,
-    marks,
-    projections,
-};
+...
+
 ```
-Then I use es6 `import` to render them with the Vega runtime:
+
+Then I use an export function that returns the Vega spec as Javascript object. In some cases it can be handy to pass arguments, for instance for dynamically setting the path to data sources and images:
 
 ```javascript
-import spec from '../src/specs/spec5';
+export default function (args) => {
+    const {
+        dataPath,
+        imagePath
+    } = args;
+
+    const data = [{
+        name: 'map',
+        url: `${dataPath}map.topo.json`,
+    }];
+
+    const marks = [{
+        type: 'image',
+        name: 'schools_image',
+        encode: {
+            enter: {
+                url: {
+                    value: `${imagePath}school.png`,
+                },
+                ...
+            }
+        }
+    }]
+
+    // the rest of you spec objects ...
+
+    return {
+        $schema: 'https://vega.github.io/schema/vega/v3.0.json',
+        width: 720,
+        height: 720,
+        autosize: 'none',
+        scales,
+        signals,
+        data,
+        marks,
+        projections,
+        ...
+    }
+};
+```
+
+Then I use es6 `import` to add the spec to the Vega runtime:
+
+```javascript
+import createSpec from '../src/specs/spec5';
+
+const spec = createSpec({
+    dataPath: '../../data',
+    imagePath: '../../img',
+});
 
 const view = new vega.View(vega.parse(spec))
     .renderer('canvas')
-    .initialize('vega-spec')
+    .initialize('vega-div')
     .hover()
     .run();
 ```
-And I have added functionality to print the object as JSON to a new browser tab to allow you to save the spec as separate `.vg.json` file:
+
+## Specs as JSON
+
+I have added functionality to print the object as JSON to a new browser tab to allow you to open and save the spec as separate `.vg.json` file:
 
 ```javascript
 const json = JSON.stringify(spec, null, 4);
@@ -63,51 +107,53 @@ w.document.close();
 ```
 All [credits](https://stackoverflow.com/questions/27705640/display-json-in-a-readable-format-in-a-new-tab) for printing JSON in a tab.
 
-## Tests
+Also there is a gulp script that converts specs in javascript format to specs in JSON format: `gulp create_specs`. It converts all specs in the `specs` folder, the JSON files will be written to this folder as well.
 
-I have created a few tests that all address different functionality of Vega, I will add more documentation as soon as I can find the time to do it.
+## Experiments
 
-### test 2
+I have created a few experiments that all address different functionality of Vega, I will add more documentation as soon as I can find the time to do it.
+
+### experiment 2
 
 Using webfonts and css in Vega specs using SVG renderer.
 [[live demo]](https://abudaan.github.io/vega-specs/experiments/2/)
 
-### test 2a
+### experiment 2a
 
 Using webfonts and css in Vega specs using canvas renderer.
 [[live demo]](https://abudaan.github.io/vega-specs/experiments/2a/)
 
-### test 3
+### experiment 3
 
 Render tooltips on top of a map using [Vega-tooltip](https://github.com/vega/vega-tooltip).
 [[live demo]](https://abudaan.github.io/vega-specs/experiments/3/)
 
-### test 4
+### experiment 4
 
 Render a Vega spec to a layer in Leaflet using [leaflet-vega](https://github.com/nyurik/leaflet-vega).
 [[live demo]](https://abudaan.github.io/vega-specs/experiments/4/)
 
-### test 5
+### experiment 5
 
 Upper part of this [example](https://vega.github.io/vega/examples/overview-plus-detail/)
 [[live demo]](https://abudaan.github.io/vega-specs/experiments/5/)
 
-### test 6
+### experiment 6
 
 Controller part of this [example](https://vega.github.io/vega/examples/overview-plus-detail/)
 [[live demo]](https://abudaan.github.io/vega-specs/experiments/6/)
 
-### test 7
+### experiment 7
 
 This [example](https://vega.github.io/vega/examples/overview-plus-detail/) split into 2 separate specs, but the upper spec still receives the signal of the controller spec.
 [[live demo]](https://abudaan.github.io/vega-specs/experiments/7/)
 
-### test 8
+### experiment 8
 
 Scatterplot with selectable date range; 2 separate specs.
 [[live demo]](https://abudaan.github.io/vega-specs/experiments/8/)
 
-### test 9
+### experiment 9
 
 Display hover signal in another (non-related) spec
 [[live demo]](https://abudaan.github.io/vega-specs/experiments/9/)
@@ -117,17 +163,16 @@ This is an ongoing project: more tests will follow.
 
 ## Project setup
 
-Folders named with a number contain tests; e.g. folder `2` contains test 2.
-
 - **css**
 - **data**: the data sources that are used in the specs
-- **experiments**: the code of the experiments as described above
+- **experiments**: the code of the experiments as described above, every experiment has its own sub folder
 - **img**: the images that are used in the specs
 - **node_modules**: you will see this folder after you've run `yarn install` or `npm install`
-- **scripts**: script that converts the Vega specs from javascript to json files
+- **scripts**: contains a script that converts the Vega specs from javascript to json files, used by gulp.
 - **specs**: all Vega specs both in javascript and json format
 - **gulp.babel.js**: contains build and watch scripts
     - `gulp build_css` compiles sass to a single css
     - `gulp build_all` builds all experiments
-    - `gulp watch_all` compiles all experiments continuously, edit the command to single out the test that you're working on:
-    - `gulp watch_all -f 9` watch only the experiment #9
+    - `gulp watch_all` watch all experiments; compiles all experiments continuously:
+    - `gulp watch_all -f 9` single out the test that you're working on; in this case only experiment #9 is watched
+    - `gulp create_specs` converts all specs in javascript format to JSON files
