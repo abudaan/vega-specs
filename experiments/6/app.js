@@ -1,6 +1,5 @@
 import createViews, { showSpecInTab } from 'vega-multi-view';
 import generateSpec from '../../specs/spec6b';
-// Vega rendering a map using leaflet-vega
 
 const spec = generateSpec({
     dataPath: '../../data/',

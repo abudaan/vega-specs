@@ -98,6 +98,12 @@ Split this [example](https://vega.github.io/vega/examples/overview-plus-detail/)
 Scatterplot with selectable date range. Note: these are 2 separate specs.
 [[live demo]](https://abudaan.github.io/vega-specs/experiments/8/)
 
+
+### test 9
+
+Display hover signal in another (non-related) spec
+[[live demo]](https://abudaan.github.io/vega-specs/experiments/9/)
+
 This is an ongoing project: more tests will follow.
 
 

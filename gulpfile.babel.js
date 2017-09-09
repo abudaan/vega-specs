@@ -2,7 +2,7 @@ import gulp from 'gulp';
 import sourcemaps from 'gulp-sourcemaps';
 import gutil from 'gulp-util';
 import rename from 'gulp-rename';
-import babili from 'gulp-babili';
+import minify from 'gulp-babel-minify';
 import sass from 'gulp-sass';
 import concat from 'gulp-concat';
 import autoprefixer from 'gulp-autoprefixer';
@@ -68,7 +68,7 @@ gulp.task('build_all', (done) => {
 
 
 gulp.task('watch_all', (done) => {
-    glob('./experiments/**/app.js', (err, files) => {
+    glob('./experiments/9/app.js', (err, files) => {
         if (err) {
             done(err);
         }
@@ -134,7 +134,7 @@ gulp.task('build_js', () => {
         // }))
         // .pipe(sourcemaps.write(path.join(targets.js, 'js')))
         // .pipe(gulp.dest(targets.js))
-        .pipe(babili({
+        .pipe(minify({
             mangle: {
                 keepClassName: true,
             },

@@ -5,8 +5,8 @@ import R from 'ramda';
 import { exec } from 'child_process';
 
 const paths = {
-    dataPath: './data/',
-    imagePath: './img/',
+    dataPath: '../../data/',
+    imagePath: '../../img/',
 };
 
 const importModule = (index, max, modules, outputFolder, callback) => {
@@ -53,18 +53,19 @@ const importModule = (index, max, modules, outputFolder, callback) => {
 
 const create = (folder, outputFolder = __dirname) => new Promise((resolve, reject) => {
     const files = R.map(file => path.join(folder, file), fs.readdirSync(folder));
+    const filteredFiles = R.filter(file => path.extname(file) === '.js', files);
     const modules = R.reduce((acc, value) => {
         const data = {
             path: value,
             name: `${path.basename(value, '.js')}.json`,
         };
         return [...acc, data];
-    }, [], files);
+    }, [], filteredFiles);
     // console.log(outputFolder);
     // console.log(modules);
     const max = R.length(files);
     importModule(0, max, modules, outputFolder, resolve);
 });
 
-create(path.join(__dirname, '../src/specs'), path.join(__dirname, '../public/specs'))
+create(path.join(__dirname, '../specs'), path.join(__dirname, '../specs'))
     .then(data => gutil.log(gutil.colors.green(data)));

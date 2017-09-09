@@ -7,14 +7,12 @@ const spec = generateSpec({
     dataPath: '../../data/',
     imagePath: '../../img/',
 });
-
 spec.runtime = {
     element: 'app',
     leaflet: true,
 };
-createViews({
-    specs: spec,
-});
+
+createViews({ specs: spec });
 
 document.getElementById('generate-spec')
     .addEventListener('click', () => showSpecInTab(spec));

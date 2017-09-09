@@ -1,0 +1,266 @@
+{
+    "$schema": "https://vega.github.io/schema/vega/v3.0.json",
+    "autosize": "none",
+    "axes": [
+        {
+            "orient": "bottom",
+            "scale": "xOverview"
+        },
+        {
+            "orient": "left",
+            "scale": "yOverview"
+        }
+    ],
+    "config": {
+        "axis": {
+            "domainColor": "white",
+            "gridColor": "white",
+            "labelColor": "white",
+            "tickColor": "white"
+        }
+    },
+    "data": [
+        {
+            "format": {
+                "delimiter": ";",
+                "parse": {
+                    "date": "date"
+                },
+                "type": "dsv"
+            },
+            "name": "reports",
+            "transform": [
+                {
+                    "groupby": [
+                        "date"
+                    ],
+                    "type": "aggregate"
+                },
+                {
+                    "as": "year_month",
+                    "expr": "year(datum.date) + \"_\" + month(datum.date)",
+                    "type": "formula"
+                },
+                {
+                    "sort": {
+                        "field": "date",
+                        "order": "ascending"
+                    },
+                    "type": "collect"
+                }
+            ],
+            "url": "../../data/combined.csv"
+        }
+    ],
+    "description": "controller",
+    "height": 140,
+    "marks": [
+        {
+            "encode": {
+                "update": {
+                    "fill": {
+                        "value": "steelblue"
+                    },
+                    "width": {
+                        "value": 2
+                    },
+                    "x": {
+                        "field": "date",
+                        "scale": "xOverview"
+                    },
+                    "y": {
+                        "field": "count",
+                        "scale": "yOverview"
+                    },
+                    "y2": {
+                        "scale": "yOverview",
+                        "value": 0
+                    }
+                }
+            },
+            "from": {
+                "data": "reports"
+            },
+            "interactive": false,
+            "type": "rect"
+        },
+        {
+            "encode": {
+                "enter": {
+                    "fill": {
+                        "value": "#333"
+                    },
+                    "fillOpacity": {
+                        "value": 0.2
+                    },
+                    "height": {
+                        "signal": "height"
+                    },
+                    "y": {
+                        "value": 0
+                    }
+                },
+                "update": {
+                    "x": {
+                        "signal": "brush[0]"
+                    },
+                    "x2": {
+                        "signal": "brush[1]"
+                    }
+                }
+            },
+            "name": "brush",
+            "type": "rect"
+        },
+        {
+            "encode": {
+                "enter": {
+                    "fill": {
+                        "value": "firebrick"
+                    },
+                    "height": {
+                        "signal": "height"
+                    },
+                    "width": {
+                        "value": 1
+                    },
+                    "y": {
+                        "value": 0
+                    }
+                },
+                "update": {
+                    "x": {
+                        "signal": "brush[0]"
+                    }
+                }
+            },
+            "interactive": false,
+            "type": "rect"
+        },
+        {
+            "encode": {
+                "enter": {
+                    "fill": {
+                        "value": "yellow"
+                    },
+                    "height": {
+                        "signal": "height"
+                    },
+                    "width": {
+                        "value": 1
+                    },
+                    "y": {
+                        "value": 0
+                    }
+                },
+                "update": {
+                    "x": {
+                        "signal": "brush[1]"
+                    }
+                }
+            },
+            "interactive": false,
+            "type": "rect"
+        }
+    ],
+    "padding": 40,
+    "projections": [],
+    "scales": [
+        {
+            "domain": {
+                "data": "reports",
+                "field": "date"
+            },
+            "name": "xOverview",
+            "range": [
+                0,
+                {
+                    "signal": "width"
+                }
+            ],
+            "type": "time"
+        },
+        {
+            "domain": {
+                "data": "reports",
+                "field": "count"
+            },
+            "name": "yOverview",
+            "range": [
+                {
+                    "signal": "height"
+                },
+                0
+            ],
+            "type": "linear"
+        }
+    ],
+    "signals": [
+        {
+            "name": "brush",
+            "on": [
+                {
+                    "events": "mousedown",
+                    "update": "[x(), x()]"
+                },
+                {
+                    "events": "[mousedown, window:mouseup] > window:mousemove!",
+                    "update": "[brush[0], clamp(x(), 0, width)]"
+                },
+                {
+                    "events": {
+                        "signal": "delta"
+                    },
+                    "update": "clampRange([anchor[0] + delta, anchor[1] + delta], 0, width)"
+                }
+            ],
+            "value": 0
+        },
+        {
+            "name": "anchor",
+            "on": [
+                {
+                    "events": "@brush:mousedown",
+                    "update": "slice(brush)"
+                }
+            ],
+            "value": null
+        },
+        {
+            "name": "xdown",
+            "on": [
+                {
+                    "events": "@brush:mousedown",
+                    "update": "x()"
+                }
+            ],
+            "value": 0
+        },
+        {
+            "name": "delta",
+            "on": [
+                {
+                    "events": "[@brush:mousedown, window:mouseup] > window:mousemove!",
+                    "update": "x() - xdown"
+                }
+            ],
+            "value": 0
+        },
+        {
+            "name": "detailDomain",
+            "on": [
+                {
+                    "events": {
+                        "signal": "brush"
+                    },
+                    "update": "span(brush) ? invert(xOverview, brush) : null"
+                }
+            ],
+            "value": [
+                "2014-01-01T00:00:00.000Z",
+                "2015-06-29T23:00:00.000Z"
+            ]
+        }
+    ],
+    "width": 900
+}

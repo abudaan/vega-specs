@@ -2,14 +2,11 @@ import createViews, { showSpecInTab } from 'vega-multi-view';
 import generateSpec1 from '../../specs/spec6a';
 import generateSpec2 from '../../specs/spec6b';
 
-// Vega rendering a map using leaflet-vega
-
 const spec1 = generateSpec1({
     dataPath: '../../data/',
     imagePath: '../../img/',
 });
 spec1.runtime = {
-    run: true,
     element: 'app1',
     subscribe: {
         signal: 'range',
@@ -22,7 +19,6 @@ const spec2 = generateSpec2({
     imagePath: '../../img/',
 });
 spec2.runtime = {
-    run: true,
     element: 'app2',
     publish: {
         signal: 'detailDomain',

@@ -1,1 +1,0 @@
-console.error("Error: Cannot find module 'canvas' from '/home/abudaan/workspace/fffact/node_modules/vega-multi-view/dist'");

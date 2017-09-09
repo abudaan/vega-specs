@@ -7,14 +7,12 @@ import generateSpec from '../../specs/spec5a';
 const spec = generateSpec();
 spec.runtime = {
     element: 'app',
-    run: true,
 };
 const data = {
     specs: spec,
     renderer: 'canvas',
     debug: true,
 };
-
 
 createViews(data)
     .then(result => console.log(result));

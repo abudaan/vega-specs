@@ -10,9 +10,11 @@
         "server": "python -m SimpleHTTPServer 9001",
         "start": "npm run server & npm run watch",
         "watch": "watchify ./src/js/index.js -t [ babelify ] -o ./public/js/app.js --debug --verbose",
-        "watch-css": "node-sass -w ./src/styles/main.sass > ./public/css/app.css"
+        "watch-css": "node-sass -w ./src/styles/main.sass > ./public/css/app.css",
+        "create-specs": "babel-node ./scripts/create-specs.js"
     },
     "dependencies": {
+        "koa": "^2.3.0",
         "ramda": "0.23.0",
         "vega-multi-view": "https://github.com/abudaan/vega-multi-view"
     },
@@ -38,6 +40,7 @@
         "glob": "^7.1.2",
         "gulp": "^3.9.1",
         "gulp-autoprefixer": "^4.0.0",
+        "gulp-babel-minify": "^0.2.0",
         "gulp-babili": "^0.1.4",
         "gulp-concat": "^2.6.1",
         "gulp-rename": "^1.2.2",

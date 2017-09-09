@@ -1,7 +1,6 @@
 import createViews, { showSpecInTab } from 'vega-multi-view';
 import generateSpec from '../../specs/spec4';
 
-
 // Shows tooltips over a map using vega-tooltip plugin
 
 const spec = generateSpec({
@@ -10,7 +9,6 @@ const spec = generateSpec({
 });
 
 spec.runtime = {
-    run: true,
     element: 'app',
     tooltipOptions: {
         showAllFields: false,
