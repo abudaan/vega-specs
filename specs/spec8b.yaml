@@ -1,0 +1,155 @@
+$schema: 'https://vega.github.io/schema/vega/v3.0.json'
+description: controller
+width: 900
+height: 140
+padding: 40
+autosize: none
+config:
+  axis:
+    domainColor: white
+    gridColor: white
+    labelColor: white
+    tickColor: white
+scales:
+  - name: xOverview
+    type: time
+    range:
+      - 0
+      - signal: width
+    domain:
+      data: reports
+      field: date
+  - name: yOverview
+    domain:
+      data: reports
+      field: count
+    type: linear
+    range:
+      - signal: height
+      - 0
+signals:
+  - name: brush
+    value: 0
+    'on':
+      - events: mousedown
+        update: '[x(), x()]'
+      - events: '[mousedown, window:mouseup] > window:mousemove!'
+        update: '[brush[0], clamp(x(), 0, width)]'
+      - events:
+          signal: delta
+        update: 'clampRange([anchor[0] + delta, anchor[1] + delta], 0, width)'
+  - name: anchor
+    value: null
+    'on':
+      - events: '@brush:mousedown'
+        update: slice(brush)
+  - name: xdown
+    value: 0
+    'on':
+      - events: '@brush:mousedown'
+        update: x()
+  - name: delta
+    value: 0
+    'on':
+      - events: '[@brush:mousedown, window:mouseup] > window:mousemove!'
+        update: x() - xdown
+  - name: detailDomain
+    value:
+      - '2014-01-01T00:00:00.000Z'
+      - '2015-06-29T23:00:00.000Z'
+    'on':
+      - events:
+          signal: brush
+        update: 'span(brush) ? invert(''xOverview'', brush) : null'
+axes:
+  - orient: bottom
+    scale: xOverview
+  - orient: left
+    scale: yOverview
+data:
+  - name: reports
+    url: ../../data/combined.csv
+    format:
+      type: dsv
+      delimiter: ;
+      parse:
+        date: date
+    transform:
+      - type: aggregate
+        groupby:
+          - date
+      - type: formula
+        as: year_month
+        expr: year(datum.date) + "_" + month(datum.date)
+      - type: collect
+        sort:
+          field: date
+          order: ascending
+marks:
+  - type: rect
+    from:
+      data: reports
+    interactive: false
+    encode:
+      update:
+        x:
+          scale: xOverview
+          field: date
+        width:
+          value: 2
+        'y':
+          scale: yOverview
+          field: count
+        y2:
+          scale: yOverview
+          value: 0
+        fill:
+          value: steelblue
+  - type: rect
+    name: brush
+    encode:
+      enter:
+        'y':
+          value: 0
+        height:
+          signal: height
+        fill:
+          value: '#333'
+        fillOpacity:
+          value: 0.2
+      update:
+        x:
+          signal: 'brush[0]'
+        x2:
+          signal: 'brush[1]'
+  - type: rect
+    interactive: false
+    encode:
+      enter:
+        'y':
+          value: 0
+        height:
+          signal: height
+        width:
+          value: 1
+        fill:
+          value: firebrick
+      update:
+        x:
+          signal: 'brush[0]'
+  - type: rect
+    interactive: false
+    encode:
+      enter:
+        'y':
+          value: 0
+        height:
+          signal: height
+        width:
+          value: 1
+        fill:
+          value: yellow
+      update:
+        x:
+          signal: 'brush[1]'
+projections: []

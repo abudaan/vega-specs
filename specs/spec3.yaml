@@ -1,0 +1,60 @@
+$schema: 'https://vega.github.io/schema/vega/v3.0.json'
+width: 900
+height: 600
+autosize: none
+scales:
+  - name: date_scale
+    type: time
+    domain:
+      data: reports
+      field: datetime
+    range:
+      - 0
+      - 100
+  - name: xscale
+    type: time
+signals:
+  - name: date_start
+    value: 0
+    bind:
+      input: range
+      min: 0
+      max: 100
+  - name: date_end
+    value: 10
+    bind:
+      input: range
+      min: 0
+      max: 100
+      label: date_end
+  - name: selected_date_range
+    update: '[invert("date_scale", date_start), invert("date_scale", date_end)]'
+data:
+  - name: reports
+    values:
+      - datetime: 1419980400000
+      - datetime: 1409522400000
+      - datetime: 1404165600000
+      - datetime: 1391209200000
+marks:
+  - type: text
+    encode:
+      enter:
+        align:
+          value: left
+        fontSize:
+          value: 20
+        width:
+          value: 50
+        baseline:
+          value: bottom
+        fill:
+          value: '#fff'
+        x:
+          value: 100
+        'y':
+          value: 100
+      update:
+        text:
+          signal: selected_date_range
+projections: []

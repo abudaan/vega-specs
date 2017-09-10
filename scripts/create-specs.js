@@ -39,7 +39,9 @@ const importModule = (index, max, modules, outputFolder, callback) => {
             //     gutil.log(gutil.colors.blue('export: ', file));
             //     next();
             // });
-            fs.writeFile(file, spec, () => { next(); });
+            fs.writeFile(file, spec, () => {
+                next();
+            });
         },
         (error) => {
             gutil.log(gutil.colors.red('[reject]', error));

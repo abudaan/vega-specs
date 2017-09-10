@@ -15,6 +15,7 @@ import babelify from 'babelify';
 import es from 'event-stream';
 import glob from 'glob';
 import path from 'path';
+import jsonToYaml from 'gulp-json-to-yaml';
 import createSpecs from './scripts/create-specs';
 
 const sources = {
@@ -161,5 +162,16 @@ gulp.task('build_css', () => gulp.src('./css/main.sass')
 
 gulp.task('create_specs', (done) => {
     createSpecs(path.join(__dirname, 'specs'), path.join(__dirname, 'specs'))
-        .then(() => { done(); }, (error) => { gutil.log(gutil.colors.red(error)); done(); });
+        .then(
+        () => {
+            gulp.src('./specs/*.json')
+                .pipe(jsonToYaml())
+                .pipe(gulp.dest('./specs/'));
+            done();
+        },
+        (error) => {
+            gutil.log(gutil.colors.red(error));
+            done();
+        },
+    );
 });

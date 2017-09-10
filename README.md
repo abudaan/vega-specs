@@ -100,7 +100,7 @@ To render separate specs that can listen to each other's signals I use [vega-mul
 
 I have added [functionality](https://stackoverflow.com/questions/27705640/display-json-in-a-readable-format-in-a-new-tab) to print the spec as JSON to a new browser tab to allow you to open and save the spec as separate `.vg.json` file:
 
-If you want to convert the spec before runtime into a JSON file there is a gulp script for that as well: `gulp create_specs`. It converts all specs in the `specs` folder; the JSON files are written to the same folder.
+If you want to convert the spec before runtime into a JSON file there is a gulp script for that as well: `gulp create_specs`. It converts all specs in the `specs` folder; the JSON files are written to the same folder. (The script will output a YAML version of the specs as well, these are used in the [vega-multi-view-server](https://github.com/abudaan/vega-multi-view-server))
 
 ## Experiments
 
