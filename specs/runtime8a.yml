@@ -1,0 +1,18 @@
+subscribe:
+    signal: range
+    as: detailDomain
+tooltipOptions:
+    showAllFields: false
+    fields:
+        - formatType: string
+          field: name
+          title: buurt
+        - formatType: number
+          field: reports
+          title: reports
+        - formatType: number
+          field: dumps
+          title: dumps
+        - formatType: number
+          field: fillperc
+          title: fillperc

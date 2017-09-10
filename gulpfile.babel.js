@@ -5,6 +5,7 @@ import rename from 'gulp-rename';
 import minify from 'gulp-babel-minify';
 import sass from 'gulp-sass';
 import concat from 'gulp-concat';
+import filter from 'gulp-filter';
 import autoprefixer from 'gulp-autoprefixer';
 import buffer from 'vinyl-buffer';
 import source from 'vinyl-source-stream';
@@ -122,31 +123,32 @@ gulp.task('watch_js', () => {
 
 
 gulp.task('build_js', () => {
+    const folder = process.argv[4] || '**';
     const opts = {
         debug: true,
-        path: sources.js,
     };
     const b = browserify(opts);
-    b.add(sources.main_js);
+    b.add(`./experiments/${folder}/app.js`);
     b.transform(babelify.configure({
         compact: true,
     }));
 
     return b.bundle()
         .on('error', logBrowserifyError)
-        .pipe(source('index.js'))
+        .pipe(source('app.bundle.js'))
         .pipe(buffer())
-        // .pipe(sourcemaps.init({
-        //     loadMaps: true,
-        // }))
-        // .pipe(sourcemaps.write(path.join(targets.js, 'js')))
-        // .pipe(gulp.dest(targets.js))
+        .pipe(sourcemaps.init({
+            loadMaps: false,
+        }))
+        .pipe(sourcemaps.write('./'))
+        .pipe(gulp.dest(`./experiments/${folder}`))
+        .pipe(filter('**/*.js'))
         .pipe(minify({
             mangle: {
                 keepClassName: true,
             },
         }))
-        .pipe(gulp.dest(targets.js));
+        .pipe(gulp.dest(`./experiments/${folder}`));
 });
 
 

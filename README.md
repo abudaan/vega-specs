@@ -109,7 +109,7 @@ w.document.close();
 ```
 All [credits](https://stackoverflow.com/questions/27705640/display-json-in-a-readable-format-in-a-new-tab) for printing JSON in a tab.
 
-There is a gulp script that converts specs in javascript format to specs in JSON format as well: `gulp create_specs`. It converts all specs in the `specs` folder, the JSON files are written to the same folder.
+There is a gulp script that converts specs in javascript format to specs in JSON format as well: `gulp create_specs`. It converts all specs in the `specs` folder, the JSON files are written to the same folder. You can use this script as a starting point of your own code for generating Vega specs dynamically on the server using nodejs.
 
 ## Experiments
 

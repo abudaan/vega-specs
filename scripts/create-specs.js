@@ -10,7 +10,7 @@ const paths = {
 };
 
 const importModule = (index, max, modules, outputFolder, callback) => {
-    if (index + 1 === max) {
+    if (index === max) {
         callback('done!');
         return;
     }
@@ -26,19 +26,20 @@ const importModule = (index, max, modules, outputFolder, callback) => {
             const spec = JSON.stringify(module.default(paths));
             const file = path.join(outputFolder, data.name);
 
-            exec(`echo  '${spec}' | python -m json.tool > ${file}`, (error, stdout, stderr) => {
-                if (R.isNil(stdout) === false && stdout !== '') {
-                    gutil.log(gutil.colors.blue('stdout: ', stdout));
-                }
-                if (R.isNil(stderr) === false && stderr !== '') {
-                    gutil.log(gutil.colors.red('stderr: ', stderr));
-                }
-                if (R.isNil(error) === false) {
-                    gutil.log(gutil.colors.red('exec error: ', error));
-                }
-                gutil.log(gutil.colors.blue('export: ', file));
-                next();
-            });
+            // exec(`echo  '${spec}' | python -m json.tool > ${file}`, (error, stdout, stderr) => {
+            //     if (R.isNil(stdout) === false && stdout !== '') {
+            //         gutil.log(gutil.colors.blue('stdout: ', stdout));
+            //     }
+            //     if (R.isNil(stderr) === false && stderr !== '') {
+            //         gutil.log(gutil.colors.red('stderr: ', stderr));
+            //     }
+            //     if (R.isNil(error) === false) {
+            //         gutil.log(gutil.colors.red('exec error: ', error));
+            //     }
+            //     gutil.log(gutil.colors.blue('export: ', file));
+            //     next();
+            // });
+            fs.writeFile(file, spec, () => { next(); });
         },
         (error) => {
             gutil.log(gutil.colors.red('[reject]', error));

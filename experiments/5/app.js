@@ -7,11 +7,11 @@ const spec = generateSpec({
     dataPath: '../../data/',
     imagePath: '../../img/',
 });
-spec.runtime = {
-    element: 'app',
-};
+// spec.runtime = {
+//     element: 'app',
+// };
 
-createViews({ specs: spec });
+createViews({ specs: [spec], element: 'app' });
 
 document.getElementById('generate-spec')
     .addEventListener('click', () => showSpecInTab(spec));
