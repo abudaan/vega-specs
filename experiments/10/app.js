@@ -2,6 +2,7 @@ import createViews from 'vega-multi-view';
 
 // get the dataset from the body
 const config = document.body.dataset.config;
+console.log(config);
 // try to parse it to javascript
 let data;
 try {

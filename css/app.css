@@ -666,6 +666,7 @@ g.mark-text > text {
   fill: red; }
 
 .view {
+  margin: 15px;
   background-color: #555; }
 
 h1 {

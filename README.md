@@ -98,18 +98,9 @@ To render separate specs that can listen to each other's signals I use [vega-mul
 
 ## Specs as JSON
 
-I have added functionality to print the object as JSON to a new browser tab to allow you to open and save the spec as separate `.vg.json` file:
+I have added [functionality](https://stackoverflow.com/questions/27705640/display-json-in-a-readable-format-in-a-new-tab) to print the spec as JSON to a new browser tab to allow you to open and save the spec as separate `.vg.json` file:
 
-```javascript
-const json = JSON.stringify(spec, null, 4);
-const w = window.open();
-w.document.open();
-w.document.write(`<html><body><pre>${json}</pre></body></html>`);
-w.document.close();
-```
-All [credits](https://stackoverflow.com/questions/27705640/display-json-in-a-readable-format-in-a-new-tab) for printing JSON in a tab.
-
-There is a gulp script that converts specs in javascript format to specs in JSON format as well: `gulp create_specs`. It converts all specs in the `specs` folder, the JSON files are written to the same folder. You can use this script as a starting point of your own code for generating Vega specs dynamically on the server using nodejs.
+If you want to convert the spec before runtime into a JSON file there is a gulp script for that as well: `gulp create_specs`. It converts all specs in the `specs` folder; the JSON files are written to the same folder.
 
 ## Experiments
 
@@ -160,6 +151,11 @@ Scatterplot with selectable date range; 2 separate specs.
 Display hover signal in another (non-related) spec
 [[live demo]](https://abudaan.github.io/vega-specs/experiments/9/)
 
+### experiment 10
+
+Same as experiment 8 but now the specs get read from the dataset attribute of the body, see the [source](https://raw.githubusercontent.com/abudaan/vega-specs/gh-pages/experiments/10/index.html) of the html file.
+[[live demo]](https://abudaan.github.io/vega-specs/experiments/10/)
+
 This is an ongoing project: more tests will follow.
 
 
@@ -175,6 +171,12 @@ This is an ongoing project: more tests will follow.
 - **gulp.babel.js**: contains build and watch scripts
     - `gulp build_css` compiles sass to a single css
     - `gulp build_all` builds all experiments
+    - `gulp build_js -e 3` build single experiment, in this case experiment 3
     - `gulp watch_all` watch all experiments; compiles all experiments continuously:
-    - `gulp watch_all -f 9` single out the test that you're working on; in this case only experiment #9 is watched
+    - `gulp watch_all -e 9` single out the experiment that you're working on; in this case only experiment #9 is watched
     - `gulp create_specs` converts all specs in javascript format to JSON files
+
+
+## Run locally
+
+If you have Python installed you can start the SimpleHTTPServer at port 9001 with the command `npm run server`
