@@ -1,6 +1,6 @@
 # vega-specs
 
-Experimenting with Vega 3 specs.
+Creating Vega 3 specs with javascipt and export them to json, bson, yaml or a template. The template format can be handy when you want to configure or generate your specs before you pass them to the Vega runtime. For instance if you serve the specs from a server you can configure the path to data sources or images to match the folder structure of your server.
 
 ## Javascript Vega specifications
 
@@ -96,7 +96,7 @@ const view = new vega.View(vega.parse(spec))
 
 To render separate specs that can listen to each other's signals I use [vega-multi-view](https://github.com/abudaan/vega-multi-view).
 
-## Specs as JSON
+## Specs as JSON, BSON or YAML
 
 I have added [functionality](https://stackoverflow.com/questions/27705640/display-json-in-a-readable-format-in-a-new-tab) to print the spec as JSON to a new browser tab to allow you to open and save the spec as separate `.vg.json` file:
 

@@ -3,6 +3,9 @@ import path from 'path';
 import gutil from 'gulp-util';
 import R from 'ramda';
 import { exec } from 'child_process';
+import BSON from 'bson';
+
+const bson = new BSON();
 
 const paths = {
     dataPath: '../../data/',
@@ -25,6 +28,8 @@ const importModule = (index, max, modules, outputFolder, callback) => {
         (module) => {
             const spec = JSON.stringify(module.default(paths));
             const file = path.join(outputFolder, data.name);
+            const specBSON = bson.serialize(spec);
+            const file2 = path.join(outputFolder, data.name2);
 
             // exec(`echo  '${spec}' | python -m json.tool > ${file}`, (error, stdout, stderr) => {
             //     if (R.isNil(stdout) === false && stdout !== '') {
@@ -40,7 +45,9 @@ const importModule = (index, max, modules, outputFolder, callback) => {
             //     next();
             // });
             fs.writeFile(file, spec, () => {
-                next();
+                fs.writeFile(file2, specBSON, () => {
+                    next();
+                });
             });
         },
         (error) => {
@@ -61,6 +68,7 @@ const create = (folder, outputFolder = __dirname) => new Promise((resolve, rejec
         const data = {
             path: value,
             name: `${path.basename(value, '.js')}.json`,
+            name2: `${path.basename(value, '.js')}.bson`,
         };
         return [...acc, data];
     }, [], filteredFiles);
