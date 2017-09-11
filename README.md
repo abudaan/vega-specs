@@ -5,6 +5,7 @@ Creating Vega 3 specs with javascript and export them to JSON, BSON, YAML or a t
 ## Table of Contents
 
    * [vega-specs](#vega-specs)
+      * [Table of Contents](#table-of-contents)
       * [Javascript Vega specifications](#javascript-vega-specifications)
       * [Specs as JSON, BSON or YAML](#specs-as-json-bson-or-yaml)
       * [Experiments](#experiments)
