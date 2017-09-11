@@ -1,6 +1,27 @@
 # vega-specs
 
-Creating Vega 3 specs with javascipt and export them to json, bson, yaml or a template. The template format can be handy when you want to configure or generate your specs before you pass them to the Vega runtime. For instance if you serve the specs from a server you can configure the path to data sources or images to match the folder structure of your server.
+Creating Vega 3 specs with javascript and export them to JSON, BSON, YAML or a template. The template format can be handy when you want to configure or generate your specs before you pass them to the Vega runtime. For instance if you serve the specs from a server you can configure the path to data sources or images to match the folder structure of your server.
+
+## Table of Contents
+
+   * [vega-specs](#vega-specs)
+      * [Javascript Vega specifications](#javascript-vega-specifications)
+      * [Specs as JSON, BSON or YAML](#specs-as-json-bson-or-yaml)
+      * [Experiments](#experiments)
+         * [experiment 2](#experiment-2)
+         * [experiment 2a](#experiment-2a)
+         * [experiment 3](#experiment-3)
+         * [experiment 4](#experiment-4)
+         * [experiment 5](#experiment-5)
+         * [experiment 6](#experiment-6)
+         * [experiment 7](#experiment-7)
+         * [experiment 8](#experiment-8)
+         * [experiment 9](#experiment-9)
+         * [experiment 10](#experiment-10)
+      * [Project setup](#project-setup)
+      * [Run locally](#run-locally)
+
+<small>(toc created by [gh-md-toc](https://github.com/ekalinin/github-markdown-toc))</small>
 
 ## Javascript Vega specifications
 
