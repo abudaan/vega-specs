@@ -1,4 +1,4 @@
-# vega-specs
+# Vega specs
 
 Creating Vega 3 specs with javascript and export them to JSON, BSON, YAML or a template. The template format can be handy when you want to configure or generate your specs before you pass them to the Vega runtime. For instance if you serve the specs from a server you can configure the path to data sources or images to match the folder structure of your server.
 
