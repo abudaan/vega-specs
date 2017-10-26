@@ -101,17 +101,21 @@
         },
         {
             "name": "start_label",
-            "event": {
-                "signal": "start_date"
-            },
-            "update": "data('months')[start_month].data + ' ' + start_year"
+            "event": [
+                {
+                    "signal": "start_tick"
+                }
+            ],
+            "update": "data('months')[month(start_tick)].data + ' ' + year(start_tick)"
         },
         {
             "name": "end_label",
-            "event": {
-                "signal": "end_date"
-            },
-            "update": "data('months')[end_month].data + ' ' + end_year"
+            "event": [
+                {
+                    "signal": "end_tick"
+                }
+            ],
+            "update": "data('months')[month(end_tick)].data + ' ' + year(end_tick)"
         },
         {
             "name": "check",
@@ -150,7 +154,7 @@
             "on": [
                 {
                     "events": "[@date_end:mousedown, window:mouseup] > window:mousemove!",
-                    "update": "x() > x_start && x() < width ? x() : x_end"
+                    "update": "x() > x_start && x() <= width ? x() : x_end"
                 }
             ]
         }
