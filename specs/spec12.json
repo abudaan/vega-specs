@@ -18,42 +18,124 @@
                 "data": "sp500",
                 "field": "date"
             }
-        },
-        {
-            "name": "yOverview",
-            "type": "linear",
-            "range": [
-                70,
-                0
-            ],
-            "domain": {
-                "data": "sp500",
-                "field": "price"
-            },
-            "nice": true,
-            "zero": true
         }
     ],
     "signals": [
         {
-            "name": "selected_start_date",
-            "value": 946681200000,
+            "name": "check1",
+            "events": [
+                {
+                    "signal": "x_start"
+                },
+                {
+                    "signal": "x_end"
+                }
+            ],
+            "update": "x_end > x_start"
+        },
+        {
+            "name": "check2",
+            "events": [
+                {
+                    "signal": "year_month_start_date"
+                },
+                {
+                    "signal": "year_month_end_date"
+                }
+            ],
+            "update": "year_month_start_date[0] < year_month_end_date[0] || (year_month_start_date[0] === year_month_end_date[0] && year_month_start_date[1] < year_month_end_date[1])"
+        },
+        {
+            "name": "x_start",
+            "value": 0,
             "on": [
                 {
                     "events": "[@date_start:mousedown, window:mouseup] > window:mousemove!",
-                    "update": "invert('xOverview', x())"
+                    "update": "x() < x_end && x() >= 0 ? x() : x_start"
+                }
+            ],
+            "event": {
+                "signal": "tick_start_date"
+            }
+        },
+        {
+            "name": "x_end",
+            "value": 720,
+            "on": [
+                {
+                    "events": "[@date_end:mousedown, window:mouseup] > window:mousemove!",
+                    "update": "x() > x_start && x() < 720 ? x() : x_end"
                 }
             ]
         },
         {
-            "name": "selected_end_date",
-            "value": 1259622000000,
+            "name": "raw_start_date",
+            "update": "datetime(2000, 0)",
+            "on": [
+                {
+                    "events": "[@date_start:mousedown, window:mouseup] > window:mousemove!",
+                    "update": "invert('xOverview', x_start)"
+                }
+            ],
+            "event": {
+                "signal": "tick_start_date"
+            }
+        },
+        {
+            "name": "raw_end_date",
+            "update": "datetime(2010, 0)",
             "on": [
                 {
                     "events": "[@date_end:mousedown, window:mouseup] > window:mousemove!",
                     "update": "invert('xOverview', x())"
                 }
             ]
+        },
+        {
+            "name": "year_month_start_date",
+            "events": [
+                {
+                    "signal": "raw_start_date"
+                }
+            ],
+            "update": "[year(raw_start_date), month(raw_start_date)]"
+        },
+        {
+            "name": "year_month_end_date",
+            "events": [
+                {
+                    "signal": "raw_end_date"
+                }
+            ],
+            "update": "[year(raw_end_date), month(raw_end_date)]"
+        },
+        {
+            "name": "tick_start_date",
+            "events": {
+                "signal": "year_month_start_date"
+            },
+            "update": "check2 ? datetime(year_month_start_date[0], year_month_start_date[1]) : tick_start_date"
+        },
+        {
+            "name": "tick_end_date",
+            "events": {
+                "signal": "year_month_end_date"
+            },
+            "update": "check2 ? datetime(year_month_end_date[0], year_month_end_date[1]) : tick_end_date"
+        },
+        {
+            "name": "label_start_date",
+            "events": {
+                "signal": "year_month_start_date"
+            },
+            "update": "data('months')[year_month_start_date[1]].data  + ' ' +  year_month_start_date[0]"
+        },
+        {
+            "name": "label_end_date",
+            "events": {
+                "signal": "year_month_end_date"
+            },
+            "update": "data('months')[year_month_end_date[1]].data + ' ' +  year_month_end_date[0]"
         }
     ],
     "axes": [
@@ -96,6 +178,23 @@
                     "date": "date"
                 }
             }
+        },
+        {
+            "name": "months",
+            "values": [
+                "Jan",
+                "Feb",
+                "Mar",
+                "Apr",
+                "May",
+                "Jun",
+                "Jul",
+                "Aug",
+                "Sep",
+                "Bok",
+                "Nov",
+                "Dec"
+            ]
         }
     ],
     "marks": [
@@ -106,11 +205,10 @@
                 "update": {
                     "x": {
                         "scale": "xOverview",
-                        "signal": "selected_start_date"
+                        "signal": "tick_start_date"
                     },
                     "y": {
-                        "scale": "yOverview",
-                        "value": 600
+                        "value": 40
                     },
                     "size": {
                         "value": 300
@@ -131,11 +229,10 @@
                 "update": {
                     "x": {
                         "scale": "xOverview",
-                        "signal": "selected_end_date"
+                        "signal": "tick_end_date"
                     },
                     "y": {
-                        "scale": "yOverview",
-                        "value": 600
+                        "value": 40
                     },
                     "size": {
                         "value": 300
@@ -169,7 +266,7 @@
                 },
                 "update": {
                     "text": {
-                        "signal": "selected_start_date"
+                        "signal": "label_start_date"
                     }
                 }
             }
@@ -197,7 +294,7 @@
                 },
                 "update": {
                     "text": {
-                        "signal": "selected_end_date"
+                        "signal": "label_end_date"
                     }
                 }
             }
