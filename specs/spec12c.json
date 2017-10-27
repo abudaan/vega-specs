@@ -22,18 +22,6 @@
     ],
     "signals": [
         {
-            "name": "check1",
-            "events": [
-                {
-                    "signal": "x_start"
-                },
-                {
-                    "signal": "x_end"
-                }
-            ],
-            "update": "x_end > x_start"
-        },
-        {
             "name": "start_year",
             "event": {
                 "signal": "start_date"
@@ -98,24 +86,6 @@
                 }
             ],
             "update": "check ? datetime(end_year, end_month) : end_tick"
-        },
-        {
-            "name": "start_label",
-            "event": [
-                {
-                    "signal": "start_tick"
-                }
-            ],
-            "update": "data('months')[month(start_tick)].data + ' ' + year(start_tick)"
-        },
-        {
-            "name": "end_label",
-            "event": [
-                {
-                    "signal": "end_tick"
-                }
-            ],
-            "update": "data('months')[month(end_tick)].data + ' ' + year(end_tick)"
         },
         {
             "name": "check",
@@ -220,8 +190,43 @@
     ],
     "marks": [
         {
+            "name": "thumb",
+            "type": "rect",
+            "style": {
+                "z-index": 3
+            },
+            "encode": {
+                "enter": {
+                    "y": {
+                        "value": 40
+                    },
+                    "height": {
+                        "value": 30
+                    },
+                    "fill": {
+                        "value": "white"
+                    },
+                    "opacity": {
+                        "value": 0.4
+                    }
+                },
+                "update": {
+                    "x": {
+                        "scale": "xOverview",
+                        "signal": "start_tick"
+                    },
+                    "width": {
+                        "signal": "scale('xOverview', end_tick) - scale('xOverview', start_tick)"
+                    }
+                }
+            }
+        },
+        {
             "name": "date_start",
             "type": "symbol",
+            "style": {
+                "z-index": 2
+            },
             "encode": {
                 "update": {
                     "x": {
@@ -246,6 +251,9 @@
         {
             "name": "date_end",
             "type": "symbol",
+            "style": {
+                "z-index": 2
+            },
             "encode": {
                 "update": {
                     "x": {
@@ -287,7 +295,7 @@
                 },
                 "update": {
                     "text": {
-                        "signal": "start_label"
+                        "signal": "data('months')[month(start_tick)].data + ' ' + year(start_tick)"
                     }
                 }
             }
@@ -315,7 +323,7 @@
                 },
                 "update": {
                     "text": {
-                        "signal": "end_label"
+                        "signal": "data('months')[month(end_tick)].data + ' ' + year(end_tick)"
                     }
                 }
             }
