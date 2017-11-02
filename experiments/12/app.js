@@ -1,8 +1,11 @@
 import createViews from 'vega-multi-view';
 
+const now = Date.now();
+console.log(now);
+
 const data = {
     specs: [
-        `../../specs/spec12c.json?${Date.now()}`,
+        '../../specs/spec12e.json',
     ],
     debug: true,
     renderer: 'svg',
