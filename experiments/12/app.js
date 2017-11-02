@@ -5,7 +5,7 @@ console.log(now);
 
 const data = {
     specs: [
-        '../../specs/spec12e.json',
+        '../../specs/spec12f.json',
     ],
     debug: true,
     renderer: 'svg',

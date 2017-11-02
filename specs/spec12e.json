@@ -258,6 +258,9 @@
                     }
                 },
                 "update": {
+                    "zindex": {
+                        "value": 2
+                    },
                     "x": {
                         "scale": "xOverview",
                         "signal": "start_tick"
@@ -274,6 +277,9 @@
             "style": "date_start",
             "encode": {
                 "update": {
+                    "zindex": {
+                        "value": 1
+                    },
                     "x": {
                         "signal": "start_tick",
                         "scale": "xOverview"
@@ -370,16 +376,13 @@
     "config": {
         "style": {
             "thumb": {
-                "fill": "white",
-                "opacity": 0.3,
-                "zindex": 1
+                "fill": "green",
+                "opacity": 1
             },
             "date_start": {
-                "zindex": 2,
                 "fill": "yellow"
             },
             "date_end": {
-                "zindex": 2,
                 "fill": "red"
             }
         }
