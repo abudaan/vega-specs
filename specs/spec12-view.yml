@@ -57,9 +57,10 @@ scales:
     field: name
 signals:
 - name: range
-  value:
-  - time(datetime(2014, 0, 1))
-  - time(datetime(2015, 0, 1))
+  value: [0, 0]
+#   value:
+#   - time(datetime(2014, 0, 1))
+#   - time(datetime(2015, 4, 30))
 #   update: "[time(datetime(2014, 0, 1)), time(datetime(2015, 0, 1))]"
 - name: start_date
   update: range[0]
