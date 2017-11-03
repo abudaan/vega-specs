@@ -8,7 +8,7 @@ const data = {
                 as: 'range',
             }],
         }],
-        spec2: ['../../specs/spec12-controller.json', {
+        spec2: ['../../specs/spec12-controller.yml', {
             publish: [{
                 signal: 'range',
                 as: 'range_2',
