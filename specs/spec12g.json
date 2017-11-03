@@ -90,6 +90,10 @@
             ]
         },
         {
+            "name": "thumb_width",
+            "update": "end_x - start_x"
+        },
+        {
             "name": "thumb_down",
             "value": 0,
             "on": [
@@ -105,7 +109,7 @@
             "on": [
                 {
                     "events": "[@thumb:mousedown, window:mouseup] > window:mousemove!",
-                    "update": "x() - thumb_down"
+                    "update": "(start_x === 0 && end_x === width) ? 0 : (x() - thumb_down)"
                 }
             ]
         },
@@ -125,6 +129,30 @@
             ]
         },
         {
+            "name": "drag_thumb_start_x",
+            "value": 0,
+            "on": [
+                {
+                    "events": {
+                        "signal": "delta"
+                    },
+                    "update": "max((thumb_ref_point[0] + delta), 0)"
+                }
+            ]
+        },
+        {
+            "name": "drag_thumb_end_x",
+            "value": 0,
+            "on": [
+                {
+                    "events": {
+                        "signal": "delta"
+                    },
+                    "update": "min((thumb_ref_point[1] + delta), width)"
+                }
+            ]
+        },
+        {
             "name": "drag_thumb",
             "value": [
                 0,
@@ -132,10 +160,15 @@
             ],
             "on": [
                 {
-                    "events": {
-                        "signal": "delta"
-                    },
-                    "update": "[thumb_ref_point[0] + delta, thumb_ref_point[1] + delta]"
+                    "events": [
+                        {
+                            "signal": "drag_thumb_start_x"
+                        },
+                        {
+                            "signal": "drag_thumb_end_x"
+                        }
+                    ],
+                    "update": "(drag_thumb_start_x !== drag_thumb[0] && drag_thumb_end_x !== drag_thumb[1]) ? [drag_thumb_start_x, drag_thumb_end_x] : drag_thumb"
                 }
             ]
         }
@@ -218,7 +251,7 @@
                         "signal": "start_x"
                     },
                     "width": {
-                        "signal": "end_x - start_x"
+                        "signal": "thumb_width"
                     }
                 }
             }
