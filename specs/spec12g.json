@@ -4,6 +4,7 @@
     "height": 70,
     "padding": 30,
     "autosize": "none",
+    "description": "time range selector",
     "scales": [
         {
             "name": "xOverview",
@@ -44,6 +45,10 @@
         {
             "name": "end_date",
             "update": "invert('xOverview', end_x)"
+        },
+        {
+            "name": "range",
+            "update": "[time(start_date), time(end_date)]"
         },
         {
             "name": "start_tick",

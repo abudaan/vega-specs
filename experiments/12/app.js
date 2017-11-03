@@ -1,12 +1,21 @@
-import createViews from 'vega-multi-view';
-
-const now = Date.now();
-console.log(now);
+import { addViews } from 'vega-multi-view';
 
 const data = {
-    specs: [
-        '../../specs/spec12g.json',
-    ],
+    specs: {
+        spec1: ['../../specs/spec12-view.yml', {
+            subscribe: [{
+                signal: 'range_2',
+                as: 'range',
+            }],
+        }],
+        spec2: ['../../specs/spec12-controller.json', {
+            publish: [{
+                signal: 'range',
+                as: 'range_2',
+            }],
+        },
+        ],
+    },
     debug: true,
     renderer: 'svg',
     cssClass: 'view',
@@ -14,7 +23,7 @@ const data = {
 };
 
 // create the views
-createViews(data)
+addViews(data)
     .then((result) => {
         // do other stuff
         console.log(result);
