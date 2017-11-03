@@ -1,0 +1,337 @@
+{
+    "$schema": "https://vega.github.io/schema/vega/v3.0.json",
+    "width": 720,
+    "height": 70,
+    "padding": 30,
+    "autosize": "none",
+    "scales": [
+        {
+            "name": "xOverview",
+            "type": "time",
+            "range": [
+                0,
+                {
+                    "signal": "width"
+                }
+            ],
+            "domain": {
+                "data": "sp500",
+                "field": "date"
+            }
+        }
+    ],
+    "signals": [
+        {
+            "name": "start_year",
+            "update": "year(start_date)"
+        },
+        {
+            "name": "end_year",
+            "update": "year(end_date)"
+        },
+        {
+            "name": "start_month",
+            "update": "month(start_date)"
+        },
+        {
+            "name": "end_month",
+            "update": "month(end_date)"
+        },
+        {
+            "name": "start_date",
+            "update": "invert('xOverview', start_x)"
+        },
+        {
+            "name": "end_date",
+            "update": "invert('xOverview', end_x)"
+        },
+        {
+            "name": "start_tick",
+            "update": "check ? datetime(start_year, start_month) : start_tick"
+        },
+        {
+            "name": "end_tick",
+            "update": "check ? datetime(end_year, end_month) : end_tick"
+        },
+        {
+            "name": "check",
+            "update": "start_year < end_year || (start_year === end_year && start_month < end_month)"
+        },
+        {
+            "name": "start_x",
+            "value": 0,
+            "on": [
+                {
+                    "events": "[@date_start:mousedown, window:mouseup] > window:mousemove!",
+                    "update": "x() < end_x && x() >= 0 ? x() : start_x"
+                },
+                {
+                    "events": {
+                        "signal": "drag_thumb"
+                    },
+                    "update": "drag_thumb[0]"
+                }
+            ]
+        },
+        {
+            "name": "end_x",
+            "update": "width",
+            "on": [
+                {
+                    "events": "[@date_end:mousedown, window:mouseup] > window:mousemove!",
+                    "update": "x() > start_x && x() <= width ? x() : end_x"
+                },
+                {
+                    "events": {
+                        "signal": "drag_thumb"
+                    },
+                    "update": "drag_thumb[1]"
+                }
+            ]
+        },
+        {
+            "name": "thumb_down",
+            "value": 0,
+            "on": [
+                {
+                    "events": "@thumb:mousedown",
+                    "update": "x()"
+                }
+            ]
+        },
+        {
+            "name": "delta",
+            "value": 0,
+            "on": [
+                {
+                    "events": "[@thumb:mousedown, window:mouseup] > window:mousemove!",
+                    "update": "x() - thumb_down"
+                }
+            ]
+        },
+        {
+            "name": "thumb_ref_point",
+            "value": [
+                0,
+                0
+            ],
+            "on": [
+                {
+                    "events": {
+                        "signal": "thumb_down"
+                    },
+                    "update": "[start_x, end_x]"
+                }
+            ]
+        },
+        {
+            "name": "drag_thumb",
+            "value": [
+                0,
+                0
+            ],
+            "on": [
+                {
+                    "events": {
+                        "signal": "delta"
+                    },
+                    "update": "[thumb_ref_point[0] + delta, thumb_ref_point[1] + delta]"
+                }
+            ]
+        }
+    ],
+    "axes": [
+        {
+            "orient": "bottom",
+            "scale": "xOverview",
+            "encode": {
+                "ticks": {
+                    "enter": {
+                        "stroke": {
+                            "value": "white"
+                        }
+                    }
+                },
+                "domain": {
+                    "enter": {
+                        "stroke": {
+                            "value": "white"
+                        }
+                    }
+                },
+                "labels": {
+                    "enter": {
+                        "fill": {
+                            "value": "white"
+                        }
+                    }
+                }
+            }
+        }
+    ],
+    "data": [
+        {
+            "name": "sp500",
+            "url": "../../data/sp500.csv",
+            "format": {
+                "type": "csv",
+                "parse": {
+                    "price": "number",
+                    "date": "date"
+                }
+            }
+        },
+        {
+            "name": "months",
+            "values": [
+                "Jan",
+                "Feb",
+                "Maa",
+                "Apr",
+                "Mei",
+                "Jun",
+                "Jul",
+                "Aug",
+                "Sep",
+                "Bok",
+                "Nov",
+                "Dec"
+            ]
+        }
+    ],
+    "marks": [
+        {
+            "name": "thumb",
+            "style": "thumb",
+            "type": "rect",
+            "encode": {
+                "enter": {
+                    "y": {
+                        "value": 40
+                    },
+                    "height": {
+                        "value": 30
+                    }
+                },
+                "update": {
+                    "x": {
+                        "signal": "start_x"
+                    },
+                    "width": {
+                        "signal": "end_x - start_x"
+                    }
+                }
+            }
+        },
+        {
+            "name": "date_start",
+            "type": "symbol",
+            "style": "date_start",
+            "encode": {
+                "update": {
+                    "x": {
+                        "signal": "start_x"
+                    },
+                    "y": {
+                        "value": 40
+                    },
+                    "size": {
+                        "value": 300
+                    },
+                    "shape": {
+                        "value": "diamond"
+                    }
+                }
+            }
+        },
+        {
+            "name": "date_end",
+            "type": "symbol",
+            "style": "date_end",
+            "encode": {
+                "update": {
+                    "x": {
+                        "signal": "end_x"
+                    },
+                    "y": {
+                        "value": 40
+                    },
+                    "size": {
+                        "value": 300
+                    },
+                    "shape": {
+                        "value": "diamond"
+                    }
+                }
+            }
+        },
+        {
+            "name": "date_start_label",
+            "type": "text",
+            "encode": {
+                "enter": {
+                    "x": {
+                        "value": 5
+                    },
+                    "y": {
+                        "value": 5
+                    },
+                    "fill": {
+                        "value": "#eee"
+                    },
+                    "text": {
+                        "value": "Date"
+                    }
+                },
+                "update": {
+                    "text": {
+                        "signal": "data('months')[month(start_tick)].data + ' ' + year(start_tick)"
+                    }
+                }
+            }
+        },
+        {
+            "name": "date_end_label",
+            "type": "text",
+            "encode": {
+                "enter": {
+                    "x": {
+                        "signal": "width"
+                    },
+                    "y": {
+                        "value": 5
+                    },
+                    "fill": {
+                        "value": "#eee"
+                    },
+                    "text": {
+                        "value": "Date"
+                    },
+                    "align": {
+                        "value": "right"
+                    }
+                },
+                "update": {
+                    "text": {
+                        "signal": "data('months')[month(end_tick)].data + ' ' + year(end_tick)"
+                    }
+                }
+            }
+        }
+    ],
+    "projections": [],
+    "config": {
+        "style": {
+            "thumb": {
+                "fill": "white",
+                "opacity": 0.5
+            },
+            "date_start": {
+                "fill": "yellow"
+            },
+            "date_end": {
+                "fill": "red"
+            }
+        }
+    }
+}
